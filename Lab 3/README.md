@@ -43,7 +43,7 @@ This section focuses on initial design and role-playing exercises.
 ### Storyboard & Initial Design
 
 - **Design Documentation:** [Wordbot Documentation (Pt1)](https://docs.google.com/document/d/13Gwjj5X3j9nWW3U7r54Km0AkHF1IowsGNWMSfG7pEe8/edit?tab=t.0)  
-  - *Content:* Complete (collated) documentation for the Wordbot project which includes design process, scripts, storyboard, peer review etc.    
+  - *Content:* Complete (collated) documentation for the Wordbot project which includes design process, scripts, storyboard, peer review, redesign etc.    
 - **Storyboard/Diagram:** [Storyboard Google Doc](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/WordBot%20StoryBoard.jpg)
 
 ### Dialogue Script
@@ -63,19 +63,39 @@ This section focuses on initial design and role-playing exercises.
 
 ---
 
-# Lab 3 Part 2. Redesign and Testing
+# Part 2. Redesign and Testing
 
 This section addresses the prototype redesign and testing phases.
 
 ### Prep for Part 2 (Redesign Rationale)
 
-- **Improvements:** Break complex final responses into summaries with prompts for more detail.  
-- **Other Interaction Modes:** Suggested blinking lights or color changes indicate processing vs listening states.  
-- **New Storyboard/Script:** [Updated Storyboard/Script](link_to_updated_storyboard)
+#### 1) What are concrete things that could use improvement in the design of your device? For example: wording, timing, anticipation of misunderstandings...  
+One improvement would be managing user uncertainty during the dialogue flow, as identified during the peer-review. The slight pause/  hesitancy after receiving the definition and example showed that the system needs to proactively suggest the next step. To do this, the final response must be redesigned to explicitly offer the next piece of information. Instead of just stating the example and going silent, the WordBot will now ask, "Would you like more information on its origin?" This makes the next capability clear to the user, guiding them to continue the conversation with a simple "Yes." or "Tell me more."   
 
+Another  improvement is changing the current intrusive initiation (where the device manually asks, "Hello, would you like today’s word?"). This will be replaced with contextual initiation based on sensor input.  
+
+#### 2) What are other modes of interaction beyond speech that you might also use to clarify how to interact?   
+Two non-speech modalities will be integrated to improve user experience:   
+First, a proximity/presence sensor will be used to enable contextual initiation. This will ensure the WordBot only offers the daily word after detecting a user nearby, addressing the concern that a non-critical tool should not proactively interrupt. The system will then revert to a prompt-only state after one activation per day.  
+Second, visual feedback (e.g. blinking lights or color changes) will be used to manage the unavoidable Ollama latency. A static green light will indicate the system is ready and listening, while a slowly blinking yellow or blue light will show that the Ollama model is "Accessing the Archives" or processing the query. This visual cue helps manage the user's expectation during the delay.  
+
+#### 3) Make a new storyboard, diagram and/or script based on these reflections.  
+- **Revised Script:** [WORDBOT Script Revision] (https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/Wordbot%20Script%20(Revised).pdf)
+- **State Diagram:** 
+stateDiagram-v2
+[*] --> Idle
+Idle --> ProximityDetected : Proximity sensor triggers
+ProximityDetected --> CheckDailyFlag : Check daily flag
+CheckDailyFlag --> ProvideWordInfo : Word not given today
+CheckDailyFlag --> Idle : Word already given
+ProvideWordInfo --> ProvideExample : Provide example/instance
+ProvideExample --> AskMoreInfo : Ask for more info
+AskMoreInfo --> ListeningMode : Listen (__ seconds)
+ListeningMode --> Idle : Timeout / End interaction
 ### Prototype your system
 
-- **System Documentation:** [System Design Document](link_to_system_doc) detailing sensors used, component interactions (Pi, Ollama, STT/TTS).  
+- **System Documentation:** [System Design Document](link_to_system_doc) detailing sensors used, component interactions etc.
+- **System Script:** [System Script](link_to_system_script) 
 - **Video/Screencaptures:** [System Demo Videos](link_to_video_or_screencaps)
 
 ## Test the system
@@ -109,6 +129,7 @@ This section addresses the prototype redesign and testing phases.
 ---
 
 This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
+
 
 
 
