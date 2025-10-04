@@ -102,6 +102,8 @@ stateDiagram-v2
     ProvideExample --> AskMoreInfo : Ask for more info
     AskMoreInfo --> ListeningMode : Listen (__ seconds)
     ListeningMode --> Idle : Timeout / End interaction
+    Idle --> ManualInput : User says "WordBot, what is today's word?"
+    ManualInput --> ProvideWordInfo : Start conversation flow
 ```
 
 ### Prototype your system
@@ -141,6 +143,7 @@ stateDiagram-v2
 ---
 
 This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
+
 
 
 
