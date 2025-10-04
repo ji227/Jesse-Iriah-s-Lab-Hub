@@ -44,7 +44,16 @@ This section focuses on initial design and role-playing exercises.
 
 - **Design Documentation:** [Wordbot Documentation (Pt1)](https://docs.google.com/document/d/13Gwjj5X3j9nWW3U7r54Km0AkHF1IowsGNWMSfG7pEe8/edit?tab=t.0)  
   - *Content:* Complete (collated) documentation for the Wordbot project which includes design process, scripts, storyboard, peer review, redesign etc.    
-- **Storyboard/Diagram:** [Storyboard Google Doc](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/WordBot%20StoryBoard.jpg)
+- **Storyboard:** [Storyboard Google Doc](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/WordBot%20StoryBoard.jpg)
+- **State diagram:**
+```mermaid
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> UserInput : User input
+    UserInput --> Response : Process input
+    Response --> ListeningMode : Output response
+    ListeningMode --> Idle : Timeout (__ seconds)
+```
 
 ### Dialogue Script
 
@@ -76,22 +85,25 @@ Another  improvement is changing the current intrusive initiation (where the dev
 
 #### 2) What are other modes of interaction beyond speech that you might also use to clarify how to interact?   
 Two non-speech modalities will be integrated to improve user experience:   
-First, a proximity/presence sensor will be used to enable contextual initiation. This will ensure the WordBot only offers the daily word after detecting a user nearby, addressing the concern that a non-critical tool should not proactively interrupt. The system will then revert to a prompt-only state after one activation per day.  
-Second, visual feedback (e.g. blinking lights or color changes) will be used to manage the unavoidable Ollama latency. A static green light will indicate the system is ready and listening, while a slowly blinking yellow or blue light will show that the Ollama model is "Accessing the Archives" or processing the query. This visual cue helps manage the user's expectation during the delay.  
+- First, a proximity/presence sensor will be used to enable contextual initiation. This will ensure the WordBot only offers the daily word after detecting a user nearby, addressing the concern that a non-critical tool should not proactively interrupt. The system will then revert to a prompt-only state after one activation per day.  
+- Second, visual feedback (e.g. blinking lights or color changes) will be used to manage the unavoidable Ollama latency. A static green light will indicate the system is ready and listening, while a slowly blinking yellow or blue light will show that the Ollama model is "Accessing the Archives" or processing the query. This visual cue helps manage the user's expectation during the delay.  
 
 #### 3) Make a new storyboard, diagram and/or script based on these reflections.  
 - **Revised Script:** [WORDBOT Script Revision] (https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/Wordbot%20Script%20(Revised).pdf)
 - **State Diagram:** 
+```mermaid
 stateDiagram-v2
-[*] --> Idle
-Idle --> ProximityDetected : Proximity sensor triggers
-ProximityDetected --> CheckDailyFlag : Check daily flag
-CheckDailyFlag --> ProvideWordInfo : Word not given today
-CheckDailyFlag --> Idle : Word already given
-ProvideWordInfo --> ProvideExample : Provide example/instance
-ProvideExample --> AskMoreInfo : Ask for more info
-AskMoreInfo --> ListeningMode : Listen (__ seconds)
-ListeningMode --> Idle : Timeout / End interaction
+    [*] --> Idle
+    Idle --> ProximityDetected : Proximity sensor triggers
+    ProximityDetected --> CheckDailyFlag : Check daily flag
+    CheckDailyFlag --> ProvideWordInfo : Word not given today
+    CheckDailyFlag --> Idle : Word already given
+    ProvideWordInfo --> ProvideExample : Provide example/instance
+    ProvideExample --> AskMoreInfo : Ask for more info
+    AskMoreInfo --> ListeningMode : Listen (__ seconds)
+    ListeningMode --> Idle : Timeout / End interaction
+```
+
 ### Prototype your system
 
 - **System Documentation:** [System Design Document](link_to_system_doc) detailing sensors used, component interactions etc.
@@ -129,6 +141,7 @@ ListeningMode --> Idle : Timeout / End interaction
 ---
 
 This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
+
 
 
 
