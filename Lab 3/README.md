@@ -109,13 +109,13 @@ stateDiagram-v2
     ProvideWordInfo --> ProvideExample : Provide example/instance
     ProvideExample --> PromptForEtymology : Deliver next prompt
     
-    AskMoreInfo --> ListeningMode : Listen (__ seconds)
+    PromptForEtymology --> ListeningMode : Listen (__ seconds)
     
-    ListeningMode --> GiveEtymology : Affirmative Response 
-    ListeningMode --> Idle : Timeout / Negative response
+    ListeningMode --> GiveEtymology : Affirmative Response
+    ListeningMode --> Idle : Negative Response / Timeout
     ListeningMode --> [*] : Stop command/ shutdown
     
-    GiveOriginInfo --> Idle : Information given (Returns to Idle)
+    GiveEtymology --> Idle : Information given (Returns to Idle)
 ```
 
   
@@ -156,6 +156,7 @@ stateDiagram-v2
 ---
 
 This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
+
 
 
 
