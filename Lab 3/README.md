@@ -23,7 +23,10 @@ This section covers coding tasks demonstrating proficiency with the core technol
 ### Speech-to-Text Demo
 
 - **Numerical Input Script:** [numerical_input.sh](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/numerical_input.sh)   
-  - *Content:* A shell script that verbally requests a 5 digit zip code and records the user's response via STT.  
+  - *Content:* A shell script that verbally requests a 5 digit zip code and records the user's response via STT.
+- **Demo** [Speech-To-Text Demo](https://drive.google.com/file/d/1Nquf9G7CIFVJoUvhF09xIDaz4nv7Oc_Q/view?usp=sharing)
+  - *Content:* Aa demonstration video of the speech-to-text function, where the user asks:  
+*“What’s the largest continent?”* and the system responds.
 
 ### AI-Powered Conversations with Ollama
 
@@ -75,25 +78,7 @@ This section addresses the prototype redesign and testing phases.
 - **System Documentation:** [System Design Document](link_to_system_doc) detailing sensors used, component interactions (Pi, Ollama, STT/TTS).  
 - **Video/Screencaptures:** [System Demo Videos](link_to_video_or_screencaps)
 
----
-
-# Testing and Evaluation
-
-### Webserver Functionality Screenshot
-
-From a remote browser on the same network, the webserver was verified at:  
-`http://<YourPiIPAddress>:5000` displaying "Hello World".
-
-![Webserver Running Screenshot](relative/or/full/path/to/webserver_screenshot.png)
-
-### Speech-to-Text Demo Video
-
-Here is a demonstration video of the speech-to-text function, where the user asks:  
-*“What’s the largest continent?”* and the system responds appropriately.
-
-[![Speech-to-Text Demo](https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
-
----
+## Test the system
 
 ### What worked well about the system and what didn't?
 
@@ -124,6 +109,7 @@ Here is a demonstration video of the speech-to-text function, where the user ask
 ---
 
 This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
+
 
 
 
