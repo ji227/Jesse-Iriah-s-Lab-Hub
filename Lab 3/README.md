@@ -23,7 +23,7 @@ This section covers coding tasks demonstrating proficiency with the core technol
 ### Speech-to-Text Demo
 
 - **Numerical Input Script:** [numerical_input.sh](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/numerical_input.sh)   
-  - **Content:** A shell script that verbally requests a 5 digit zip code and records the user's response via STT.  
+  - *Content:* A shell script that verbally requests a 5 digit zip code and records the user's response via STT.  
 
 ### AI-Powered Conversations with Ollama
 
@@ -123,4 +123,5 @@ Here is a demonstration video of the speech-to-text function, where the user ask
 ---
 
 This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
+
 
