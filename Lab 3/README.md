@@ -1,328 +1,125 @@
-# Chatterboxes
-**NAMES OF COLLABORATORS HERE**
-[![Watch the video](https://user-images.githubusercontent.com/1128669/135009222-111fe522-e6ba-46ad-b6dc-d1633d21129c.png)](https://www.youtube.com/embed/Q8FWzLMobx0?start=19)
+# Chatterboxes: Speech-Enabled Conversational Device
 
-In this lab, we want you to design interaction with a speech-enabled device--something that listens and talks to you. This device can do anything *but* control lights (since we already did that in Lab 1).  First, we want you first to storyboard what you imagine the conversational interaction to be like. Then, you will use wizarding techniques to elicit examples of what people might say, ask, or respond.  We then want you to use the examples collected from at least two other people to inform the redesign of the device.
-
-We will focus on **audio** as the main modality for interaction to start; these general techniques can be extended to **video**, **haptics** or other interactive mechanisms in the second part of the Lab.
-
-## Prep for Part 1: Get the Latest Content and Pick up Additional Parts 
-
-Please check instructions in [prep.md](prep.md) and complete the setup before class on Wednesday, Sept 23rd.
-
-### Pick up Web Camera If You Don't Have One
-
-Students who have not already received a web camera will receive their [Logitech C270 Webcam](https://www.amazon.com/Logitech-Desktop-Widescreen-Calling-Recording/dp/B004FHO5Y6/ref=sr_1_3?crid=W5QN79TK8JM7&dib=eyJ2IjoiMSJ9.FB-davgIQ_ciWNvY6RK4yckjgOCrvOWOGAG4IFaH0fczv-OIDHpR7rVTU8xj1iIbn_Aiowl9xMdeQxceQ6AT0Z8Rr5ZP1RocU6X8QSbkeJ4Zs5TYqa4a3C_cnfhZ7_ViooQU20IWibZqkBroF2Hja2xZXoTqZFI8e5YnF_2C0Bn7vtBGpapOYIGCeQoXqnV81r2HypQNUzFQbGPh7VqjqDbzmUoloFA2-QPLa5lOctA.L5ztl0wO7LqzxrIqDku9f96L9QrzYCMftU_YeTEJpGA&dib_tag=se&keywords=webcam%2Bc270&qid=1758416854&sprefix=webcam%2Bc270%2Caps%2C125&sr=8-3&th=1) and bluetooth speaker on Wednesday at the beginning of lab. If you cannot make it to class this week, please contact the TAs to ensure you get these. 
-
-### Get the Latest Content
-
-As always, pull updates from the class Interactive-Lab-Hub to both your Pi and your own GitHub repo. There are 2 ways you can do so:
-
-**\[recommended\]**Option 1: On the Pi, `cd` to your `Interactive-Lab-Hub`, pull the updates from upstream (class lab-hub) and push the updates back to your own GitHub repo. You will need the *personal access token* for this.
-
-```
-pi@ixe00:~$ cd Interactive-Lab-Hub
-pi@ixe00:~/Interactive-Lab-Hub $ git pull upstream Fall2025
-pi@ixe00:~/Interactive-Lab-Hub $ git add .
-pi@ixe00:~/Interactive-Lab-Hub $ git commit -m "get lab3 updates"
-pi@ixe00:~/Interactive-Lab-Hub $ git push
-```
-
-Option 2: On your your own GitHub repo, [create pull request](https://github.com/FAR-Lab/Developing-and-Designing-Interactive-Devices/blob/2022Fall/readings/Submitting%20Labs.md) to get updates from the class Interactive-Lab-Hub. After you have latest updates online, go on your Pi, `cd` to your `Interactive-Lab-Hub` and use `git pull` to get updates from your own GitHub repo.
-
-## Part 1.
-### Setup 
-
-Activate your virtual environment
-
-```
-pi@ixe00:~$ cd Interactive-Lab-Hub
-pi@ixe00:~/Interactive-Lab-Hub $ cd Lab\ 3
-pi@ixe00:~/Interactive-Lab-Hub/Lab 3 $ python3 -m venv .venv
-pi@ixe00:~/Interactive-Lab-Hub $ source .venv/bin/activate
-(.venv)pi@ixe00:~/Interactive-Lab-Hub $ 
-```
-
-Run the setup script
-```(.venv)pi@ixe00:~/Interactive-Lab-Hub $ pip install -r requirements.txt  ```
-
-Next, run the setup script to install additional text-to-speech dependencies:
-```
-(.venv)pi@ixe00:~/Interactive-Lab-Hub/Lab 3 $ ./setup.sh
-```
-
-### Text to Speech 
-
-In this part of lab, we are going to start peeking into the world of audio on your Pi! 
-
-We will be using the microphone and speaker on your webcamera. In the directory is a folder called `speech-scripts` containing several shell scripts. `cd` to the folder and list out all the files by `ls`:
-
-```
-pi@ixe00:~/speech-scripts $ ls
-Download        festival_demo.sh  GoogleTTS_demo.sh  pico2text_demo.sh
-espeak_demo.sh  flite_demo.sh     lookdave.wav
-```
-
-You can run these shell files `.sh` by typing `./filename`, for example, typing `./espeak_demo.sh` and see what happens. Take some time to look at each script and see how it works. You can see a script by typing `cat filename`. For instance:
-
-```
-pi@ixe00:~/speech-scripts $ cat festival_demo.sh 
-#from: https://elinux.org/RPi_Text_to_Speech_(Speech_Synthesis)#Festival_Text_to_Speech
-```
-You can test the commands by running
-```
-echo "Just what do you think you're doing, Dave?" | festival --tts
-```
-
-Now, you might wonder what exactly is a `.sh` file? 
-Typically, a `.sh` file is a shell script which you can execute in a terminal. The example files we offer here are for you to figure out the ways to play with audio on your Pi!
-
-You can also play audio files directly with `aplay filename`. Try typing `aplay lookdave.wav`.
-
-\*\***Write your own shell file to use your favorite of these TTS engines to have your Pi greet you by name.**\*\*
-(This shell file should be saved to your own repo for this lab.)  
-See file here (in 'speech-scripts' folder) : https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/speech-scripts/my_greeting.sh
+**Collaborators:**  
+N/A.
 
 ---
-Bonus:
-[Piper](https://github.com/rhasspy/piper) is another fast neural based text to speech package for raspberry pi which can be installed easily through python with:
-```
-pip install piper-tts
-```
-and used from the command line. Running the command below the first time will download the model, concurrent runs will be faster. 
-```
-echo 'Welcome to the world of speech synthesis!' | piper \
-  --model en_US-lessac-medium \
-  --output_file welcome.wav
-```
-Check the file that was created by running `aplay welcome.wav`. Many more languages are supported and audio can be streamed dirctly to an audio output, rather than into an file by:
 
-```
-echo 'This sentence is spoken first. This sentence is synthesized while the first sentence is spoken.' | \
-  piper --model en_US-lessac-medium --output-raw | \
-  aplay -r 22050 -f S16_LE -t raw -
-```
-  
-### Speech to Text
+## Project Overview
 
-Next setup speech to text. We are using a speech recognition engine, [Vosk](https://alphacephei.com/vosk/), which is made by researchers at Carnegie Mellon University. Vosk is amazing because it is an offline speech recognition engine; that is, all the processing for the speech recognition is happening onboard the Raspberry Pi. 
-
-Make sure you're running in your virtual environment with the dependencies already installed:
-```
-source .venv/bin/activate
-```
-
-Test if vosk works by transcribing text:
-
-```
-vosk-transcriber -i recorded_mono.wav -o test.txt
-```
-
-You can use vosk with the microphone by running 
-```
-python test_microphone.py -m en
-```
+This project involves designing interaction with a speech-enabled device that listens and talks, excluding control of lights (covered in a prior lab). The focus is on audio as the main interaction modality, using speech-to-text, text-to-speech, and AI-powered conversation to create engaging dialogues.
 
 ---
-Bonus:
-[Whisper](https://openai.com/index/whisper/) is a neural network–based speech-to-text (STT) model developed and open-sourced by OpenAI. Compared to Vosk, Whisper generally achieves higher accuracy, particularly on noisy audio and diverse accents. It is available in multiple model sizes; for edge devices such as the Raspberry Pi 5 used in this class, the tiny.en model runs with reasonable latency even without a GPU.
 
-By contrast, Vosk is more lightweight and optimized for running efficiently on low-power devices like the Raspberry Pi. The choice between Whisper and Vosk depends on your scenario: if you need higher accuracy and can afford slightly more compute, Whisper is preferable; if your priority is minimal resource usage, Vosk may be a better fit.
+# Part 1. Setup & Technical Demos
 
-In this class, we provide two Whisper options: A quantized 8-bit faster-whisper model for speed, and the standard Whisper model. Try them out and compare the trade-offs.
+This section covers coding tasks demonstrating proficiency with the core technologies.  
 
-Make sure you're in the Lab 3 directory with your virtual environment activated:
-```
-cd ~/Interactive-Lab-Hub/Lab\ 3/speech-scripts
-source ../.venv/bin/activate
-```
+### Text-to-Speech Demo
 
-Then test the Whisper models:
-```
-python whisper_try.py
-```
-and
+- **Greeting Script:** [my_greeting.sh](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/my_greeting.sh)  
+- **Contents:** A shell script using a text-to-speech engine to output ""Greetings, Jesse Iriah. Welcome to Lab Three."  
 
-```
-python faster_whisper_try.py
-```
-\*\***Write your own shell file that verbally asks for a numerical based input (such as a phone number, zipcode, number of pets, etc) and records the answer the respondent provides.**\*\*  
-See file here (in 'speech-scripts' folder) : https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/speech-scripts/numerical_input.sh  
+### Speech-to-Text Demo
 
-### 🤖 NEW: AI-Powered Conversations with Ollama
+- **Numerical Input Script:** [numerical_input.sh](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/numerical_input.sh)   
+- **Contents:** A shell script that verbally requests a 5 digit zip code and records the user's response via STT.  
 
-Want to add intelligent conversation capabilities to your voice projects? **Ollama** lets you run AI models locally on your Raspberry Pi for sophisticated dialogue without requiring internet connectivity!
+### AI-Powered Conversations with Ollama
 
-#### Quick Start with Ollama
+- **Voice Assistant Documentation:** [OLLAMA Voice Assistant Documentation](https://docs.google.com/document/d/1MC8Soh6y-xnqsH4-R49oLbx3axFsuhnrAuuwzcrkruw/edit?tab=t.0)  
+- **Contents:** Documentation outlining technical challenges like STT/TTS issues, Ollama latency, and voice clarity improvements.  
+- **Ollama Voice Assistant Script:** [final_voice_assistant.py](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/final_voice_assistant.py)
 
-**Installation** (takes ~5 minutes):
-```bash
-# Install Ollama
-curl -fsSL https://ollama.com/install.sh | sh
+---
 
-# Download recommended model for Pi 5
-ollama pull phi3:mini
+# Part 1. Design & Dialogue Elicitation
 
-# Install system dependencies for audio (required for pyaudio)
-sudo apt-get update
-sudo apt-get install -y portaudio19-dev python3-dev
+This section focuses on initial design and role-playing exercises.
 
-# Create separate virtual environment for Ollama (due to pyaudio conflicts)
-cd ollama/
-python3 -m venv ollama_venv
-source ollama_venv/bin/activate
+### Storyboard & Initial Design
 
-# Install Python dependencies in separate environment
-pip install -r ollama_requirements.txt
-```
-#### Ready-to-Use Scripts
+- **Design Documentation:** [Wordbot Documentation (Pt1)](https://docs.google.com/document/d/13Gwjj5X3j9nWW3U7r54Km0AkHF1IowsGNWMSfG7pEe8/edit?tab=t.0)  
+- **Contents:** Complete (collated) documentation for the Wordbot project which includes design process, scripts, storyboard, peer review etc.    
+- **Storyboard/Diagram:** [Storyboard Google Doc](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/WordBot%20StoryBoard.jpg)
 
-We've created three Ollama integration scripts for different use cases:
+### Dialogue Script
 
-**1. Basic Demo** - Learn how Ollama works:
-```bash
-python3 ollama_demo.py
-```
+- **Initial Script:** [WORDBOT Script](https://docs.google.com/document/d/1t9Ip9DpQih5_yKYYBYtNqrnhIPVMiVl7mqFzCLVfRVg/edit?tab=t.0)  
+- **Process Description:** [Development Process](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/Wordbot%20Design%3AProcess.png)
 
-**2. Voice Assistant** - Full speech-to-text + AI + text-to-speech:
-```bash
-python3 ollama_voice_assistant.py
-```
+### Acting out the Dialogue
 
-**3. Web Interface** - Beautiful web-based chat with voice options:
-```bash
-python3 ollama_web_app.py
-# Then open: http://localhost:5000
-```
+- **Dialogue Recording:** [Wordbot Dialogue.mp3](https://github.com/user-attachments/files/22690623/Wordbot.Dialogue.mp3)
+- **Reflection/ Review:** [Wordbot Review/Reflection](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/Wordbot%20Peer-Review.pdf)
 
-#### Integration in Your Projects
+### Wizarding with the Pi (Optional)
 
-Simple example to add AI to any project:
-```python
-import requests
+- (Include your notes or delete if not completed.)
 
-def ask_ai(question):
-    response = requests.post(
-        "http://localhost:11434/api/generate",
-        json={"model": "phi3:mini", "prompt": question, "stream": False}
-    )
-    return response.json().get('response', 'No response')
+---
 
-# Use it anywhere!
-answer = ask_ai("How should I greet users?")
-```
+# Lab 3 Part 2. Redesign and Testing
 
-**📖 Complete Setup Guide**: See `OLLAMA_SETUP.md` for detailed instructions, troubleshooting, and advanced usage!
+This section addresses the prototype redesign and testing phases.
 
-\*\***Try creating a simple voice interaction that combines speech recognition, Ollama processing, and text-to-speech output. Document what you built and how users responded to it.**\*\*  
-See script here ('final_voice_assistant.py in ollama folder) : https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/ollama/final_voice_assistant.py  
-See documentation on the script and response here: https://docs.google.com/document/d/1MC8Soh6y-xnqsH4-R49oLbx3axFsuhnrAuuwzcrkruw/edit?tab=t.0  
+### Prep for Part 2 (Redesign Rationale)
 
+- **Improvements:** Break complex final responses into summaries with prompts for more detail.  
+- **Other Interaction Modes:** Suggested blinking lights or color changes indicate processing vs listening states.  
+- **New Storyboard/Script:** [Updated Storyboard/Script](link_to_updated_storyboard)
 
-### Serving Pages
+### Prototype your system
 
-In Lab 1, we served a webpage with flask. In this lab, you may find it useful to serve a webpage for the controller on a remote device. Here is a simple example of a webserver.
+- **System Documentation:** [System Design Document](link_to_system_doc) detailing sensors used, component interactions (Pi, Ollama, STT/TTS).  
+- **Video/Screencaptures:** [System Demo Videos](link_to_video_or_screencaps)
 
-```
-pi@ixe00:~/Interactive-Lab-Hub/Lab 3 $ python server.py
- * Serving Flask app "server" (lazy loading)
- * Environment: production
-   WARNING: This is a development server. Do not use it in a production deployment.
-   Use a production WSGI server instead.
- * Debug mode: on
- * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 162-573-883
-```
-From a remote browser on the same network, check to make sure your webserver is working by going to `http://<YourPiIPAddress>:5000`. You should be able to see "Hello World" on the webpage.  
-<img width="376" height="94" alt="Screenshot 2025-09-28 at 00 58 12" src="https://github.com/user-attachments/assets/5c693891-a609-4e64-8b60-072b146de9de" />  
+---
 
-### Storyboard
+# Testing and Evaluation
 
-Storyboard and/or use a Verplank diagram to design a speech-enabled device. (Stuck? Make a device that talks for dogs. If that is too stupid, find an application that is better than that.) 
+### Webserver Functionality Screenshot
 
-\*\***Post your storyboard and diagram here.**\*\*  
-See documentation with storyboard/diagrams here: https://docs.google.com/document/d/13Gwjj5X3j9nWW3U7r54Km0AkHF1IowsGNWMSfG7pEe8/edit?tab=t.0
+From a remote browser on the same network, the webserver was verified at:  
+`http://<YourPiIPAddress>:5000` displaying "Hello World".
 
-Write out what you imagine the dialogue to be. Use cards, post-its, or whatever method helps you develop alternatives or group responses. 
+![Webserver Running Screenshot](relative/or/full/path/to/webserver_screenshot.png)
 
-\*\***Please describe and document your process.**\*\*  
-See script here: https://docs.google.com/document/d/1t9Ip9DpQih5_yKYYBYtNqrnhIPVMiVl7mqFzCLVfRVg/edit?tab=t.0  
-  
-### Acting out the dialogue
+### Speech-to-Text Demo Video
 
-Find a partner, and *without sharing the script with your partner* try out the dialogue you've designed, where you (as the device designer) act as the device you are designing.  Please record this interaction (for example, using Zoom's record feature).
+Here is a demonstration video of the speech-to-text function, where the user asks:  
+*“What’s the largest continent?”* and the system responds appropriately.
 
-\*\***Describe if the dialogue seemed different than what you imagined when it was acted out, and how.**\*\*
+[![Speech-to-Text Demo](https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
 
-### Wizarding with the Pi (optional)
-In the [demo directory](./demo), you will find an example Wizard of Oz project. In that project, you can see how audio and sensor data is streamed from the Pi to a wizard controller that runs in the browser.  You may use this demo code as a template. By running the `app.py` script, you can see how audio and sensor data (Adafruit MPU-6050 6-DoF Accel and Gyro Sensor) is streamed from the Pi to a wizard controller that runs in the browser `http://<YouPiIPAddress>:5000`. You can control what the system says from the controller as well!
-
-\*\***Describe if the dialogue seemed different than what you imagined, or when acted out, when it was wizarded, and how.**\*\*
-
-# Lab 3 Part 2
-
-For Part 2, you will redesign the interaction with the speech-enabled device using the data collected, as well as feedback from part 1.
-
-## Prep for Part 2
-
-1. What are concrete things that could use improvement in the design of your device? For example: wording, timing, anticipation of misunderstandings...
-2. What are other modes of interaction _beyond speech_ that you might also use to clarify how to interact?
-3. Make a new storyboard, diagram and/or script based on these reflections.
-
-## Prototype your system
-
-The system should:
-* use the Raspberry Pi 
-* use one or more sensors
-* require participants to speak to it. 
-
-*Document how the system works*
-
-*Include videos or screencaptures of both the system and the controller.*
-
-<details>
-  <summary><strong>Submission Cleanup Reminder (Click to Expand)</strong></summary>
-  
-  **Before submitting your README.md:**
-  - This readme.md file has a lot of extra text for guidance.
-  - Remove all instructional text and example prompts from this file.
-  - You may either delete these sections or use the toggle/hide feature in VS Code to collapse them for a cleaner look.
-  - Your final submission should be neat, focused on your own work, and easy to read for grading.
-  
-  This helps ensure your README.md is clear professional and uniquely yours!
-</details>
-
-## Test the system
-Try to get at least two people to interact with your system. (Ideally, you would inform them that there is a wizard _after_ the interaction, but we recognize that can be hard.)
-
-Answer the following:
+---
 
 ### What worked well about the system and what didn't?
-\*\**your answer here*\*\*
+
+***your answer here***
 
 ### What worked well about the controller and what didn't?
 
-\*\**your answer here*\*\*
+***your answer here***
 
 ### What lessons can you take away from the WoZ interactions for designing a more autonomous version of the system?
 
-\*\**your answer here*\*\*
-
+***your answer here***
 
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
-\*\**your answer here*\*\*
+***your answer here***
 
+---
 
+# Sources
 
+- List any references, tutorials, libraries, or resources used.
 
+---
 
+**Note:** Replace all placeholder links `link_to_...`, YouTube IDs, and file paths with your actual URLs, paths, and video IDs.
 
+---
 
-
-
-
-
-
+This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
