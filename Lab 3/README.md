@@ -11,7 +11,7 @@ This project involves designing interaction with a speech-enabled device that li
 
 ---
 
-# Part 1. Setup & Technical Demos
+# Part 1A. Setup & Technical Demos
 
 This section covers coding tasks demonstrating proficiency with the core technologies.  
 
@@ -36,7 +36,7 @@ This section covers coding tasks demonstrating proficiency with the core technol
 
 ---
 
-# Part 1. Design & Dialogue Elicitation
+# Part 1B. Design & Dialogue Elicitation
 
 This section focuses on initial design and role-playing exercises.
 
@@ -109,6 +109,7 @@ This section addresses the prototype redesign and testing phases.
 ---
 
 This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
+
 
 
 
