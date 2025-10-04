@@ -56,6 +56,7 @@ stateDiagram-v2
     ListeningMode --> [*] : User ends conversation
 ```
 
+  
 ### Dialogue Script
 
 - **Initial Script:** [WORDBOT Script](https://docs.google.com/document/d/1t9Ip9DpQih5_yKYYBYtNqrnhIPVMiVl7mqFzCLVfRVg/edit?tab=t.0)  
@@ -69,7 +70,7 @@ stateDiagram-v2
 
 ### Wizarding with the Pi (Optional)
 
-- (Include your notes or delete if not completed.)
+- **Reflection/ Review:** 
 
 ---
 
@@ -117,6 +118,7 @@ stateDiagram-v2
     GiveOriginInfo --> Idle : Information given (Returns to Idle)
 ```
 
+  
 ### Prototype your system
 
 - **System Documentation:** [System Design Document](link_to_system_doc) detailing sensors used, component interactions etc.
@@ -154,6 +156,7 @@ stateDiagram-v2
 ---
 
 This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
+
 
 
 
