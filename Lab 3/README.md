@@ -49,7 +49,7 @@ This section focuses on initial design and role-playing exercises.
 ```mermaid
 stateDiagram-v2
     [*] --> Idle
-    Idle --> UserInput : User requests WOTD data
+    Idle --> UserInput : User requests WOTD info
     UserInput --> Response : Process input 
     Response --> ListeningMode : Output response
     ListeningMode --> Idle : Timeout (__ seconds)
@@ -96,7 +96,7 @@ Two non-speech modalities will be integrated to improve user experience:
 stateDiagram-v2
     [*] --> Idle
     Idle --> ProximityDetected : Proximity sensor triggers
-    Idle --> ManualInput : User requests WOTD data
+    Idle --> ManualInput : User requests WOTD info
     Idle --> [*] : Stop command/ shutdown
     
     ProximityDetected --> CheckDailyFlag : Check daily flag
@@ -154,6 +154,7 @@ stateDiagram-v2
 ---
 
 This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
+
 
 
 
