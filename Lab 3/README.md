@@ -18,17 +18,17 @@ This section covers coding tasks demonstrating proficiency with the core technol
 ### Text-to-Speech Demo
 
 - **Greeting Script:** [my_greeting.sh](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/my_greeting.sh)  
-- **Contents:** A shell script using a text-to-speech engine to output ""Greetings, Jesse Iriah. Welcome to Lab Three."  
+  - *Content:* A shell script using a text-to-speech engine to output ""Greetings, Jesse Iriah. Welcome to Lab Three."  
 
 ### Speech-to-Text Demo
 
 - **Numerical Input Script:** [numerical_input.sh](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/numerical_input.sh)   
-- **Contents:** A shell script that verbally requests a 5 digit zip code and records the user's response via STT.  
+  - **Content:** A shell script that verbally requests a 5 digit zip code and records the user's response via STT.  
 
 ### AI-Powered Conversations with Ollama
 
 - **Voice Assistant Documentation:** [OLLAMA Voice Assistant Documentation](https://docs.google.com/document/d/1MC8Soh6y-xnqsH4-R49oLbx3axFsuhnrAuuwzcrkruw/edit?tab=t.0)  
-- **Contents:** Documentation outlining technical challenges like STT/TTS issues, Ollama latency, and voice clarity improvements.  
+  - *Content:* Documentation outlining technical challenges like STT/TTS issues, Ollama latency, and voice clarity improvements.  
 - **Ollama Voice Assistant Script:** [final_voice_assistant.py](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/final_voice_assistant.py)
 
 ---
@@ -40,7 +40,7 @@ This section focuses on initial design and role-playing exercises.
 ### Storyboard & Initial Design
 
 - **Design Documentation:** [Wordbot Documentation (Pt1)](https://docs.google.com/document/d/13Gwjj5X3j9nWW3U7r54Km0AkHF1IowsGNWMSfG7pEe8/edit?tab=t.0)  
-- **Contents:** Complete (collated) documentation for the Wordbot project which includes design process, scripts, storyboard, peer review etc.    
+  - *Content:* Complete (collated) documentation for the Wordbot project which includes design process, scripts, storyboard, peer review etc.    
 - **Storyboard/Diagram:** [Storyboard Google Doc](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/WordBot%20StoryBoard.jpg)
 
 ### Dialogue Script
@@ -123,3 +123,4 @@ Here is a demonstration video of the speech-to-text function, where the user ask
 ---
 
 This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
+
