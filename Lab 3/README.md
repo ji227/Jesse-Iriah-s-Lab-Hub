@@ -52,6 +52,7 @@ This section focuses on initial design and role-playing exercises.
 
 - **Dialogue Recording:** [Wordbot Dialogue.mp3](https://github.com/user-attachments/files/22690623/Wordbot.Dialogue.mp3)
 - **Reflection/ Review:** [Wordbot Review/Reflection](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/Wordbot%20Peer-Review.pdf)
+  - *Contribution Note:* This review and reflection was performed with Kyle acting as the user/peer-reviewer.
 
 ### Wizarding with the Pi (Optional)
 
@@ -123,5 +124,6 @@ Here is a demonstration video of the speech-to-text function, where the user ask
 ---
 
 This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
+
 
 
