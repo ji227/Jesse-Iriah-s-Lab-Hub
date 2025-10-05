@@ -122,7 +122,7 @@ stateDiagram-v2
   - *Content:* Main Wordbot code integrating speech recognition, TTS, proximity, display, and Ollama for natural dialogue.   
 - **Video/Screencaptures:** [Wordbot Live Demo](https://drive.google.com/file/d/1ibcdPk0tkAVUzXTxxm05ir3aHmEtbXNk/view?usp=sharing)  
   - *Content:* Full demo of Wordbot in operation, showing user interaction with sensor, audio prompts, TTS replies, and RGB feedback.
-<img width="1440" height="460" alt="Screenshot 2025-10-05 at 06 22 02" src="https://github.com/user-attachments/assets/380a97a6-758f-47de-8a25-a25ba1dd8c0e" />
+<img width="1440" height="460" alt="WordbotDemoScreenshot" src="https://github.com/user-attachments/assets/f6d30775-4a4e-46c3-94c7-1bacddfa3c16" />
 
 
 ### Test the system
@@ -169,6 +169,7 @@ Additional sensing modalities that could enhance analysis include:
 
 
 ---
+
 
 
 
