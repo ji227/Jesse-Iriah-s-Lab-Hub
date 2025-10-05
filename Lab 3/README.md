@@ -122,11 +122,11 @@ stateDiagram-v2
 
 - **System Documentation:** [Wordbot Prototype Documentation](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/Wordbot%20Prototype%20Documentation.pdf)  
   - *Content:* Describes hardware setup, sensor/RGB integration, Ollama language model, and state flow.  
-- **Hardware (Sensor & RGB) Test Script:** [RGB & Sensor Test Script](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/sensor_and_rgb_test.py)  
+- **Hardware (Sensor & RGB) Test Code:** [RGB & Sensor Test Code](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/sensor_and_rgb_test.py)  
   - *Content:* Script for verifying VCNL4040 sensor triggering and PiTFT RGB display feedback during development.  
-- **Hardware (Sensor & RGB) Test Script Demo:** [Hardware Test Script](https://drive.google.com/file/d/1El91XUt4rTHmSPmdlPCDypnxZY37Om7s/view?usp=sharing)  
+- **Hardware (Sensor & RGB) Test Script Demo:** [Hardware Demo](https://drive.google.com/file/d/1El91XUt4rTHmSPmdlPCDypnxZY37Om7s/view?usp=sharing)  
   - *Content:* Video of the test script with hand approach triggering color changes and live proximity values on display.  
-- **Complete System Script:** [Wordbot Script]([link_to_system_script](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/wordbot.py))  
+- **Complete System Code:** [Wordbot Code](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/wordbot.py)  
   - *Content:* Main Wordbot code integrating speech recognition, TTS, proximity, display, and Ollama for natural dialogue.   
 - **Video/Screencaptures:** [Wordbot Live Demo](https://drive.google.com/file/d/1ibcdPk0tkAVUzXTxxm05ir3aHmEtbXNk/view?usp=sharing)  
   - *Content:* Full demo of Wordbot in operation, showing user interaction with sensor, audio prompts, TTS replies, and RGB feedback.  
@@ -175,6 +175,7 @@ Additional sensing modalities that could enhance analysis include:
 ---
 
 This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
+
 
 
 
