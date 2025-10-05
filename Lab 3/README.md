@@ -25,7 +25,7 @@ This section covers coding tasks demonstrating proficiency with the core technol
 - **Numerical Input Script:** [numerical_input.sh](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/numerical_input.sh)   
   - *Content:* A shell script that verbally requests a 5 digit zip code and records the user's response via STT.
 - **Demo** [Speech-To-Text Demo](https://drive.google.com/file/d/1Nquf9G7CIFVJoUvhF09xIDaz4nv7Oc_Q/view?usp=sharing)
-  - *Content:* Aa demonstration video of the speech-to-text function, where the user asks:  
+  - *Content:* A demonstration video of the speech-to-text function, where the user asks:  
 *“What’s the largest continent?”* and the system responds.
 
 ### AI-Powered Conversations with Ollama
@@ -69,8 +69,7 @@ stateDiagram-v2
   - *Contribution Note:* This review and reflection was performed with Kyle acting as the user/peer-reviewer.
 
 ### Wizarding with the Pi (Optional)
-
-- **Reflection/ Review:** 
+- **Reflection/ Review:**
 
 ---
 
@@ -121,41 +120,62 @@ stateDiagram-v2
   
 ### Prototype your system
 
-- **System Documentation:** [System Design Document](link_to_system_doc) detailing sensors used, component interactions etc.
-- **System Script:** [System Script](link_to_system_script) 
-- **Video/Screencaptures:** [System Demo Videos](link_to_video_or_screencaps)
+- **System Documentation:** [Wordbot Prototype Documentation](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/Wordbot%20Prototype%20Documentation.pdf)  
+  - *Content:* Describes hardware setup, sensor/RGB integration, Ollama language model, and state flow.  
+- **Hardware (Sensor & RGB) Test Script:** [RGB & Sensor Test Script](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/sensor_and_rgb_test.py)  
+  - *Content:* Script for verifying VCNL4040 sensor triggering and PiTFT RGB display feedback during development.  
+- **Hardware (Sensor & RGB) Test Script Demo:** [Hardware Test Script](https://drive.google.com/file/d/1El91XUt4rTHmSPmdlPCDypnxZY37Om7s/view?usp=sharing)  
+  - *Content:* Video of the test script with hand approach triggering color changes and live proximity values on display.  
+- **Complete System Script:** [Wordbot Script]([link_to_system_script](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/wordbot.py))  
+  - *Content:* Main Wordbot code integrating speech recognition, TTS, proximity, display, and Ollama for natural dialogue.   
+- **Video/Screencaptures:** [Wordbot Live Demo](https://drive.google.com/file/d/1ibcdPk0tkAVUzXTxxm05ir3aHmEtbXNk/view?usp=sharing)  
+  - *Content:* Full demo of Wordbot in operation, showing user interaction with sensor, audio prompts, TTS replies, and RGB feedback.  
+### Test the system
 
-## Test the system
+**What worked well about the system and what didn't?**  
+Pre-integration testing of individual components proved highly beneficial, enabling isolation and resolution of hardware-level issues prior to coding the final state machine. The implemented redesigns showed success in several areas:
+- The proximity sensor reliably provided non-intrusive activation, transitioning the system from idle (green) to listening (red).
+- The visual status Protocol (green → red → yellow → green) effectively managed user expectations during the inherent Ollama latency, aligning with the redesign goals.
+- The proactive prompt ("Would you like to hear about its origin?")  guided users toward the etymology follow-up, mitigating user uncertainty observed in peer review.
+However, Ollama latency remains a limiting factor due to the Raspberry Pi’s hardware constraints running the LLM. Additionally, the LLM’s tendency to generate conversational filler required defensive parsing logic in the Python script to reliably extract structured data.
 
-### What worked well about the system and what didn't?
+**What worked well about the controller and what didn't?**  
+The VCNL4040 proximity sensor functioned effectively as the primary non-contact controller for system wake-up and state reset. The Microphone/STT reliably served as the secondary verbal controller for dialog interactions.   
+The system lacks manual physical controls (e.g. buttons). If the conversation stalls due to STT timeout, there isn't really a recovery. The PiTFT screen functions solely as an output device without input control capabilities.
 
-***your answer here***
+**What lessons can you take away from the WoZ interactions for designing a more autonomous version of the system?**
+Conversational latency is identified as a critical failure point for autonomous systems. The smooth flow seen during the Wizard of Oz sessions couldn’t be replicated automatically because of the response delays in the LLM. Future designs should consider:  
+- Pre-computation: Pre-load and parse word data during idle state to enable instantaneous transition to delivery once activated.
+- Explicit Recovery: Include a physical override (button) to allow immediate system reset from any state, providing a reliable user escape in case of verbal or timing failures.
+- STT Confirmation: Implement verbal confirmation for ambiguous user inputs prior to proceeding, a function implicitly handled by the “wizard” during WoZ studies.
 
-### What worked well about the controller and what didn't?
-
-***your answer here***
-
-### What lessons can you take away from the WoZ interactions for designing a more autonomous version of the system?
-
-***your answer here***
-
-### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
-
-***your answer here***
+**How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?**
+The system’s  operation can generate a  dataset logging human-device interactions including:  
+- System states and timestamps: start and end times for each state transition.
+- Input data: Proximity sensor values at activation and raw STT transcripts.
+- Latency measurements: Duration of Ollama processing during the processing state.
+- System outputs: Exact TTS utterances delivered.   
+Additional sensing modalities that could enhance analysis include:  
+- Ambient light sensors: To correlate environmental lighting with user response to visual status cues.
+- Microphone noise level (dB): To assess the impact of ambient noise on STT success and timeout rates.
+- Physical user inputs: Buttons or touch sensors as fallback/override controls.
 
 ---
 
 # Sources
 
-- List any references, tutorials, libraries, or resources used.
+- Adafruit VCNL4040 Library
+- Adafruit RGB Display (ST7789) Library
+- gTTS Python Library
+- SpeechRecognition Python Library
+- Ollama LLM API / Client
+- Python PIL Imaging for Display Control
 
----
-
-**Note:** Replace all placeholder links `link_to_...`, YouTube IDs, and file paths with your actual URLs, paths, and video IDs.
 
 ---
 
 This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
+
 
 
 
