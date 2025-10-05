@@ -95,7 +95,7 @@ Two non-speech modalities will be integrated to improve user experience:
 - Second, visual feedback (e.g. blinking lights or color changes) will be used to manage the unavoidable Ollama latency. A static green light will indicate the system is ready and listening, while a slowly blinking yellow or blue light will show that the Ollama model is "Accessing the Archives" or processing the query. This visual cue helps manage the user's expectation during the delay.  
 
 #### 3) Make a new storyboard, diagram and/or script based on these reflections.  
-- **Revised Script:** [WORDBOT Script Revision] (https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/Wordbot%20Script%20(Revised).pdf)
+- **Revised Script:** [WORDBOT Script Revision](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/Wordbot%20Script%20(Revised).pdf)
 - **State Diagram:** 
 ```mermaid
 stateDiagram-v2
@@ -179,6 +179,7 @@ Additional sensing modalities that could enhance analysis include:
 
 
 ---
+
 
 
 
