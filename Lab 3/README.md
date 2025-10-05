@@ -91,7 +91,7 @@ Another  improvement is changing the current intrusive initiation (where the dev
 
 #### 2) What are other modes of interaction beyond speech that you might also use to clarify how to interact?   
 Two non-speech modalities will be integrated to improve user experience:   
-- First, a proximity/presence sensor will be used to enable contextual initiation. This will ensure the WordBot only offers the daily word after detecting a user nearby, addressing the concern that a non-critical tool should not proactively interrupt. The system will then revert to a prompt-only state after one activation per day.  
+- First, a proximity/presence sensor will be used to enable contextual initiation. This will ensure the WordBot only offers the daily word after detecting a user nearby, addressing the concern that a non-critical tool should not proactively interrupt.  
 - Second, visual feedback (e.g. blinking lights or color changes) will be used to manage the unavoidable Ollama latency. A static green light will indicate the system is ready and listening, while a slowly blinking yellow or blue light will show that the Ollama model is "Accessing the Archives" or processing the query. This visual cue helps manage the user's expectation during the delay.  
 
 #### 3) Make a new storyboard, diagram and/or script based on these reflections.  
@@ -100,29 +100,16 @@ Two non-speech modalities will be integrated to improve user experience:
 ```mermaid
 stateDiagram-v2
     [*] --> Idle
-    Idle --> ProximityDetected : Proximity sensor triggers
-    Idle --> ManualInput : User requests WOTD info
-    Idle --> [*] : Stop command/ shutdown
-    
-    ProximityDetected --> CheckDailyFlag : Check daily flag
-    CheckDailyFlag --> ProvideWordInfo : Word not given today
-    CheckDailyFlag --> Idle : Word already given
-    
-    ManualInput --> ProvideWordInfo : Start conversation flow
-    
-    ProvideWordInfo --> ProvideExample : Provide example/instance
-    ProvideExample --> PromptForEtymology : Deliver next prompt
-    
-    PromptForEtymology --> ListeningMode : Listen (__ seconds)
-    
-    ListeningMode --> GiveEtymology : Affirmative Response
-    ListeningMode --> Idle : Negative Response / Timeout
-    ListeningMode --> [*] : Stop command/ shutdown
-    
-    GiveEtymology --> Idle : Information given (Returns to Idle)
+    Idle --> AwaitingConfirmation : Proximity detected
+    AwaitingConfirmation --> DeliverWord : Affirmative response
+    AwaitingConfirmation --> Idle : Timeout or negative response
+    DeliverWord --> AwaitEtymologyPrompt : Word delivered
+    AwaitEtymologyPrompt --> DeliverEtymology : Affirmative respomse
+    AwaitEtymologyPrompt --> AwaitReset : Negative response/ timeout
+    DeliverEtymology --> AwaitReset : Etymology delivered
+    AwaitReset --> Idle : User moves away
 ```
 
-  
 ### Prototype your system
 
 - **System Documentation:** [Wordbot Prototype Documentation](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%203/Deliverables/Wordbot%20Prototype%20Documentation.pdf)  
@@ -182,6 +169,7 @@ Additional sensing modalities that could enhance analysis include:
 
 
 ---
+
 
 
 
