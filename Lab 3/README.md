@@ -133,7 +133,7 @@ stateDiagram-v2
 ### Test the system
 
 **What worked well about the system and what didn't?**  
-Pre-integration testing of individual components proved highly beneficial, enabling isolation and resolution of hardware-level issues prior to coding the final state machine. The implemented redesigns showed success in several areas:
+Pre-integration testing of individual components proved highly beneficial, enabling isolation and resolution of hardware-level issues prior to coding the final state machine. The implemented redesigns showed success in the following areas:
 - The proximity sensor reliably provided non-intrusive activation, transitioning the system from idle (green) to listening (red).
 - The visual status Protocol (green → red → yellow → green) effectively managed user expectations during the inherent Ollama latency, aligning with the redesign goals.
 - The proactive prompt ("Would you like to hear about its origin?")  guided users toward the etymology follow-up, mitigating user uncertainty observed in peer review.
@@ -154,7 +154,8 @@ The system’s  operation can generate a  dataset logging human-device interacti
 - System states and timestamps: start and end times for each state transition.
 - Input data: Proximity sensor values at activation and raw STT transcripts.
 - Latency measurements: Duration of Ollama processing during the processing state.
-- System outputs: Exact TTS utterances delivered.   
+- System outputs: Exact TTS utterances delivered.
+  
 Additional sensing modalities that could enhance analysis include:  
 - Ambient light sensors: To correlate environmental lighting with user response to visual status cues.
 - Microphone noise level (dB): To assess the impact of ambient noise on STT success and timeout rates.
@@ -175,6 +176,7 @@ Additional sensing modalities that could enhance analysis include:
 ---
 
 This README uses Markdown headings for clear sectioning, bullet points for concise info, embedded images and videos to show proof, and placeholders for your testing reflections and sources. It is ready for direct use or further customization. Let me know if you want me to generate this with your specific links included.
+
 
 
 
