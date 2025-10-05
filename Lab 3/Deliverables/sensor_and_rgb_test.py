@@ -80,4 +80,3 @@ finally:
     draw.rectangle((0, 0, width, height), outline=0, fill=(0, 0, 0))
     disp.image(image, rotation)
     backlight.value = False
-(wordbot_venv) pi@jesseiriah-raspberrypi:~ $ 
