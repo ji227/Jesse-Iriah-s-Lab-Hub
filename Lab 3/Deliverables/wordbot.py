@@ -1,17 +1,19 @@
-import time
 import sys
+import time
+from datetime import date
+
 import pyaudio
 import speech_recognition as sr
+from gtts import gTTS
+from io import BytesIO
+
 import digitalio
 import busio
 import board
 from PIL import Image, ImageDraw, ImageFont
 import adafruit_vcnl4040
 import adafruit_rgb_display.st7789 as st7789
-from gtts import gTTS
-from io import BytesIO
 from ollama import Client
-
 
 # --- CONFIGURATION ---
 # Note: Ensure Ollama is running and the model is pulled ('ollama pull phi3')
@@ -26,11 +28,12 @@ BAUDRATE = 64000000
 spi = board.SPI()
 
 # --- INITIALIZATION ---
+# Sensor setup
 i2c = busio.I2C(board.SCL, board.SDA)
 sensor = adafruit_vcnl4040.VCNL4040(i2c, address=0x60)
 PROXIMITY_THRESHOLD = 200
 
-# Initialize the Mini PiTFT Display
+# Mini PiTFT Display setup
 disp = st7789.ST7789(spi, cs=cs_pin, dc=dc_pin, rst=reset_pin, baudrate=BAUDRATE,
                      width=135, height=240, x_offset=53, y_offset=40)
 height = disp.width 
@@ -42,18 +45,22 @@ backlight = digitalio.DigitalInOut(board.D22)
 backlight.switch_to_output()
 backlight.value = True
 
-# Load font
+# Date/time setup
+last_delivery_date = None
+current_word = None
+word_given = False
+
+# Color and text setup
 try:
     font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 24)
 except IOError:
     font = ImageFont.load_default()
-
-# --- COLOR & TEXT FUNCTIONS ---
+  
 COLOR_READY_GREEN       = (0, 255, 0)
 COLOR_DETECTED_RED      = (255, 0, 0)
 COLOR_PROCESSING_YELLOW = (255, 255, 0)
 
-
+# Olama setup
 try:
     ollama_client = Client(host=OLLAMA_HOST)
     # Check if a model exists by listing them 
@@ -116,9 +123,11 @@ def listen_for_keyword(keyword="yes", timeout=15):
 
 def get_word_details():
     """Gets the WOTD details from Ollama and parses the structured response."""
+    today_str = date.today().strftime("%B %d, %Y")  # Format like "October 05, 2025"
+    prompt = f"Provide a single word of the day for {today_str}, its spelling, definition, and a brief example. Format this strictly as: WORD|SPELLING|DEFINITION|EXAMPLE"
+    
     speak("Accessing the Archives of the Day. Please stand by.")
-    # Set screen to YELLOW (Processing)
-    set_status_screen(COLOR_PROCESSING_YELLOW, "PROCESSING: LLM", sensor.proximity) 
+    set_status_screen(COLOR_PROCESSING_YELLOW, "PROCESSING: LLM", sensor.proximity)OCESSING: LLM", sensor.proximity) 
     
     time.sleep(1)
     try:
@@ -131,14 +140,14 @@ def get_word_details():
         raw_text = response['response'].strip()
 
         
-        # 1. Clean up any headers/prefixes and replace newlines with a separator if needed
+        # Clean up any headers/prefixes and replace newlines with a separator if needed
         clean_text = raw_text.replace('\n', '|').replace('\r', '|')
         clean_text = clean_text.replace('WORD|', '').replace('Word|', '')
         
-        # 2. Split the text into parts and remove whitespace
+        # Split the text into parts and remove whitespace
         parts = [p.strip() for p in clean_text.split('|') if p.strip()]
         
-        # 3. Take the last 4 parts only.
+        # Take the last 4 parts only.
         if len(parts) >= 4:
             data_parts = parts[-4:]
         else:
@@ -196,14 +205,28 @@ def set_status_screen(color_rgb, label, proximity_value):
 
 def main_loop():
     """The main state machine for the WordBot, triggered by proximity."""
-    
-    current_word = None
-    word_given = False  
+    global last_delivery_date, current_word, word_given 
     
     # Initialize state
     speak("WordBot Initialized. Entering Deep Sleep State. Waiting for proximity.")
 
     while True:
+        today = date.today()
+        
+        if last_delivery_date != today:
+            # New day, fetch new word
+            word_data = get_word_details()
+            if word_data:
+                current_word = word_data
+                last_delivery_date = today
+                word_given = False
+            else:
+                current_word = None
+                word_given = False
+        else:
+            # Same day, reuse current_word
+            pass
+      
         try:
             # 1. DEEP SLEEP / INITIAL WAIT STATE: Wait for proximity detection
             if current_word is None and not word_given:
