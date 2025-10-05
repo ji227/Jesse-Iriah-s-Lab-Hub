@@ -133,7 +133,7 @@ def get_word_details():
     try:
         response = ollama_client.generate(
             model=LLM_MODEL, 
-            prompt=LLM_WOTD_PROMPT, 
+            prompt=prompt,  # Use dynamic prompt with today's date 
             system="You are a linguistic archivist. Output *only* the requested pipe-separated data and nothing else."
         )
         
