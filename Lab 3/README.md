@@ -69,7 +69,7 @@ stateDiagram-v2
   - *Contribution Note:* This review and reflection was performed with Kyle acting as the user/peer-reviewer.
 
 ### Wizarding with the Pi (Optional)
-- **Reflection/ Review**  
+**Reflection/ Review**  
 The Wizard of Oz (WoZ) method was used to simulate the speech-enabled system, with the Raspberry Pi streaming sensor and audio data to a browser-based wizard controller. This setup allowed for controlling the system’s responses in real time, enabling dynamic dialogue management without requiring a fully autonomous voice assistant.  
 
 During these sessions, the dialogue flow appeared smoother than what the autonomous version could achieve. Manual control made it possible to instantly adapt to user input, manage hesitation, and clarify ambiguous requests—capabilities limited by current language model latency and speech recognition performance. This made the WoZ approach useful for early-stage testing, revealing how timing, phrasing, and user uncertainty affect interaction quality.  
@@ -179,6 +179,7 @@ Additional sensing modalities that could enhance analysis include:
 
 
 ---
+
 
 
 
