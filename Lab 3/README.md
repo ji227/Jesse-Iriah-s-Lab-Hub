@@ -123,6 +123,7 @@ stateDiagram-v2
 - **Video/Screencaptures:** [Wordbot Live Demo](https://drive.google.com/file/d/1ibcdPk0tkAVUzXTxxm05ir3aHmEtbXNk/view?usp=sharing)  
   - *Content:* Full demo of Wordbot in operation, showing user interaction with sensor, audio prompts, TTS replies, and RGB feedback.
 <img width="1440" height="460" alt="WordbotDemoScreenshot" src="https://github.com/user-attachments/assets/f6d30775-4a4e-46c3-94c7-1bacddfa3c16" />
+<img width="1440" height="900" alt="Screenshot 2025-10-05 at 20 42 44" src="https://github.com/user-attachments/assets/03639711-7014-491e-ac67-f0e42c91a44c" />
 
 
 ### Test the system
@@ -169,6 +170,7 @@ Additional sensing modalities that could enhance analysis include:
 
 
 ---
+
 
 
 
