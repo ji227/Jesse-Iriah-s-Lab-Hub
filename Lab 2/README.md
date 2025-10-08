@@ -69,16 +69,18 @@ This project involves creating a simple clock on the Raspberry Pi using CLI and 
 - Conceptualized dotted grid lines to improve time reading accuracy.
 
 ### Clock Mind Map
+![clockMindMap](https://github.com/user-attachments/assets/e0cd18cb-606d-4339-9659-864726e6ab3e)
 
-![Clock Mind Map](clockMindMap.jpg)
 
 ### Peer Feedback
 
-- Received helpful suggestions from classmates Iqra and Kyle.
-- Emphasized priority on clear, readable display of the current time.
-- Recommended avoiding overcrowding the small screen with too many features.
-- Suggested adding visual aids like dotted grid lines to ease reading.
-- Feedback led to refining and focusing the design for usability and clarity.
+- Received helpful feedback from classmates Iqra and Kyle, focusing on usability and visual clarity.
+- Discussions highlighted the importance of readable typography and minimalist layouts for the small MiniPiTFT display.
+- Recommended avoiding unnecessary animations or text clutter to maintain smooth performance and legibility.
+- Suggestions included adding dotted grid lines to improve time interpretation and spatial orientation on the graph.
+- Encouraged clearer differentiation between clock elements (axes, markers, and the plotted “X”) to enhance readability.
+- Peer insights directly informed design refinements, shifting the focus toward clarity, contrast, and intuitive interaction.
+- The final implementation reflects this feedback through simplified visuals, well-balanced text scaling, and a responsive toggle feature for switching between display modes.
 
 ---
 
@@ -105,13 +107,16 @@ This project involves creating a simple clock on the Raspberry Pi using CLI and 
 https://github.com/user-attachments/assets/95dab6c3-2320-4121-b357-19cc9854fde3
 
 
-
 ---
 
 ## Additional Notes
 
 - Feedback helped prioritize feature clarity and effective use of interface space.
-- Future work could include adding sensors or utilizing more interactive modalities.
+- Future extensions may include:
+  - Integration of real-time weather or date data via APIs.
+  - Use of sensors (emperature, ambient light) to adjust display brightness or provide contextual information.
+  - Implementation of gesture or touch input for more dynamic control beyond button toggles.
+  - A customisable theme system, allowing users to modify colour palettes or layouts directly from the Pi interface.
 
 ---
 
