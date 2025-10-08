@@ -16,10 +16,8 @@ This project involves creating a simple clock on the Raspberry Pi using CLI and 
 - Connected via SSH to the Raspberry Pi.
 - Created and activated Python virtual environment (`venv`) for development.
 - Configured Git personal access tokens for secure pushing and pulling to/from GitHub.
+![connectedPI](https://github.com/user-attachments/assets/e341a653-5c4b-44a0-b4dc-1f60dd5c9c5b)
 
-### Image of Setup Here
-
-![Connected Pi](connectedPI.jpg)
 
 ---
 
@@ -29,10 +27,8 @@ This project involves creating a simple clock on the Raspberry Pi using CLI and 
 - Installed all Python dependencies from `requirements.txt`.
 - Ran `cli_clock.py` to display a terminal clock.
 - Verified the time output, and exited cleanly with `Ctrl-C`.
+<img width="517" height="140" alt="commandLineClock" src="https://github.com/user-attachments/assets/e5c36916-ffa6-4ced-b234-627e9ef2443b" />
 
-### Command Line Clock Screenshot
-
-![Command Line Clock](comandLineClock.png)
 
 ---
 
@@ -44,18 +40,12 @@ This project involves creating a simple clock on the Raspberry Pi using CLI and 
 - Explored example scripts:
   - `screen_boot_script.py` for text display.
   - `image.py` for showing images on the screen.
+![whiteScreenTest](https://github.com/user-attachments/assets/3f4727c1-94d5-414a-9225-db0ffaacbcbe)
 
-### MiniPiTFT White Screen Test
-
-![White Screen Test](whiteScreenTest.jpg)
 
 ### Text Display Test Output
+![textTest_hellojesse](https://github.com/user-attachments/assets/5f42812f-fb72-4daa-ad51-8daea44bfdb7)
 
-![Text Test Hello Jesse](textTest_hellojesse.jpg)
-
-### Image Display Test
-
-![Image Test](image_test.jpg)
 
 ---
 
@@ -64,10 +54,8 @@ This project involves creating a simple clock on the Raspberry Pi using CLI and 
 - Modified `screen_clock.py` to show current time on the MiniPiTFT by filling in the display update loop.
 - Used code references from `cli_clock.py` and `stats.py`.
 - Edited code on Pi via Nano editor, VNC with Thonny IDE, or VS Code remote for convenience.
+![displayClockDemo_PI](https://github.com/user-attachments/assets/af143b16-efe2-4fab-944a-99cb2bbeed79)
 
-### Display Clock Demo on Pi
-
-![Display Clock Demo](displayClockDemo_PI.jpg)
 
 ---
 
@@ -101,12 +89,12 @@ This project involves creating a simple clock on the Raspberry Pi using CLI and 
 - Full code documented in `screen_clock.py`.
 
 ### Code Documentation PDF
+[graphClockCode.pdf](https://github.com/user-attachments/files/22784258/graphClockCode.pdf)
 
-[Graph Clock Code (PDF)](graphClockCode.pdf)
 
 ### Clock Sketch Image
+![myClockSketch](https://github.com/user-attachments/assets/c5f8d4cf-7b28-4eca-9984-67bdbe5c3b0e)
 
-![My Clock Sketch](myClockSketch.jpg)
 
 ---
 
@@ -114,12 +102,9 @@ This project involves creating a simple clock on the Raspberry Pi using CLI and 
 
 - Recorded demonstration video of the modified PiClock interaction.
 
-### Clock Demo Video
+https://github.com/user-attachments/assets/95dab6c3-2320-4121-b357-19cc9854fde3
 
-<video width="640" height="480" controls>
-  <source src="graphClockDemo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+
 
 ---
 
