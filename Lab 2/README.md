@@ -51,7 +51,7 @@ This project involves creating a simple clock on the Raspberry Pi using CLI and 
 
 ## Part D. Set Up the Display Clock Demo
 
-- Modified `screen_clock.py` to show current time on the MiniPiTFT by filling in the display update loop.
+- Modified [screen_clock.py](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%202/Deliverables/screen_clock.py) to show current time on the MiniPiTFT by filling in the display update loop.
 - Used code references from `cli_clock.py` and `stats.py`.
 - Edited code on Pi via Nano editor, VNC with Thonny IDE, or VS Code remote for convenience.
 ![displayClockDemo_PI](https://github.com/user-attachments/assets/af143b16-efe2-4fab-944a-99cb2bbeed79)
@@ -84,9 +84,9 @@ This project involves creating a simple clock on the Raspberry Pi using CLI and 
 
 ## Part 2: Modified Barebones PiClock
 
-- Implemented an interactive visual clock with graphical markers distinct from traditional digital or analog clocks.
-- Added functionality to toggle display elements (graph key with title, axis, and markers) using MiniPiTFT buttons.
-- Full code documented in `screen_clock.py`.
+- Implemented an interactive visual clock with graphical markers distinct.
+- Added MiniPiTFT button control to switch between the main graph view and a key screen displaying the title, axes, and markers.
+- Full code documented in [graphClockCode.py](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%202/Deliverables/graphClockCode.py).
 
 ### Code Documentation PDF
 [graphClockCode.pdf](https://github.com/user-attachments/files/22784258/graphClockCode.pdf)
