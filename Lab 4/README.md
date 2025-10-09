@@ -136,6 +136,7 @@ This project explores physical user interfaces on the Raspberry Pi, focusing on 
   - Where should the rotary dial be placed for intuitive volume control without interfering with gameplay?
   - How visible is the display from natural holding angles during active use?
   - Does the form factor allow comfortable grip and sustained interaction without fatigue?  
+  
   Physical cardboard prototypes are needed to test the ergonomics of button and dial placement, the comfort of the grip while holding the device, and display visibility at typical viewing angles. Prototyping will help answer tactile feedback and spacing challenges that sketches alone cannot resolve.  
 
 - **Integrated Design Selection:**  
