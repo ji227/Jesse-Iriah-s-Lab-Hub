@@ -125,12 +125,22 @@ This project explores physical user interfaces on the Raspberry Pi, focusing on 
 
 - **Sketches:**  
   *Placeholder for 5 display/button/knob positioning sketches.*
+  ![Interactive Devices-23 2](https://github.com/user-attachments/assets/ca7dce17-5ad0-4295-b5bd-63cbbeaec3d7)
+  - *Content:* Five layout designs were created for the Gameboy-style device, varying the physical positions of the OLED display, jump and duck buttons, and the rotary volume dial:
 
 - **Reflection:**  
   *Short explanation about questions raised during sketching, and what needs to be prototyped to answer those questions.*
+  These sketches raised design questions including:
+  - How does the positioning of buttons affect reachability and prevent accidental presses?
+  - What button sizes best balance quick access and comfort?
+  - Where should the rotary dial be placed for intuitive volume control without interfering with gameplay?
+  - How visible is the display from natural holding angles during active use?
+  - Does the form factor allow comfortable grip and sustained interaction without fatigue?  
+  Physical cardboard prototypes are needed to test the ergonomics of button and dial placement, the comfort of the grip while holding the device, and display visibility at typical viewing angles. Prototyping will help answer tactile feedback and spacing challenges that sketches alone cannot resolve.  
 
 - **Integrated Design Selection:**  
   *Note which display/housing design will be used in your prototype and the rationale for selection (e.g. size, simple interface, visibility).*
+  The first layout—centered display with symmetrical buttons below and rotary dial on the top edge—was selected for prototype. This design balances symmetry for easy ambidextrous use and places controls where thumbs naturally rest while holding the device. The dial's top-center placement provides intuitive adjustment with minimal hand movement. The size and positioning also ensure the screen is clearly visible during play.
 
 - **Cardboard Prototype:**  
   *Include photos or video documenting your prototype. Paste link, image, or video embed here.*
