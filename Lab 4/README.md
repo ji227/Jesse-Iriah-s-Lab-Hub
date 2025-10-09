@@ -111,7 +111,7 @@ This project explores physical user interfaces on the Raspberry Pi, focusing on 
 - **Sketches:**  
 	![Interactive Devices-23](https://github.com/user-attachments/assets/1b06e81c-b99a-4a97-9f11-be572ccb34b5)
 
-- **Reflection: What are some things these sketches raise as questions? What do you need to physically prototype to understand how to anwer those questions?**  
+- **Reflection - What are some things these sketches raise as questions? What do you need to physically prototype to understand how to anwer those questions?**  
   The five sketches explore various physical forms for the game controller interface: a classic Gameboy, a PSP-like handheld, an arcade machine, a laptop keyboard layout, and a video game controller. These different formats raise design questions related to ergonomics, button placement, user comfort, and control intuitiveness. For example, the portability of the Gameboy contrasts with the immersive feel of an arcade machine setup. The sketches also highlight challenges in balancing screen visibility, control accessibility, and housing size.
   Key questions for prototyping include how button size and spacing affect rapid jump/duck input, the dial placement’s ease of use for volume control, and how different device shapes accommodate sustained gameplay without fatigue.
   Physical prototypes are needed to test button spacing, size, and placement relative to hand reach and movement. Also, the dialing mechanism for volume control requires testing for tactile feedback and ease of adjustment.  
