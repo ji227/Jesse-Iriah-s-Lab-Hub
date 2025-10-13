@@ -1,5 +1,5 @@
 """
-Simple Raspberry Pi OLED display script for Waveshare 2.23" OLED HAT (128x32 pixels).
+Setup Raspberry Pi OLED display script for Waveshare 2.23" OLED HAT (128x32 pixels).
 
 Key info for development:
 - Screen dimensions: 50 mm (width) × 12.5 mm (height) based on pixel pitch 0.41 mm × 0.39 mm and resolution 128×32 pixels.
