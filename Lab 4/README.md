@@ -156,7 +156,6 @@ This project explores physical user interfaces on the Raspberry Pi, focusing on 
 
   - Final layout sketch:  
     - Description: *The sketch below shows the fixed physical arrangement of components: The **OLED Display** is centered at the top. The **Raspberry Pi** is mounted upside down to route the USB-C power cable out the top-right corner. The rotary encoder is on the bottom-left, and the joystick is on the bottom-right. The I2C SHIM's role as the connection point is highlighted.*
-	![Interactive Devices-28](https://github.com/user-attachments/assets/0b0e5342-9a9e-4d17-8bef-cb3b0161a3cd)
 	 <img src="https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%204/Deliverables/partD_prototypeSketch.jpg?raw=true" width="350" alt="Pi and OLED Assembly Measurements" />  
   - Cardboard prototype:
     
