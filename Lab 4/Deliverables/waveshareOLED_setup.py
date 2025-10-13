@@ -13,11 +13,8 @@ Key info for development:
 - Font size 10 fits about 4 lines of text vertically.
 - Flip or rotate the image with Pillow if needed (e.g., image.rotate(180)).
 
-Dependencies to install in your Python environment (virtualenv recommended):
+Dependencies to install in your Python environment (virtualenv):
   pip install adafruit-circuitpython-ssd1305 adafruit-blinka pillow
-
-You may need to run this also if running outside a venv:
-  sudo apt-get install libopenjp2-7 libopenjp2-7-dev libjpeg-dev
 """
 
 
