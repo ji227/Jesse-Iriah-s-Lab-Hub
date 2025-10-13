@@ -150,15 +150,14 @@ This project explores physical user interfaces on the Raspberry Pi, focusing on 
   The final design incorporates a **Waveshare 2.23-inch OLED Hat** and replaces the capacitive buttons with the **Rotary Encoder** and **Joystick** for a robust, dedicated control interface.
   - Component update & connectivity: The final configuration utilizes the **Waveshare 2.23-inch OLED Hat** (wide screen), which mounts directly onto the Raspberry Pi's **40 GPIO pins**. An **I2C SHIM** is physically sandwiched between the display and the Pi to provide accessible I2C connections for the external **Rotary Encoder** and **Joystick**. All three components (Display, Encoder, Joystick) communicate using the I2C protocol.
   - Component measurements (approximate):
-    ![Interactive Devices-27](https://github.com/user-attachments/assets/1e4eb815-014c-4440-99d4-6f1c177d4de7)
-	![Interactive Devices-26](https://github.com/user-attachments/assets/91eb6acb-9f66-41da-866d-0f2c73e9444d)
-	![Interactive Devices-25](https://github.com/user-attachments/assets/72f47a4b-56ef-49e0-97cd-a13b494f3b95)
-
-  - Final layout sketch:
-    	*The sketch below shows the fixed physical arrangement of components: The **OLED Display** is centered at the top. The **Raspberry Pi** is mounted upside down to route the USB-C power cable out the top-right corner. The rotary encoder is on the bottom-left, and the joystick is on the bottom-right. The I2C SHIM's role as the connection point is highlighted.*
----![Interactive Devices-28](https://github.com/user-attachments/assets/0b0e5342-9a9e-4d17-8bef-cb3b0161a3cd)
-
-
+	![Interactive Devices-27](https://github.com/user-attachments/assets/11cfca5f-0f0c-4a4c-9ac9-c6cfe319831f)
+	![Interactive Devices-26](https://github.com/user-attachments/assets/ceafecb4-7e58-4126-a0e6-1038c477d330)
+	![Interactive Devices-25](https://github.com/user-attachments/assets/1e19839b-9c59-480b-afa2-5dca0ba8f784)
+  - Final layout sketch:  
+    - Description: *The sketch below shows the fixed physical arrangement of components: The **OLED Display** is centered at the top. The **Raspberry Pi** is mounted upside down to route the USB-C power cable out the top-right corner. The rotary encoder is on the bottom-left, and the joystick is on the bottom-right. The I2C SHIM's role as the connection point is highlighted.*
+	![Interactive Devices-28](https://github.com/user-attachments/assets/0b0e5342-9a9e-4d17-8bef-cb3b0161a3cd)
+  - Cardboard prototype:
+    
 ## Structure for Part 2 
 
 ### E. Multi-Device Demo
