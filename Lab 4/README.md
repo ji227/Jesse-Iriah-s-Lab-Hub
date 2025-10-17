@@ -181,17 +181,17 @@ stateDiagram-v2
 
     MENU: Qwiic Button LED OFF
 
-    MENU --> DINO_GAME: Game Selected (Encoder/Joystick/Button)
-    MENU --> MAZE_GAME: Game Selected (Encoder/Joystick/Button)
-
-    DINO_GAME: Qwiic Button LED ON
-    MAZE_GAME: Qwiic Button LED ON
-
-    DINO_GAME --> MENU: Encoder/Button Exit
-    MAZE_GAME --> MENU: Encoder/Button Exit
-
-    DINO_GAME --> [*]: User Quits
-    MAZE_GAME --> [*]: User Quits
+	MENU --> GEOMETRY_RUNNER: Game Selected (Encoder/Joystick/Button)
+	MENU --> MAZE_GAME: Game Selected (Encoder/Joystick/Button)
+	
+	GEOMETRY_RUNNER: Qwiic Button LED ON
+	MAZE_GAME: Qwiic Button LED ON
+	
+	GEOMETRY_RUNNER --> MENU: Encoder/Button Exit
+	MAZE_GAME --> MENU: Encoder/Button Exit
+	
+	GEOMETRY_RUNNER --> [*]: User Quits
+	MAZE_GAME --> [*]: User Quits
 ```
   
 - **Reflection:**  
