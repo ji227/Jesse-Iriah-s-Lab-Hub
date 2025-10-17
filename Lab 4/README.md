@@ -11,8 +11,7 @@ This project explores physical user interfaces on the Raspberry Pi, focusing on 
 
 ---
 
-## Part 1 Deliverables
-
+## Part 1
 ### A. Capacitive Sensing
 
 - **Setup:** Connected capacitive sensor to Pi using conductive materials from kit.
@@ -154,24 +153,55 @@ This project explores physical user interfaces on the Raspberry Pi, focusing on 
     <img src="https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%204/Deliverables/joystick_measurements.jpg?raw=true" width="250" alt="Joystick Measurements" />  
     <img src="https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%204/Deliverables/pi%2Bdisplay_measurements.jpg?raw=true" width="350" alt="Pi and OLED Assembly Measurements" />  
 
-  - Final layout sketch:  
-    - Description: *The sketch below shows the fixed physical arrangement of components: The **OLED Display** is centered at the top. The **Raspberry Pi** is placed upside down to route the USB-C power cable out the top-right corner. The rotary encoder is on the bottom-left, and the joystick is on the bottom-right. The I2C SHIM's role as the connection point is highlighted.*
-	 <img src="https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%204/Deliverables/partD_prototypeSketch.jpg?raw=true" width="350" alt="Pi and OLED Assembly Measurements" />
-
   - Cardboard prototype:
-    
-## Structure for Part 2 
-
+  	- Description: *The cardboard prototype represents the physical realization of the Gameboy-inspired design, allowing for ergonomic validation of the selected components. The final arrangement features the Waveshare 2.23-inch OLED Hat display centered at the top, mounted directly to the Raspberry Pi. The key interactive components, the Rotary Encoder (bottom-left) and the Joystick (bottom-right), are symmetrically placed for intuitive two-handed control, replacing the initial capacitive button concept. To manage the hardware connections, an I2C SHIM is sandwiched between the display and the Pi, providing I2C access for the external controls. This layout and construction allow for testing the grip comfort and the placement of controls relative to the user's natural hand position during play, effectively transitioning from the sketched concept to a physical model for validation.*  
+ 	<img src="https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%204/Deliverables/cardoardFrame.jpg?raw=true" width="350" alt="Pi and OLED Assembly Measurements" />
+	
+## Part 2
 ### E. Multi-Device Demo
+The multi-device prototype implements a handheld, retro-inspired game console prototype featuring two input devices and two output devices integrated via Raspberry Pi. Inputs include a **Qwiic Joystick** for directional control and button presses, and a **Rotary Encoder** for menu navigation and selection. Outputs consist of a **Waveshare 2.23" OLED Display HAT** delivering real-time monochrome visual feedback, and a **Qwiic Button** with an integrated green LED that acts as a state indicator during gameplay and turning off in menus.
+
+The design draws inspiration from classic 90s handheld gaming consoles, emphasizing functional placement for intuitive, comfortable control during play. It supports two geometry-themed games—a DINO-inspired runner and a Maze puzzle—each utilizing different control schemes while providing visually distinct feedback through the OLED screen and LED indicator. The overall system demonstrates a playful yet functional approach to chaining physical interfaces and outputs in a compact form factor.
 
 - **Demo Code & Video:**  
-  *To be added after completion.*
+  - *Code:* [geometry_game.py](https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%204/Deliverables/geometry_game.py)
+  - *Videos:*
+ 	 - Game 1 (Geometry Runner) Demo: https://drive.google.com/drive/folders/1k5EjLj52QXkYCU0cCGVUmvABz0LI8WAS
+ 	 - Game 2 (Maze) Demo: https://drive.google.com/drive/folders/1k5EjLj52QXkYCU0cCGVUmvABz0LI8WAS
 
-- **Interaction Diagram/Sketch:**  
-  *To be added after completion.*
+- **Interaction Diagram/Sketch:**
+- Comments: *The diagram below shows the fixed physical arrangement of components: The **OLED Display** is centered at the top. The **Raspberry Pi** is placed upside down to route the USB-C power cable out the top-right corner. The rotary encoder is on the bottom-left, and the joystick is on the bottom-right. The I2C SHIM's role as the connection point is highlighted.*
+ <img src="https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%204/Deliverables/partD_prototypeSketch.jpg?raw=true" width="350" alt="Pi and OLED Assembly Measurements" />
 
+- **State Machine Diagram:**
+- Comments: *The state machine diagram below illustrates the device's entire user flow, detailing transitions between the Menu and the two game states. It also explicitly tracks the status of the Qwiic Button LED as a visual indicator of whether a game is currently active.*
+```mermaid
+stateDiagram-v2
+    [*] --> MENU
+
+    MENU: Qwiic Button LED OFF
+
+    MENU --> DINO_GAME: Game Selected (Encoder/Joystick/Button)
+    MENU --> MAZE_GAME: Game Selected (Encoder/Joystick/Button)
+
+    DINO_GAME: Qwiic Button LED ON
+    MAZE_GAME: Qwiic Button LED ON
+
+    DINO_GAME --> MENU: Encoder/Button Exit
+    MAZE_GAME --> MENU: Encoder/Button Exit
+
+    DINO_GAME --> [*]: User Quits
+    MAZE_GAME --> [*]: User Quits
+```
+  
 - **Reflection:**  
-  *To be added after completion.*
+  *Multi-input/Multi-Output Chaining Reflection*  
+	- System Integration and Interface Chaining: Integrating multiple I2C/Qwiic and SPI devices (Joystick, Rotary Encoder, OLED display, Qwiic Button LED) significantly increased system interactivity beyond single-component operation. The compact handheld form factor was achieved by using an I2C SHIM to access the bus while the display HAT occupied the main GPIO header, demonstrating a practical solution for pin conflicts.
+	- New Types of Interaction (Multi-Input/Multi-Output): Combining the two inputs allows for multi-modal interaction where roles can be assigned by context. For instance, the Rotary Encoder is mapped to discrete menu selection, leveraging its precision and detents, while the Joystick is reserved for continuous positional or velocity control within a game. The Qwiic Button LED provides a new, non-visual feedback channel that augments the OLED display by providing unambiguous state indication ("active gameplay").
+	- Device Role and Arrangement Effects:
+		- Physical Arrangement: The symmetrical placement of the Rotary Encoder and Joystick on the cardboard chassis was validated for improved grip comfort and two-handed control. The "upside-down Pi" setup was a functional arrangement decision made specifically to manage power cable routing and maintain primary interaction space.
+		- Swapping Primary/Secondary: Observing the system behavior highlighted that the Joystick naturally serves as the primary input for directional game control, while the Encoder's push-button function is highly effective as a dedicated secondary input (e.g., a rapid "back to menu" command), confirming component suitability for specific tasks.
+	- Challenges and Constraints: The primary challenge was the strict 128x32 display resolution, which severely constrained the visual complexity of both the Geometry Runner and Maze Game. Furthermore, verifying input and output response times across the chained I2C and SPI buses required careful testing to ensure fluid gameplay.
 
 ---
 
@@ -186,8 +216,8 @@ This project explores physical user interfaces on the Raspberry Pi, focusing on 
 ---
 
 ## Additional Notes
-
+The final prototype required the use of the Waveshare 2.23-inch OLED Hat as the main display, as it was a component sourced outside of the provided kit. Documentation for this specific component can be found here: https://www.waveshare.com/wiki/2.23inch_OLED_HAT
 
 ---
 
-ons or if you want an example of how to embed media using markdown tags!
+
