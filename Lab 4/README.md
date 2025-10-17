@@ -156,7 +156,8 @@ This project explores physical user interfaces on the Raspberry Pi, focusing on 
   - Cardboard prototype:
   	- Description: *The cardboard prototype represents the physical realization of the Gameboy-inspired design, allowing for ergonomic validation of the selected components. The final arrangement features the Waveshare 2.23-inch OLED Hat display centered at the top, mounted directly to the Raspberry Pi. The key interactive components, the Rotary Encoder (bottom-left) and the Joystick (bottom-right), are symmetrically placed for intuitive two-handed control, replacing the initial capacitive button concept. To manage the hardware connections, an I2C SHIM is sandwiched between the display and the Pi, providing I2C access for the external controls. This layout and construction allow for testing the grip comfort and the placement of controls relative to the user's natural hand position during play, effectively transitioning from the sketched concept to a physical model for validation.*   
  		<img src="https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%204/Deliverables/cardoardFrame.jpg?raw=true" width="350" alt="Pi and OLED Assembly Measurements" />
-	
+
+
 ## Part 2
 ### E. Multi-Device Demo
 The multi-device prototype implements a handheld, retro-inspired game console prototype featuring two input devices and two output devices integrated via Raspberry Pi. Inputs include a **Qwiic Joystick** for directional control and button presses, and a **Rotary Encoder** for menu navigation and selection. Outputs consist of a **Waveshare 2.23" OLED Display HAT** delivering real-time monochrome visual feedback, and a **Qwiic Button** with an integrated green LED that acts as a state indicator during gameplay and turning off in menus.
@@ -177,21 +178,21 @@ The design draws inspiration from classic 90s handheld gaming consoles, emphasiz
 - Comments: *The state machine diagram below illustrates the device's entire user flow, detailing transitions between the Menu and the two game states. It also explicitly tracks the status of the Qwiic Button LED as a visual indicator of whether a game is currently active.*
 ```mermaid
 stateDiagram-v2
-    [*] --> MENU
+[*] --> MENU
 
-    MENU: Qwiic Button LED OFF
+MENU: Qwiic Button LED OFF
 
-	MENU --> GEOMETRY_RUNNER: Game Selected (Encoder/Joystick/Button)
-	MENU --> MAZE_GAME: Game Selected (Encoder/Joystick/Button)
-	
-	GEOMETRY_RUNNER: Qwiic Button LED ON
-	MAZE_GAME: Qwiic Button LED ON
-	
-	GEOMETRY_RUNNER --> MENU: Encoder/Button Exit
-	MAZE_GAME --> MENU: Encoder/Button Exit
-	
-	GEOMETRY_RUNNER --> [*]: User Quits
-	MAZE_GAME --> [*]: User Quits
+MENU --> GEOMETRY_RUNNER: Game Selected (Encoder/Joystick/Button)
+MENU --> MAZE_GAME: Game Selected (Encoder/Joystick/Button)
+
+GEOMETRY_RUNNER: Qwiic Button LED ON
+MAZE_GAME: Qwiic Button LED ON
+
+GEOMETRY_RUNNER --> MENU: Encoder/Button Exit
+MAZE_GAME --> MENU: Encoder/Button Exit
+
+GEOMETRY_RUNNER --> [*]: User Quits
+MAZE_GAME --> [*]: User Quits
 ```
   
 - **Reflection:**  
