@@ -185,7 +185,7 @@ stateDiagram-v2
     state "MENU" as MENU
     state "GAME_ACTIVE" as GAME_ACTIVE
 
-    MENU --> GAME_ACTIVE: Game Selected (Dino / Maze), LED On
+    MENU --> GAME_ACTIVE: Game Selected (Runner / Maze), LED On
     GAME_ACTIVE --> MENU: Encoder/Button Exit or Game Over/Win, LED Off
 ```
   
