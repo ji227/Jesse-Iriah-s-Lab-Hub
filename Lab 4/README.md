@@ -183,14 +183,17 @@ stateDiagram-v2
 
     MENU: Qwiic Button LED OFF
 
-    MENU --> GEOMETRY_RUNNER: Game selected (Encoder/Joystick/Button)
-    MENU --> MAZE_GAME: Game selected (Encoder/Joystick/Button)
+    MENU --> GAME_PLAY
 
-    GEOMETRY_RUNNER: Qwiic Button LED ON
-    MAZE_GAME: Qwiic Button LED ON
+    state GAME_PLAY {
+        GEOMETRY_RUNNER
+        MAZE_GAME
+    }
 
-    GEOMETRY_RUNNER --> MENU: Encoder/Button exit
-    MAZE_GAME --> MENU: Encoder/Button exit
+    GAME_PLAY: Qwiic Button LED ON
+
+    GEOMETRY_RUNNER --> MENU: Encoder/Button Exit
+    MAZE_GAME --> MENU: Encoder/Button Exit
 
     GEOMETRY_RUNNER --> [*]: User quits
     MAZE_GAME --> [*]: User quits
@@ -222,6 +225,7 @@ The system operates as a multi-input/multi-output demonstrator. It utilizes the 
 User interaction begins at the MENU state, where the Qwiic LED is OFF. The user rotates the Encoder or uses the Joystick's vertical axis to cycle between the Geometry Runner and Maze Game options. Pressing the Encoder's push-button or the Joystick's integrated button selects the game and initiates the transition. Upon entering a game state, the Qwiic LED turns ON, providing immediate visual confirmation that gameplay is active. Within a game, the Joystick provides the primary input (e.g., jump/duck in Runner, movement in Maze). To exit any game and return to the MENU, the user presses the Encoder's push-button, and the LED instantly switches OFF, confirming the system state change. This flow demonstrates clear, multi-modal feedback essential for an interactive physical device.
 
 
+**DEMO Snippets**
 https://github.com/user-attachments/assets/3e2bab7a-8910-4e71-be9f-d66a5547499a
 
 https://github.com/user-attachments/assets/232e628e-fd51-44e7-aedc-f7ceede9e64b
