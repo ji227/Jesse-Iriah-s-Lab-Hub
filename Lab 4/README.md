@@ -172,7 +172,7 @@ The design draws inspiration from classic 90s handheld gaming consoles, emphasiz
 
 - **Interaction Diagram/Sketch:**
 - Comments: *The diagram below shows the fixed physical arrangement of components: The **OLED Display** is centered at the top. The **Raspberry Pi** is placed upside down to route the USB-C power cable out the top-right corner. The rotary encoder is on the bottom-left, and the joystick is on the bottom-right. The I2C SHIM's role as the connection point is highlighted.*
- 		<img src="https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%204/Deliverables/partD_prototypeSketch.jpg?raw=true" width="350" alt="Pi and OLED Assembly Measurements" />
+ 		<img src="https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%204/Deliverables/prototypeSketch_part2.jpg?raw=true" width="350" alt="Pi and OLED Assembly Measurements" />
 
 - **State Machine Diagram:**
 - Comments: *The state machine diagram below illustrates the device's entire user flow, detailing transitions between the Menu and the two game states.*
@@ -216,7 +216,11 @@ User interaction begins at the MENU state, where the Qwiic LED is OFF. The user 
 
 
 **DEMO Snippets**
-https://github.com/user-attachments/assets/3e2bab7a-8910-4e71-be9f-d66a5547499a
+
+
+https://github.com/user-attachments/assets/4ce5b002-b887-4d37-bc54-04713a90b154
+
+
 
 https://github.com/user-attachments/assets/232e628e-fd51-44e7-aedc-f7ceede9e64b
 
