@@ -179,21 +179,21 @@ The design draws inspiration from classic 90s handheld gaming consoles, emphasiz
 
 ```mermaid
 stateDiagram-v2
-[*] --> MENU
+	[*] --> MENU
 
-MENU: Qwiic Button LED OFF
+    MENU: Qwiic Button LED OFF
 
-MENU --> GEOMETRY_RUNNER: Game Selected (Encoder/Joystick/Button)
-MENU --> MAZE_GAME: Game Selected (Encoder/Joystick/Button)
+    MENU --> GEOMETRY_RUNNER: Game selected (Encoder/Joystick/Button)
+    MENU --> MAZE_GAME: Game selected (Encoder/Joystick/Button)
 
-GEOMETRY_RUNNER: Qwiic Button LED ON
-MAZE_GAME: Qwiic Button LED ON
+    GEOMETRY_RUNNER: Qwiic Button LED ON
+    MAZE_GAME: Qwiic Button LED ON
 
-GEOMETRY_RUNNER --> MENU: Encoder/Button Exit
-MAZE_GAME --> MENU: Encoder/Button Exit
+    GEOMETRY_RUNNER --> MENU: Encoder/Button exit
+    MAZE_GAME --> MENU: Encoder/Button exit
 
-GEOMETRY_RUNNER --> [*]: User Quits
-MAZE_GAME --> [*]: User Quits
+    GEOMETRY_RUNNER --> [*]: User quits
+    MAZE_GAME --> [*]: User quits
 ```
   
 - **Reflection:**  
@@ -205,19 +205,34 @@ MAZE_GAME --> [*]: User Quits
 		- Swapping Primary/Secondary: Observing the system behavior highlighted that the Joystick naturally serves as the primary input for directional game control, while the Encoder's push-button function is highly effective as a dedicated secondary input (e.g., a rapid "back to menu" command), confirming component suitability for specific tasks.
 	- Challenges and Constraints: The primary challenge was the strict 128x32 display resolution, which severely constrained the visual complexity of both the Geometry Runner and Maze Game. Furthermore, verifying input and output response times across the chained I2C and SPI buses required careful testing to ensure fluid gameplay.
 
+- **Feedback:**
+The prototype was demonstrated to Angela and Iqra, who offered feedback on potential enhancements and future directions. Both noted that adding sound output or haptic feedback could further highlight key gameplay moments, such as successful movements or collisions. The system could be expanded to include multiple lights or colors for distinguishing between different games or states, enhancing visual feedback. A suggestion was made to integrate player customization options, such as selecting sprite shapes or LED colors, to increase engagement. Overall, the handheld form factor and control layout were considered intuitive, but further sensory feedback modes and personalization features would create a richer user experience.
+  
 ---
 
 ### F. Final Documentation
 
-- **Photos/Videos of Final Prototype:**  
-  *To be added after completion.*
+**Looks Like (Aesthetics and Form Factor)**
+The final prototype adopts a simple, two-handed handheld console form factor, adhering to the Gameboy-inspired sketches. The chassis uses rigid cardboard and masking tape to achieve a fixed, compact enclosure suitable for ergonomic testing. The Waveshare 2.23-inch OLED Display HAT is centrally positioned at the top for optimal screen visibility. The Rotary Encoder and Qwiic Joystick are mounted symmetrically below the display—Encoder on the left, Joystick on the right—to accommodate two-handed control. The separate Qwiic Button LED module is visible at the top edge and acts as the system status indicator. The Raspberry Pi is internally oriented to route the power supply cable away from the grip area, confirming the physical design decisions made during the iteration process.
 
-- **Summary & Reflection:**  
-  *To be added after completion.*
+**Works Like (Functionality and Technical Implementation)**
+The system operates as a multi-input/multi-output demonstrator. It utilizes the Joystick for analog directional input and a selection button, and the Rotary Encoder for discrete value changes (menu item selection) and a secondary 'back' button press. The outputs include the 128x32 pixel monochrome display for all visual game feedback and menu rendering, and the integrated Qwiic Button LED for system state indication. The software implements a centralized state machine that controls the active game loop, manages all component inputs, and modulates the Qwiic LED output. The integration of the I2C SHIM successfully facilitated the simultaneous use of the display, Encoder, and Joystick.
+
+**Acts Like (Interaction and User Flow)**
+User interaction begins at the MENU state, where the Qwiic LED is OFF. The user rotates the Encoder or uses the Joystick's vertical axis to cycle between the Geometry Runner and Maze Game options. Pressing the Encoder's push-button or the Joystick's integrated button selects the game and initiates the transition. Upon entering a game state, the Qwiic LED turns ON, providing immediate visual confirmation that gameplay is active. Within a game, the Joystick provides the primary input (e.g., jump/duck in Runner, movement in Maze). To exit any game and return to the MENU, the user presses the Encoder's push-button, and the LED instantly switches OFF, confirming the system state change. This flow demonstrates clear, multi-modal feedback essential for an interactive physical device.
+
+
+https://github.com/user-attachments/assets/3e2bab7a-8910-4e71-be9f-d66a5547499a
+
+https://github.com/user-attachments/assets/232e628e-fd51-44e7-aedc-f7ceede9e64b
+
 
 ---
 
 ## Additional Notes
+
+
+
 The final prototype required the use of the Waveshare 2.23-inch OLED Hat as the main display, as it was a component sourced outside of the provided kit. Documentation for this specific component can be found here: https://www.waveshare.com/wiki/2.23inch_OLED_HAT
 
 ---
