@@ -225,6 +225,8 @@ https://github.com/user-attachments/assets/4ce5b002-b887-4d37-bc54-04713a90b154
 https://github.com/user-attachments/assets/232e628e-fd51-44e7-aedc-f7ceede9e64b
 
 
+<img src="https://https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%204/Deliverables/workingPrototype.jpeg?raw=true" width="350" alt="Pi and OLED Assembly Measurements" />
+
 ---
 
 ## Additional Notes
