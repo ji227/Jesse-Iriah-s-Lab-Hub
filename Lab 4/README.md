@@ -178,17 +178,21 @@ The design draws inspiration from classic 90s handheld gaming consoles, emphasiz
 - Comments: *The state machine diagram below illustrates the device's entire user flow, detailing transitions between the Menu and the two game states. It also explicitly tracks the status of the Qwiic Button LED as a visual indicator of whether a game is currently active.*
 
 ```mermaid
-stateDiagram-v2
-	[*] --> MENU
-    MENU --> GAME_PLAY
-    state GAME_PLAY {
-        [*] --> RUNNING
-        RUNNING --> PAUSED
-        PAUSED --> RUNNING
-        RUNNING --> GAME_OVER
-        GAME_OVER --> [*]
-    }
-    GAME_PLAY --> MENU
+[*] --> MENU
+
+MENU: Qwiic Button LED OFF
+
+MENU --> GEOMETRY_RUNNER: Game Selected (Encoder/Joystick/Button)
+MENU --> MAZE_GAME: Game Selected (Encoder/Joystick/Button)
+
+GEOMETRY_RUNNER: Qwiic Button LED ON
+MAZE_GAME: Qwiic Button LED ON
+
+GEOMETRY_RUNNER --> MENU: Encoder/Button Exit
+MAZE_GAME --> MENU: Encoder/Button Exit
+
+GEOMETRY_RUNNER --> [*]: User Quits
+MAZE_GAME --> [*]: User Quits
 ```
   
 - **Reflection:**  
