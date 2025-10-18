@@ -178,6 +178,7 @@ The design draws inspiration from classic 90s handheld gaming consoles, emphasiz
 - Comments: *The state machine diagram below illustrates the device's entire user flow, detailing transitions between the Menu and the two game states. It also explicitly tracks the status of the Qwiic Button LED as a visual indicator of whether a game is currently active.*
 
 ```mermaid
+stateDiagram-v2
 [*] --> MENU
 
 MENU: Qwiic Button LED OFF
