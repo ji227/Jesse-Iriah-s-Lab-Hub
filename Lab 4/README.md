@@ -182,14 +182,12 @@ stateDiagram-v2
 
 	[*] --> MENU
 	
-	MENU: Qwiic Button LED OFF
-	
-	MENU --> GAME_ACTIVE: Game Selected (Dino / Maze)
-	
-	GAME_ACTIVE: Qwiic Button LED ON
-	
-	GAME_ACTIVE --> MENU: Encoder/Button Exit or Game Over/Win
-	GAME_ACTIVE --> [*]: User Quits
+	state "MENU\n(Qwiic Button LED OFF)" as MENU
+    state "GAME_ACTIVE\n(Qwiic Button LED ON)" as GAME_ACTIVE
+
+    MENU --> GAME_ACTIVE: Game Selected (Dino / Maze)
+    GAME_ACTIVE --> MENU: Encoder/Button Exit or Game Over/Win
+    GAME_ACTIVE --> [*]: User Quits
 ```
   
 - **Reflection:**  
