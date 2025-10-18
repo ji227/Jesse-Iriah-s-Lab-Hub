@@ -175,15 +175,15 @@ The design draws inspiration from classic 90s handheld gaming consoles, emphasiz
  		<img src="https://github.com/ji227/Jesse-Iriah-s-Lab-Hub/blob/Fall2025/Lab%204/Deliverables/partD_prototypeSketch.jpg?raw=true" width="350" alt="Pi and OLED Assembly Measurements" />
 
 - **State Machine Diagram:**
-- Comments: *The state machine diagram below illustrates the device's entire user flow, detailing transitions between the Menu and the two game states. It also explicitly tracks the status of the Qwiic Button LED as a visual indicator of whether a game is currently active.*
+- Comments: *The state machine diagram below illustrates the device's entire user flow, detailing transitions between the Menu and the two game states.*
 
 ```mermaid
 stateDiagram-v2
 
 	[*] --> MENU
 	
-	state "MENU\n(Qwiic Button LED OFF)" as MENU
-    state "GAME_ACTIVE\n(Qwiic Button LED ON)" as GAME_ACTIVE
+	state "MENU" as MENU
+    state "GAME_ACTIVE" as GAME_ACTIVE
 
     MENU --> GAME_ACTIVE: Game Selected (Dino / Maze)
     GAME_ACTIVE --> MENU: Encoder/Button Exit or Game Over/Win
