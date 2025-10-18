@@ -186,14 +186,16 @@ MENU: Qwiic Button LED OFF
 MENU --> GEOMETRY_RUNNER: Game Selected (Encoder/Joystick/Button)
 MENU --> MAZE_GAME: Game Selected (Encoder/Joystick/Button)
 
-GEOMETRY_RUNNER: Qwiic Button LED ON
-MAZE_GAME: Qwiic Button LED ON
-
-GEOMETRY_RUNNER --> MENU: Encoder/Button Exit
-MAZE_GAME --> MENU: Encoder/Button Exit
-
-GEOMETRY_RUNNER --> [*]: User Quits
-MAZE_GAME --> [*]: User Quits
+state GEOMETRY_RUNNER {
+    GEOMETRY_RUNNER: Qwiic Button LED ON
+    GEOMETRY_RUNNER --> MENU: Encoder/Button Exit
+    GEOMETRY_RUNNER --> [*]: User Quits
+}
+state MAZE_GAME {
+    MAZE_GAME: Qwiic Button LED ON
+    MAZE_GAME --> MENU: Encoder/Button Exit
+    MAZE_GAME --> [*]: User Quits
+}
 ```
   
 - **Reflection:**  
