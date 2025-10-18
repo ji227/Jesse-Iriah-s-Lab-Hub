@@ -180,23 +180,15 @@ The design draws inspiration from classic 90s handheld gaming consoles, emphasiz
 ```mermaid
 stateDiagram-v2
 	[*] --> MENU
-
-    MENU: Qwiic Button LED OFF
-
     MENU --> GAME_PLAY
-
     state GAME_PLAY {
-        GEOMETRY_RUNNER
-        MAZE_GAME
+        [*] --> RUNNING
+        RUNNING --> PAUSED
+        PAUSED --> RUNNING
+        RUNNING --> GAME_OVER
+        GAME_OVER --> [*]
     }
-
-    GAME_PLAY: Qwiic Button LED ON
-
-    GEOMETRY_RUNNER --> MENU: Encoder/Button Exit
-    MAZE_GAME --> MENU: Encoder/Button Exit
-
-    GEOMETRY_RUNNER --> [*]: User quits
-    MAZE_GAME --> [*]: User quits
+    GAME_PLAY --> MENU
 ```
   
 - **Reflection:**  
