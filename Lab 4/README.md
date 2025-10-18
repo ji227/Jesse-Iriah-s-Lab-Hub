@@ -187,9 +187,6 @@ stateDiagram-v2
 
     MENU --> GAME_ACTIVE: Game Selected (Dino / Maze)
     GAME_ACTIVE --> MENU: Encoder/Button Exit or Game Over/Win
-
-    MENU --> [*]: User Quits
-    GAME_ACTIVE --> [*]: User Quits
 ```
   
 - **Reflection:**  
