@@ -117,21 +117,20 @@ Tested MediaPipe's hand pose detection system which tracks 21 landmarks on the h
 | **Quiet Coyote** (Discrete) | Thumb, index, and pinky extended; middle and ring fingers down | Instant jump to preset value (triggers "quiet coyote!" message) | ![Quiet Coyote](Deliverables/handPoseTracking/quietCoyote.png) |
 
 **Testing Results:**
-
-![Hand Gesture A](Deliverables/handPoseTracking/gesture1.png)
-*Open hand - all landmarks tracked, showing 30% value*
-
-![Hand Gesture B](Deliverables/handPoseTracking/gesture3.png)
-*Shaka sign- 5% value, good landmark visibility*
-
-![Hand Gesture C](Deliverables/handPoseTracking/gesture4.png)
-*ASML 'I love you' - 42% value, all fingertips clearly marked*
-
-![Pinch Detection](Deliverables/handPoseTracking/pinch.png)
-*Pinch gesture detected -   green indicator dot visible when thumb and index finger come close, showing 0% (fingers fully together)*
-
-![Quiet Coyote Detection](Deliverables/handPoseTracking/quietCoyote.png)
-*"Quiet Coyote" gesture recognized - text overlay appears when specific finger configuration is detected*
+    <img src="Deliverables/handPoseTracking/gesture1.png" width="200">  
+    *Open hand - all landmarks tracked, showing 30% value*
+    
+    <img src="Deliverables/handPoseTracking/gesture3.png" width="200">  
+    *Shaka sign- 5% value, good landmark visibility*
+    
+    <img src="Deliverables/handPoseTracking/gesture4.png" width="200">  
+    *ASML 'I love you' - 42% value, all fingertips clearly marked*
+    
+    <img src="Deliverables/handPoseTracking/pinch.png" width="200">  
+    *Pinch gesture detected -   green indicator dot visible when thumb and index finger come close, showing 0% (fingers fully together)*
+    
+    <img src="Deliverables/handPoseTracking/quietCoyote.png" width="200">  
+    *"Quiet Coyote" gesture recognized - text overlay appears when specific finger configuration is detected*
 
 **Key Observations:**
 
