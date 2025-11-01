@@ -61,23 +61,17 @@ This lab explores nteractive systems that sense and respond to real-world events
 | Digital Camera | "Polaroid camera" | 33-48% | Recognized as camera but wrong type |
 
 - **Media:**  
-![Coffee Mug Detection](Deliverables/pytorch_objectRecognition/mug.jpeg)
-*Coffee mug detected with moderate confidence*
+src="Deliverables/pytorch_objectRecognition/mug.jpeg" width="400"> Coffee mug detected with moderate confidence
 
-![iPhone as iPod](Deliverables/pytorch_objectRecognition/iphone.jpeg)
-*iPhone misclassified as iPod - common confusion for the model*
+<img src="Deliverables/pytorch_objectRecognition/iphone.jpeg" width="400"> iPhone misclassified as iPod - common confusion for the model
 
-![Fire Stick Remote](Deliverables/pytorch_objectRecognition/remote.jpeg)
-*Amazon Fire Stick remote detected with 90%+ confidence*
+<img src="Deliverables/pytorch_objectRecognition/remote.jpeg" width="400"> Amazon Fire Stick remote detected with 90%+ confidence
 
-![Green Apple as Granny Smith](Deliverables/pytorch_objectRecognition/apple.jpeg)
-*Green apple correctly identified as "Granny Smith" with 99% confidence*
+<img src="Deliverables/pytorch_objectRecognition/apple.jpeg" width="400"> Green apple correctly identified as "Granny Smith" with 99% confidence
 
-![Pen Detection](Deliverables/pytorch_objectRecognition/pen.jpeg)
-*Ballpoint pen detected with good confidence*
+<img src="Deliverables/pytorch_objectRecognition/pen.jpeg" width="400"> Ballpoint pen detected with good confidence
 
-![Camera Detection](Deliverables/pytorch_objectRecognition/camera.jpeg)
-*Digital camera recognized but classified as Polaroid*
+<img src="Deliverables/pytorch_objectRecognition/camera.jpeg" width="400"> Digital camera recognized but classified as Polaroid 
 
 **Key Observations:**
 - The model performs best with common, distinct objects (apple, remote)
