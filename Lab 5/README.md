@@ -116,6 +116,7 @@ Tested MediaPipe's hand pose detection system which tracks 21 landmarks on the h
 | **Pinch** (Continuous) | Thumb and index finger proximity | Percentage value (0-100%) based on finger distance | ![Pinch Gesture](Deliverables/handPoseTracking/pinch.png) |
 | **Quiet Coyote** (Discrete) | Thumb, index, and pinky extended; middle and ring fingers down | Instant jump to preset value (triggers "quiet coyote!" message) | ![Quiet Coyote](Deliverables/handPoseTracking/quietCoyote.png) |
 
+
 **Testing Results:**  
     <img src="Deliverables/handPoseTracking/gesture1.png" width="200">  
     *Open hand - all landmarks tracked, showing 30% value*  
