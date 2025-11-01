@@ -118,15 +118,15 @@ Tested MediaPipe's hand pose detection system which tracks 21 landmarks on the h
 
 **Testing Results:**  
     <img src="Deliverables/handPoseTracking/gesture1.png" width="200">  
-    *Open hand - all landmarks tracked, showing 30% value*
-    <img src="Deliverables/handPoseTracking/gesture3.png" width="200">  
-    *Shaka sign- 5% value, good landmark visibility*
-    <img src="Deliverables/handPoseTracking/gesture4.png" width="200">  
-    *ASML 'I love you' - 42% value, all fingertips clearly marked*
-    <img src="Deliverables/handPoseTracking/pinch.png" width="200">  
-    *Pinch gesture detected -   green indicator dot visible when thumb and index finger come close, showing 0% (fingers fully together)*
-    <img src="Deliverables/handPoseTracking/quietCoyote.png" width="200">  
-    *"Quiet Coyote" gesture recognized - text overlay appears when specific finger configuration is detected*
+    *Open hand - all landmarks tracked, showing 30% value*  
+    <img src="Deliverables/handPoseTracking/gesture3.png" width="200">    
+    *Shaka sign- 5% value, good landmark visibility*  
+    <img src="Deliverables/handPoseTracking/gesture4.png" width="200">    
+    *ASML 'I love you' - 42% value, all fingertips clearly marked*  
+    <img src="Deliverables/handPoseTracking/pinch.png" width="200">    
+    *Pinch gesture detected -   green indicator dot visible when thumb and index finger come close, showing 0% (fingers fully together)*  
+    <img src="Deliverables/handPoseTracking/quietCoyote.png" width="200">    
+    *"Quiet Coyote" gesture recognized - text overlay appears when specific finger configuration is detected*  
 
 **Key Observations:**
 
