@@ -61,27 +61,27 @@ This lab explores nteractive systems that sense and respond to real-world events
 | Digital Camera | "Polaroid camera" | 33-48% | Recognized as camera but wrong type |
 
 - **Media:**  
-    <img src="Deliverables/pytorch_objectRecognition/mug.jpeg" width="300">
+    <img src="Deliverables/objectRecognition/mug.jpeg" width="300">
     
     *Coffee mug detected with moderate confidence*
     
-    <img src="Deliverables/pytorch_objectRecognition/iphone.jpeg" width="300">
+    <img src="Deliverables/objectRecognition/iphone.jpeg" width="300">
     
     *iPhone misclassified as iPod - common confusion for the model*
     
-    <img src="Deliverables/pytorch_objectRecognition/remote.jpeg" width="300"> 
+    <img src="Deliverables/objectRecognition/remote.jpeg" width="300"> 
     
     *Amazon Fire Stick remote detected with 90%+ confidence*
     
-    <img src="Deliverables/pytorch_objectRecognition/apple.jpeg" width="300">
+    <img src="Deliverables/objectRecognition/apple.jpeg" width="300">
     
     *Green apple correctly identified as "Granny Smith" with 99% confidence*
     
-    <img src="Deliverables/pytorch_objectRecognition/pen.jpeg" width="300">
+    <img src="Deliverables/objectRecognition/pen.jpeg" width="300">
     
     *Ballpoint pen detected with good confidence*
     
-    <img src="Deliverables/pytorch_objectRecognition/camera.jpeg" width="300">
+    <img src="Deliverables/objectRecognition/camera.jpeg" width="300">
     
     *Digital camera recognized but classified as Polaroid*
 
@@ -101,11 +101,76 @@ This lab explores nteractive systems that sense and respond to real-world events
 
 ### MediaPipe Hand Pose Tracking
 
-- **What you did:**  
-  *Summary of hand pose script, gestures detected, feedback, pros/cons with your setup.*
+**Overview:**  
+Tested MediaPipe's hand pose detection system which tracks 21 landmarks on the hand in real-time and translates gestures into control signals.
 
-- **Screenshots or Video:**  
-  ![Hand Pose Screenshot](path/to/photo.jpg)
+**Performance Metrics:**
+- **FPS:** 8-11 frames per second (slower than PyTorch)
+- **Tracking:** 21 hand landmarks with 3D coordinates
+- **Gestures Implemented:** Pinching (continuous control) and "Quiet Coyote" (discrete control)
+
+**Gesture Control Mechanisms:**
+
+| Gesture Type | Description | Control Output | Screenshot |
+|--------------|-------------|----------------|------------|
+| **Pinch** (Continuous) | Thumb and index finger proximity | Percentage value (0-100%) based on finger distance | ![Pinch Gesture](Deliverables/handPoseTracking/pinch.png) |
+| **Quiet Coyote** (Discrete) | Thumb, index, and pinky extended; middle and ring fingers down | Instant jump to preset value (triggers "quiet coyote!" message) | ![Quiet Coyote](Deliverables/handPoseTracking/quietCoyote.png) |
+
+**Testing Results:**
+
+![Hand Gesture A](Deliverables/handPoseTracking/gesture1.png)
+*Open hand - all landmarks tracked, showing 30% value*
+
+![Hand Gesture B](Deliverables/handPoseTracking/gesture3.png)
+*Shaka sign- 5% value, good landmark visibility*
+
+![Hand Gesture C](Deliverables/handPoseTracking/gesture4.png)
+*ASML 'I love you' - 42% value, all fingertips clearly marked*
+
+![Pinch Detection](Deliverables/handPoseTracking/pinch.png)
+*Pinch gesture detected -   green indicator dot visible when thumb and index finger come close, showing 0% (fingers fully together)*
+
+![Quiet Coyote Detection](Deliverables/handPoseTracking/quietCoyote.png)
+*"Quiet Coyote" gesture recognized - text overlay appears when specific finger configuration is detected*
+
+**Key Observations:**
+
+**Strengths:**
+- Excellent landmark tracking when hand is steady
+- Accurately identifies all 21 hand points even with complex finger positions
+- Successfully differentiates between different gesture types
+- Provides visual feedback (percentage values, gesture labels)
+- Works with various hand orientations and positions
+
+**Limitations:**
+- **Slow performance:** 8-11 FPS makes interactions feel laggy
+- **Motion sensitivity:** Significant lag when hand moves quickly
+- **Tracking loss:** Struggles to maintain tracking with rapid hand movements
+- **Lighting dependent:** Works best in good, even lighting conditions
+- **Frame edge issues:** Can lose tracking if hand moves to edge of camera view
+- **Distance sensitivity:** Best tracking at 1-2 feet from camera
+
+**Interaction Design Implications:**
+
+The position-based approach in MediaPipe offers interesting possibilities for UI control:
+- **Volume/brightness control** via pinch distance (continuous adjustment)
+- **Menu navigation** using finger positions and orientations  
+- **Gesture shortcuts** like "Quiet Coyote" for instant actions (pause, reset, etc.)
+- **Multi-finger counting** for discrete selection (1-5 fingers up)
+
+This could be integrated with physical UI elements from Lab 4:
+- Control servo motor angle via hand rotation
+- Adjust rotary encoder values using pinch distance
+- Trigger button presses with specific gestures
+
+However, the 8-11 FPS performance limits real-time responsiveness. This system would work better for:
+- **Deliberate, slow gestures** rather than quick hand movements
+- **Periodic sampling** (every few seconds) rather than continuous control
+- **Gesture-triggered events** rather than real-time proportional control
+
+**Code Used:**  
+`hand_pose.py` - MediaPipe Hands solution with custom gesture recognition logic
+
 
 ---
 
