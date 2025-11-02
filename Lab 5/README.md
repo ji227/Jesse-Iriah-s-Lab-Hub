@@ -14,7 +14,9 @@ N/A
 
 ## Project Overview
 
-This lab explores nteractive systems that sense and respond to real-world events using a Raspberry Pi 4. The lab focuses on experimenting with various machine learning models for object recognition, gesture detection, and custom classification to build observant systems that can monitor and respond to environmental changes.
+This lab explores interactive systems that sense and respond to real-world events using a Raspberry Pi 4. The lab focuses on experimenting with various machine learning models for object recognition, gesture detection, and custom classification to build observant systems that can monitor and respond to environmental changes.
+
+**All code, models, and media referenced in this document can be found in the [`Deliverables`](Deliverables/) folder.**
 
 ---
 
@@ -165,19 +167,83 @@ However, the 8-11 FPS performance limits real-time responsiveness. This system w
 - **Gesture-triggered events** rather than real-time proportional control
 
 **Code Used:**  
-`hand_pose.py` - MediaPipe Hands solution with custom gesture recognition logic
+`hand_pose.py` - MediaPipe Hands solution with gesture recognition logic
 
 
 ---
 
 ### Teachable Machines
 
-- **What you did:**  
-  *Summary of training and deploying a custom classifier. Describe how you got your model on the Pi and ran tml_example.py. Compare performance.*
+**Overview:**  
+Trained two custom TensorFlow Lite models: a 9-class hand gesture model (3,653 samples) for directional controls and counting, and a 6-class color model (1,101 samples) for object identification.
 
-- **Screenshots or Video:**  
-  ![Teachable Machines Example](path/to/photo.jpg)  
-  [![Watch Demo](path/to/thumb.jpg)](link-to-video)
+**Models Trained:**
+
+| Model | Classes | Training Samples |
+|-------|---------|-----------------|
+| **Gestures** | Background, Palm, 1/2/3 Fingers, Point Up/Down/Left/Right | 267-570 per class, varied angles/distances |
+| **Colors** | Red, Green, Blue, Yellow, Black, White | 82-357 per class |
+
+![Gesture Training](Deliverables/teachableMachines/previewTesting/gesture_training_overview.png) ![Color Training](Deliverables/teachableMachines/previewTesting/color_training_overview.png)
+
+---
+
+**Testing Results:**
+
+**Browser Preview (Training Environment):** 
+- 95-100% confidence across all classes
+- Minor expected fluctuation between similar classes
+- Fast, responsive predictions
+
+![Browser Success](Deliverables/teachableMachines/previewTesting/gesture_palm.png) ![Browser Color](Deliverables/teachableMachines/previewTesting/color_black.png)
+
+**Raspberry Pi Deployment:** 
+
+*Color Model Issues:*
+- Heavy bias toward RED/YELLOW (black misclassified 70% of time)
+- Only partial success with blue
+
+![Pi Color Failure](Deliverables/teachableMachines/pi_webcam_testing/color_black.png) ![Pi Color Mixed](Deliverables/teachableMachines/pi_webcam_testing/color_green.png)
+
+*Gesture Model Issues:*
+- Only PALM (99%), BACKGROUND (100%), THREE_FINGERS (99%) reliable
+- All pointing directions and 1-2 finger counting failed
+
+![Pi Gesture Success](Deliverables/teachableMachines/pi_webcam_testing/gesture_palm.png) ![Pi Gesture Failure](Deliverables/teachableMachines/pi_webcam_testing/gesture_pointLeft.png)
+
+---
+
+**Comparison:**
+
+| Model | FPS | Deployment | Performance |
+|-------|-----|------------|-------------|
+| PyTorch | ~13 | Direct frames | Good (60-99%) |
+| MediaPipe | 8-11 | Direct frames | Good |
+| Teachable Machines | ~10 | Frame save/load | Poor (bias issues) |
+
+------
+
+**Analysis:**
+
+The models performed well in browser preview (95-100% confidence) but failed significantly on Pi deployment despite identical camera, lighting, and location. The issue stems from different inference pipelines:
+```
+Browser:  Live webcam → Inference
+Pi:       Webcam → Save JPEG → Load → Inference
+```
+
+The intermediate save/load step likely introduced JPEG compression artifacts and color space conversion issues.
+
+**Teachable Machines Trade-offs:**
+- **Strengths:** Ultra-fast training (< 5 min), no coding required, visual interface, multiple export formats. This makes it suitable for rapid prototyping, browser apps, education etc.
+- **Weaknesses:** Black-box pipeline (hard to debug), environment-dependent, poor edge device deployment. This makes it a poor choice for when training is not the deployment environment
+
+---
+
+**Code & Models:**
+- Deployment scripts: [`tml_gestures.py`](Deliverables/teachableMachines/tml_gestures.py), [`tml_colors.py`](Deliverables/teachableMachines/tml_colors.py)
+- Gesture model: [`gestures_model.tflite`](Deliverables/teachableMachines/gestures_model/gestures_model.tflite), [`gestures_labels.txt`](Deliverables/teachableMachines/gestures_model/gestures_labels.txt)
+- Color model: [`colors_model.tflite`](Deliverables/teachableMachines/colors_model/colors_model.tflite), [`colors_labels.txt`](Deliverables/teachableMachines/colors_model/colors_labels.txt)
+
 
 ---
 
