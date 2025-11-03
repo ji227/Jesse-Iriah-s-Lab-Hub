@@ -232,10 +232,10 @@ Browser:  Live webcam → Inference
 Pi:       Webcam → Save JPEG → Load → Inference
 ```
 
-The intermediate save/load step likely introduced JPEG compression artifacts and color space conversion issues.
+The intermediate save/load step likely introduced jpeg compression artifacts and color space conversion issues.
 
 **Teachable Machines Trade-offs:**
-- **Strengths:** Ultra-fast training (< 5 min), no coding required, visual interface, multiple export formats. This makes it suitable for rapid prototyping, browser apps, education etc.
+- **Strengths:** Fast training (< 5 min), no coding required, visual interface, multiple export formats. This makes it suitable for rapid prototyping, browser apps, education etc.
 - **Weaknesses:** Black-box pipeline (hard to debug), environment-dependent, poor edge device deployment. This makes it a poor choice for when training is not the deployment environment
 
 ---
@@ -257,7 +257,7 @@ The intermediate save/load step likely introduced JPEG compression artifacts and
 **Why MediaPipe?**
 - Proven reliability on the Pi (8-11 FPS, good tracking accuracy from Part A testing)
 - Real-time landmark detection enables gesture recognition
-- More robust than Teachable Machines (which had deployment pipeline issues)
+- Stronger than Teachable Machines (which had deployment pipeline issues)
 - PyTorch limited to pre-trained object classes, couldn't detect custom gestures
 
 **System Overview:**
@@ -325,13 +325,13 @@ The PiTFT displays were designed for clear, immediate recognition:
 
 ### Testing Summary
 
-The Thumbs Feedback System was systematically tested across multiple scenarios to identify success cases, failure modes, and limitations. Testing revealed strong performance under optimal conditions but also uncovered specific environmental and usage constraints.
+The Thumbs Feedback System was tested across multiple scenarios to identify success cases, failure modes, and limitations. Testing revealed strong performance under optimal conditions but also uncovered specific environmental and usage constraints.
 
 **Success Cases - When It Works:**
 
 The system performs reliably when:
 - **Good lighting conditions** - Ambient room lighting or even directional spotlight (tested with flashlight behind camera)
-- **Proper distance** - 1-3 feet from camera; system surprisingly robust even at extended distances
+- **Proper distance** - 1-3 feet from camera; system is stable even at extended distances
 - **Steady hand position** - Gesture held for 1-2 seconds allows camera to focus and system to stabilize
 - **Clear hand visibility** - Full hand in frame with all fingers visible
 - **Single user or synchronized users** - One person, or multiple people making the same gesture
@@ -349,7 +349,7 @@ The system performs reliably when:
 | **Two Opposite Gestures (Thumbs Up/Thumbs Down)** | Rapid flickering between thumbs_down and neutral states | System processes hands sequentially; conflicting inputs create state oscillation | [Video](Deliverables/testingCharacterization/case_2handsOpposite.mp4) |
 | **Fast Movement** | 1-2 second delay before detection | Camera autofocus lag + frame processing latency compounds | [Video](Deliverables/testingCharacterization/case_tooFast.mp4) |
 
-**dge Cases:**
+**Edge Cases:**
 
 1. **Side Angle (45° rotation):** 
    - **Result:** Still detected correctly
@@ -389,11 +389,10 @@ The system performs reliably when:
 
 1. **Gloves or hand coverings** - May obscure landmarks or alter hand appearance
 2. **Skin tone variation in extreme lighting** - Very dark or very light skin against similar-colored backgrounds
-3. **Partial hand occlusion** (e.g., holding object) - Would fail landmark detection
-4. **Multiple users taking turns rapidly** - State would oscillate as hands enter/exit frame
+3. **Partial hand obstruction** (e.g., holding object) - Would fail landmark detection
+4. **Multiple users taking turns quickly** - State would oscillate as hands enter/exit frame
 5. **Shaky camera/moving Pi** - Motion blur could degrade landmark detection accuracy
 6. **Background with hand-like shapes** - Unlikely but could cause false detections
-7. **Children's smaller hands** - May be too small to detect at normal distances
 
 ### Design Improvements
 
@@ -430,7 +429,7 @@ The system performs reliably when:
 |------------|-----------|--------|---------------|
 | **False Negative** (gesture not detected) | Moderate (in suboptimal lighting) | Low - User simply repeats gesture | Minor inconvenience |
 | **False Positive** (wrong gesture detected) | Very rare (closed-fist requirement effective) | Low - Immediate PiTFT feedback alerts user | Quick correction |
-| **State Flickering** (rapid changes) | Rare (only with conflicting hands) | Medium - Mildly annoying, unclear which input counts | Remove secondary hand |
+| **State Flickering** (rapid changes) | Rare (only with conflicting hands) | Medium | Remove secondary hand |
 | **Complete Failure** (no detection) | Rare (only in darkness or extreme close-up) | Medium - No feedback confuses users | Adjust distance/lighting |
 
 **How Design Mitigates Errors:**
@@ -552,11 +551,124 @@ Currently, users are not explicitly informed of system limitations:
 
 ## Part 2. Final System & Demonstration
 
-- **Final Integration:**  
-  *What did you change or improve for the final build? Integrate sensors, add outputs, log data, etc.*
+### Evolution from Prototype to Final System
 
-- **Final Demo Video:**  
-  [![Final System Demo](path/to/thumb.jpg)](link-to-video)
+The initial prototype (Part 1B) demonstrated basic thumbs up/down detection with simple visual feedback. For the final system, this was evolved into a practical vote counting application with significant improvements based on testing insights from Parts 1C and 1D.
+
+**Key Improvements Implemented:**
+
+1. **Vote Counting State Machine**
+   - Problem: Original system displayed current gesture only, with no memory
+   - Solution: Implemented state machine that counts votes and prevents double-counting
+   - Logic: `neutral → gesture detected → hold 0.5s → count vote → must return to neutral`
+2. **State Persistence** 
+   - Problem: Rapid flickering when hand moved or multiple conflicting hands present
+   - Solution: 0.5-second hold requirement before vote registers
+   - Impact: Eliminates accidental votes from hand movements
+3. **Enhanced User Feedback**
+   - Problem: System could not distinguish between "no hand detected" vs "waiting for gesture"
+   - Solution: Distinct messages for different states ("Ready", "Voting Up...", "Vote Counted!", "No hand")
+   - Added: Progress indicator showing hold percentage (0-100%)
+4. **Hand Count Display**
+   - Problem: System unclear about multi-hand detection capability
+   - Solution: "# of Hands Detected: X" shown on debug window
+   - Note: System prioritizes first detected hand for vote counting
+5. **Vote Statistics**
+   - Added: Running totals for thumbs up/down
+   - Added: Net sentiment score (Up - Down)
+   - Added: Total votes cast
+   - Added: Reset functionality (press 'R' key)
+6. **Visual Design Improvements**
+   - Problem: Emoji font not available, text overflow on 240x135 display
+   - Solution: Custom-drawn triangle arrows (up/down) using PIL polygon drawing
+   - Solution: Optimized font sizes and layout for small screen
+   - Result: Clean, readable display that fits within constraints
+
+### System Architecture (Comaprison)
+
+| Version | Purpose | Key Features |
+|---------|---------|--------------|
+| **v1: Thumbs Feedback** | Real-time gesture feedback | Instant visual response, smiley/frowny faces, simple interaction |
+| **v2: Thumb Counter** | Vote counting/polling | State machine, vote tallying, statistics, reset capability |
+
+#### v1 Architecture (Thumbs Feedback System)
+
+The original system operates as a straightforward real-time gesture recognition pipeline. Camera input at 640x480 resolution feeds into MediaPipe's hand detection framework, which tracks 21 anatomical landmarks on each detected hand. The gesture classification module analyzes thumb tip position relative to thumb base (Y-axis comparison with 30-pixel threshold) and verifies that remaining fingers are in a closed-fist configuration. Based on this analysis, the system outputs one of three states: thumbs_up, thumbs_down, or neutral. These states directly drive the PiTFT display output, which renders color-coded backgrounds (green for positive, red for negative, black for neutral) along with programmatically-drawn facial expressions. A parallel debug window displays the raw camera feed with landmark overlays and detection status for troubleshooting purposes. The entire pipeline operates at 8-11 FPS, with display updates occurring in real-time with minimal latency.
+
+**v1 State Machine:**
+```mermaid
+stateDiagram-v2
+    [*] --> Neutral
+    Neutral --> ThumbsUp: Thumb up detected
+    Neutral --> ThumbsDown: Thumb down detected
+    ThumbsUp --> Neutral: Gesture ends
+    ThumbsDown --> Neutral: Gesture ends
+    ThumbsUp --> ThumbsUp: Hold gesture
+    ThumbsDown --> ThumbsDown: Hold gesture
+    Neutral --> Neutral: No gesture
+```
+
+#### v2 Architecture (Thumb Counter System)
+The enhanced vote counting system extends v1 by adding a persistent state machine and vote tallying mechanism. While the detection pipeline remains identical (camera → MediaPipe → gesture classification), classified gestures now feed into a state management layer rather than directly controlling display output. 
+
+The state machine implements a four-state model (neutral, counting, counted_up, counted_down) with temporal requirements. When a thumbs_up or thumbs_down gesture is detected in neutral state, a timer initializes requiring 0.5 seconds of continuous hold before the vote registers. Once this threshold is met, the appropriate counter increments and the state transitions to counted_up or counted_down. The system remains in this counted state until the hand returns to neutral or leaves the frame, preventing double-counting while allowing rapid sequential voting. The display layer renders custom arrow icons alongside vote counts, total votes, and net sentiment score, with all data persisting in memory until manual reset.
+
+For multi-hand scenarios, `detector.findPosition(img, handNo=0)` returns only the first detected hand (ordered by MediaPipe confidence), preventing double-voting while simplifying conflict resolution.
+
+**v2 State Machine:**
+```mermaid
+stateDiagram-v2
+    [*] --> Neutral
+    Neutral --> CountingUp: Thumbs up held 0.5s
+    Neutral --> CountingDown: Thumbs down held 0.5s
+    CountingUp --> CountedUp: Vote registered(increment up_count)
+    CountingDown --> CountedDown: Vote registered(increment down_count)
+    CountedUp --> Neutral: Gesture ends
+    CountedDown --> Neutral: Gesture ends
+    Neutral --> NoHand: Hand leaves frame
+    NoHand --> Neutral: Hand enters frame
+```
+
+### Code Structure
+*Core Components:*
+1. **`detect_thumbs_orientation(lmList)`** - Gesture detection logic that analyzes landmark positions and returns classification: "thumbs_up", "thumbs_down", "neutral", or "no_hand"
+2. **`update_display(gesture, up_count, down_count)`** - PiTFT rendering function that draws custom arrow icons, displays vote statistics, and provides color-coded feedback
+3. **State Machine Loop** - Vote counting logic implementing temporal requirements and state transitions for vote registration
+4. **`draw_up_arrow()` / `draw_down_arrow()`** - Custom icon rendering functions that draw triangle polygons to replace emoji dependencies
+
+### Final Demo Video
+
+[![Thumb Counter Final Demo](https://drive.google.com/file/d/1v8UmLXCpez65vUweiW0hi8_VbNI5y-R6/view?usp=sharing)
+
+*Video demonstrates: Real-time vote counting with dual displays (PiTFT + debug window), thumbs up/down vote registration, state machine requiring neutral return between votes, calculations, multi-hand detection behavior and hold progress indicator.*
+
+### Performance Metrics
+
+| Metric | Value | Notes |
+|--------|-------|-------|
+| **FPS** | 8-11 | Consistent with Part 1A MediaPipe testing |
+| **Vote Registration Time** | 0.5s | Hold time before count increments |
+| **State Transition** | <0.1s | Display updates immediately after vote |
+| **Detection Range** | 1-4 feet | Works beyond expected range from Part 1C testing |
+| **Hand Count Accuracy** | 100% | MediaPipe reliably counts 1-2 hands |
+| **Gesture Classification** | ~95% | Occasional neutral misclassification in edge cases |
+
+### Future Improvements
+
+- Complete darkness failure - Could add brightness warning
+- Fast movement lag - Camera hardware limitation
+- No confidence display - Could show detection confidence percentage
+
+### Use Cases
+
+The final Thumb Counter system is well-suited for small group polls (2-10 people), classroom engagement checks, workshop feedback, accessibility voting (hands-free yes/no), and party games. The system is not suitable for large scale elections (no voter identification), high-speed voting (0.5s hold time required), outdoor use (lighting sensitivity), or privacy-critical votes (camera records all voters).
+
+### Code 
+
+- **Initial prototype:** [`thumbs_feedback_v1.py`](Deliverables/thumbs_feedback_v1.py)
+- **Final system:** [`thumb_counter_v2.py`](Deliverables/thumb_counter_v2.py)
+- **Supporting files:** [`HandTrackingModule.py`](HandTrackingModule.py)
+
 
 ---
 
