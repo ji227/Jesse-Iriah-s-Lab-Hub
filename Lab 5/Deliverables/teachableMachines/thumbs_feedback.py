@@ -55,23 +55,61 @@ def update_display(status):
     """Update PiTFT display based on gesture"""
     draw.rectangle((0, 0, width, height), outline=0, fill=0)
     
+    # Load different font sizes
+    font_large = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 28)
+    font_small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 20)
+    
     if status == "thumbs_up":
-        # Green background with thumbs up
+        # Green background
         draw.rectangle((0, 0, width, height), fill=(0, 255, 0))
-        draw.text((60, 40), "👍", font=font, fill=(255, 255, 255))
-        draw.text((15, 100), "Thumbs Up!", font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 36), fill=(255, 255, 255))
+        
+        # Draw smiley face manually
+        # Face circle
+        draw.ellipse((85, 20, 155, 90), fill=(255, 255, 0), outline=(0, 0, 0), width=3)
+        # Eyes
+        draw.ellipse((100, 35, 110, 45), fill=(0, 0, 0))
+        draw.ellipse((130, 35, 140, 45), fill=(0, 0, 0))
+        # Smile
+        draw.arc((95, 45, 145, 80), start=0, end=180, fill=(0, 0, 0), width=3)
+        
+        # Text
+        text = "Thumbs Up!"
+        bbox = draw.textbbox((0, 0), text, font=font_large)
+        text_width = bbox[2] - bbox[0]
+        x_centered = (width - text_width) // 2
+        draw.text((x_centered, 100), text, font=font_large, fill=(255, 255, 255))
+        
     elif status == "thumbs_down":
-        # Red background with thumbs down
+        # Red background
         draw.rectangle((0, 0, width, height), fill=(255, 0, 0))
-        draw.text((60, 40), "👎", font=font, fill=(255, 255, 255))
-        draw.text((5, 100), "Thumbs Down!", font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 32), fill=(255, 255, 255))
+        
+        # Draw frowny face manually
+        # Face circle
+        draw.ellipse((85, 20, 155, 90), fill=(255, 255, 0), outline=(0, 0, 0), width=3)
+        # Eyes
+        draw.ellipse((100, 35, 110, 45), fill=(0, 0, 0))
+        draw.ellipse((130, 35, 140, 45), fill=(0, 0, 0))
+        # Frown
+        draw.arc((95, 55, 145, 90), start=180, end=360, fill=(0, 0, 0), width=3)
+        
+        # Text
+        text = "Thumbs Down!"
+        bbox = draw.textbbox((0, 0), text, font=font_small)
+        text_width = bbox[2] - bbox[0]
+        x_centered = (width - text_width) // 2
+        draw.text((x_centered, 100), text, font=font_small, fill=(255, 255, 255))
+        
     else:
         # Black/neutral
         draw.rectangle((0, 0, width, height), fill=(0, 0, 0))
-        draw.text((20, 60), "Waiting...", font=font, fill=(100, 100, 100))
+        text = "Waiting..."
+        bbox = draw.textbbox((0, 0), text, font=font_small)
+        text_width = bbox[2] - bbox[0]
+        x_centered = (width - text_width) // 2
+        draw.text((x_centered, 60), text, font=font_small, fill=(100, 100, 100))
     
     disp.image(image, rotation)
-
+    
 def detect_thumbs_orientation(lmList):
     """Detect if thumb is pointing up or down"""
     if len(lmList) == 0:
