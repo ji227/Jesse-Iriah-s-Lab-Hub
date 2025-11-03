@@ -633,11 +633,11 @@ stateDiagram-v2
 1. **`detect_thumbs_orientation(lmList)`** - Gesture detection logic that analyzes landmark positions and returns classification: "thumbs_up", "thumbs_down", "neutral", or "no_hand"
 2. **`update_display(gesture, up_count, down_count)`** - PiTFT rendering function that draws custom arrow icons, displays vote statistics, and provides color-coded feedback
 3. **State Machine Loop** - Vote counting logic implementing temporal requirements and state transitions for vote registration
-4. **`draw_up_arrow()` / `draw_down_arrow()`** - Custom icon rendering functions that draw triangle polygons to replace emoji dependencies
+4. **`draw_up_arrow()` / `draw_down_arrow()`** - Custom icon rendering functions that draw triangles to replace emoji dependencies
 
 ### Final Demo Video
 
-[![Thumb Counter Final Demo](https://drive.google.com/file/d/1v8UmLXCpez65vUweiW0hi8_VbNI5y-R6/view?usp=sharing)
+[![Thumb Counter Final Demo](https://img.youtube.com/vi/placeholder/0.jpg)](https://drive.google.com/file/d/1v8UmLXCpez65vUweiW0hi8_VbNI5y-R6/view?usp=sharing)
 
 *Video demonstrates: Real-time vote counting with dual displays (PiTFT + debug window), thumbs up/down vote registration, state machine requiring neutral return between votes, calculations, multi-hand detection behavior and hold progress indicator.*
 
