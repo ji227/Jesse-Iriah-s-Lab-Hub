@@ -323,14 +323,160 @@ The PiTFT displays were designed for clear, immediate recognition:
 
 ## Part 1C. Testing & Evaluation
 
-- **Testing Summary:**  
-  *How well did your prototype work? Where did it fail? What did users notice?*
+### Testing Summary
 
-- **Design Improvements:**  
-  *List any changes or optimizations you made, like gesture calibration/visual feedback, error correction, added resets, etc.*
+The Thumbs Feedback System was systematically tested across multiple scenarios to identify success cases, failure modes, and limitations. Testing revealed strong performance under optimal conditions but also uncovered specific environmental and usage constraints.
 
-- **Impact of Misclassification:**  
-  *Describe the effect of detection errors and how your design addresses them.*
+**Success Cases - When It Works:**
+
+The system performs reliably when:
+- **Good lighting conditions** - Ambient room lighting or even directional spotlight (tested with flashlight behind camera)
+- **Proper distance** - 1-3 feet from camera; system surprisingly robust even at extended distances
+- **Steady hand position** - Gesture held for 1-2 seconds allows camera to focus and system to stabilize
+- **Clear hand visibility** - Full hand in frame with all fingers visible
+- **Single user or synchronized users** - One person, or multiple people making the same gesture
+
+![Default Conditions](Deliverables/testingCharacterization/case_default.png)
+*Optimal performance: centered hand, good lighting, proper distance - consistent 10-11 FPS detection*
+
+**Failure Cases - When It Breaks:**
+
+| Scenario | Observed Behavior | Root Cause | Media |
+|----------|------------------|------------|-------|
+| **Too Close (<1 ft)** | No detection, black screen persists | Hand fills frame - MediaPipe cannot identify all 21 landmarks | ![Too Close](Deliverables/testingCharacterization/case_tooClose.png) |
+| **Complete Darkness** | No detection, system shows only FPS counter | Camera unable to capture usable image data | ![Blackout](Deliverables/testingCharacterization/case_blackoutLight.png) |
+| **Incorrect Gestures** (open palm, pointing finger) | Neutral state maintained | Closed-fist requirement not met - fingers extended don't satisfy gesture logic | ![Palm](Deliverables/testingCharacterization/case_incorrectGesture_palm.png) ![Point](Deliverables/testingCharacterization/case_incorrectGesture_point.png) |
+| **Two Opposite Gestures (Thumbs Up/Thumbs Down)** | Rapid flickering between thumbs_down and neutral states | System processes hands sequentially; conflicting inputs create state oscillation | [Video](Deliverables/testingCharacterization/case_2handsOpposite.mp4) |
+| **Fast Movement** | 1-2 second delay before detection | Camera autofocus lag + frame processing latency compounds | [Video](Deliverables/testingCharacterization/case_tooFast.mp4) |
+
+**dge Cases:**
+
+1. **Side Angle (45° rotation):** 
+   - **Result:** Still detected correctly
+   - **Why:** Landmark-based detection is rotation-invariant; thumb tip vs. base calculation works at angles
+   - ![Side Angle](Deliverables/testingCharacterization/case_side.png)
+2. **Extended Distance:**
+   - **Result:** Works well beyond 3 feet
+   - **Why:** MediaPipe can still resolve landmarks as long as hand is sufficiently large in frame
+   - ![Too Far](Deliverables/testingCharacterization/case_tooFar.png)
+3. **Spotlight (darkness with directional light):**
+   - **Result:** Performs as well as ambient lighting
+   - **Why:** System only needs sufficient illumination on hand, not ambient room lighting
+   - ![Spotlight](Deliverables/testingCharacterization/case_spotlight.png)
+4. **Two Identical Hands:**
+   - **Result:** Both tracked, correct gesture displayed
+   - **Why:** MediaPipe multi-hand detection; both hands satisfy same gesture condition
+   - ![Two Hands Identical](Deliverables/testingCharacterization/case_2handsIdentical.png)
+
+### Why It Fails
+
+**Root causes of failure modes:**
+
+1. **MediaPipe Landmark Detection Limits:**
+   - Requires all 21 hand points visible
+   - Fails when hand too close (out of bounds) or too dark (insufficient contrast)
+2. **Camera Hardware Constraints:**
+   - Autofocus introduces 1-2s latency for fast movements
+   - Low-light sensitivity limited; cannot capture frames in complete darkness
+3. **Gesture Logic Design:**
+   - Closed-fist requirement intentionally rejects open-hand gestures (feature, not bug)
+   - Sequential hand processing creates state conflicts with opposing gestures
+4. **Frame Rate Bottleneck:**
+   - 8-11 FPS processing creates inherent lag
+   - Not fast enough for rapid gesture transitions
+
+### Based on observed behavior, what other scenarios could cause problems?
+
+1. **Gloves or hand coverings** - May obscure landmarks or alter hand appearance
+2. **Skin tone variation in extreme lighting** - Very dark or very light skin against similar-colored backgrounds
+3. **Partial hand occlusion** (e.g., holding object) - Would fail landmark detection
+4. **Multiple users taking turns rapidly** - State would oscillate as hands enter/exit frame
+5. **Shaky camera/moving Pi** - Motion blur could degrade landmark detection accuracy
+6. **Background with hand-like shapes** - Unlikely but could cause false detections
+7. **Children's smaller hands** - May be too small to detect at normal distances
+
+### Design Improvements
+
+**Optimizations Implemented During Development:**
+
+1. **Closed-fist requirement**   
+   - Checks each finger individually (tips below knuckles)
+   - Drastically reduced false positives from open hands
+2. **30-pixel threshold for thumb orientation**  
+   - Prevents micro-movements from triggering state changes
+   - Balances sensitivity vs. stability
+3. **Visual feedback on both screens**  
+   - PiTFT shows user-facing output (green/red/black + faces)
+   - Debug window shows landmarks and detection status for troubleshooting
+4. **Neutral state as default**  
+   - System shows "Waiting..." when uncertain
+   - Prevents random triggering when no hand present
+
+**Potential Future Improvements:**
+
+1. **State persistence/smoothing:**
+   - Hold detected state for 0.5s before allowing change
+   - Would eliminate flickering with conflicting hands
+2. **Confidence threshold:**
+   - Only trigger state change above 80% gesture confidence
+   - Add "unsure" state for ambiguous poses
+3. **Distance/lighting warnings:**
+   - Display "Move closer" or "Need more light" messages
+   - Help users self-correct rather than confusion at black screen
+4. **Multi-hand priority logic:**
+   - Detect which hand appeared first and prioritize it
+   - Ignore secondary conflicting hands
+5. **Adaptive exposure:**
+   - Programmatically adjust camera brightness for low-light environments
+   - Would extend usable range
+6. **Gesture timeout:**
+   - Auto-reset to neutral if same gesture held >10 seconds
+   - Prevents "stuck" states
+
+### Impact of Misclassification
+
+| Error Type | Frequency | Impact | User Response |
+|------------|-----------|--------|---------------|
+| **False Negative** (gesture not detected) | Moderate (in suboptimal lighting) | Low - User simply repeats gesture | Minor inconvenience |
+| **False Positive** (wrong gesture detected) | Very rare (closed-fist requirement effective) | Low - Immediate PiTFT feedback alerts user | Quick correction |
+| **State Flickering** (rapid changes) | Rare (only with conflicting hands) | Medium - Mildly annoying, unclear which input counts | Remove secondary hand |
+| **Complete Failure** (no detection) | Rare (only in darkness or extreme close-up) | Medium - No feedback confuses users | Adjust distance/lighting |
+
+**How Design Mitigates Errors:**
+
+1. **Immediate Visual Feedback:**
+   - PiTFT displays current state in <0.1s
+   - Users instantly know if their gesture was detected correctly
+   - Enables rapid self-correction
+
+2. **Simple Gesture Vocabulary:**
+   - Only 2 gestures (thumbs up/down) reduces confusion
+   - Universally understood gestures require no training
+
+3. **Conservative Detection Logic:**
+   - Closed-fist requirement errs on side of false negatives
+   - Prevents unintended triggers more important than catching every gesture
+
+4. **Debug Window (Optional):**
+   - Shows hand landmarks and thumb orientation value
+   - Helps developers troubleshoot, not needed for end users
+
+5. **Low Consequence Domain:**
+   - Feedback/polling use case means errors are not safety-critical
+   - Users can always repeat input without harm
+
+**User Awareness of Uncertainties:**
+
+Currently, users are not explicitly informed of system limitations:
+- No error messages for darkness or distance failures
+- No visual indicators of detection confidence
+- Neutral state looks the same for "no hand" , "ambiguous gesture" etc
+
+**Future improvements:**
+- Display detection confidence percentage
+- Show "No hand detected" vs "Gesture unclear" distinct messages
+- Show a count for the number of hands detected
+- Add visual cue when lighting/distance suboptimal
 
 ---
 
@@ -385,20 +531,16 @@ The PiTFT displays were designed for clear, immediate recognition:
 ### How does the system feel?
 
 **User Experience (with Iqra and Kyle) :**
-
-*Responsiveness:* Moderate lag (8-11 FPS detection + 1-2s camera focus) makes it feel deliberate rather than instant. Users must hold gestures for 1-2 seconds for reliable detection.
-
-*Satisfaction:* High - immediate visual feedback on PiTFT is rewarding. Clear color changes (green/red) and facial expressions make success obvious.
-
-*Intuitiveness:* Thumbs up/down is universally understood. No learning curve.
-
-*Reliability:* Good in optimal conditions, but users quickly learn to hold steady and ensure good lighting. The closed-fist requirement prevents most false positives.
-
+*Responsiveness:* Moderate lag (8-11 FPS detection + 1-2s camera focus) makes it feel deliberate rather than instant. Users must hold gestures for 1-2 seconds for reliable detection.  
+*Satisfaction:* High - immediate visual feedback on PiTFT is rewarding. Clear color changes (green/red) and facial expressions make success obvious.  
+*Intuitiveness:* Thumbs up/down is universally understood. No learning curve.  
+*Reliability:* Good in optimal conditions, but users quickly learn to hold steady and ensure good lighting. The closed-fist requirement prevents most false positives.  
+  
 *Frustration Points:* 
 - Flickering with multiple users (confusing which input counts)
 - Camera focus lag makes rapid interactions not practical
 
-**Overall Feel:** The system feels like a thoughtful polling tool. It is best suited for deliberate, intentional feedback rather than quick, spontaneous gestures.
+**Overall Review:** The system feels like a thoughtful polling tool. It is best suited for deliberate, intentional feedback rather than quick, spontaneous gestures.
 
 ### Characterization Media
 
