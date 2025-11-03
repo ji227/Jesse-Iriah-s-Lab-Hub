@@ -566,6 +566,5 @@ Currently, users are not explicitly informed of system limitations:
 - PyTorch MobileNet  
 - Teachable Machines  
 - [Bellotti et al.](link-to-paper-if-applicable)  
-- Any other documentation or credits
 
 ---
