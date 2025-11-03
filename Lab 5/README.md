@@ -627,6 +627,8 @@ stateDiagram-v2
     Neutral --> NoHand: Hand leaves frame
     NoHand --> Neutral: Hand enters frame
 ```
+![IMG_8476](https://github.com/user-attachments/assets/7ecebeb6-1eae-4510-a865-feae5814abad)
+![IMG_8375](https://github.com/user-attachments/assets/4ee1317c-7bb5-4cfd-b016-5953e746b733)
 
 ### Code Structure
 *Core Components:*
