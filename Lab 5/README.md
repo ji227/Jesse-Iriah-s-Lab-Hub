@@ -336,19 +336,89 @@ The PiTFT displays were designed for clear, immediate recognition:
 
 ## Part 1D. System Characterization
 
-- **Intended Use:**  
-- **Best/Challenging Environments:**  
-- **Failure Modes & Recovery:**  
-- **Interaction Feel:**  
-  *Write a paragraph or use a markdown table if desired.*
+### What can you use this system for?
 
-## Part 1D. System Characterization
-### What can you use X for?
-### What is a good environment for X?
-### What is a bad environment for X?
-### When will X break?
-### How does X feel?
+**Primary Applications:**
+- **Audience feedback/polling** - Quick approve/disapprove during presentations
+- **Accessibility control** - Hands-free yes/no input for users with limited mobility
+- **Review/rating systems** - Binary approval for content, products, decisions
+- **Classroom engagement** - Students signal understanding (thumbs up) or confusion (thumbs down)
+- **Remote participation** - Silent feedback in video calls without unmuting
 
+**Potential Extensions:**
+- Count thumbs up/down to tally group opinions
+- Log feedback with timestamps for analytics
+- Trigger other actions (send notification, record vote, control device)
+
+### What is a good environment for this system?
+
+**Optimal Conditions:**
+- **Lighting:** Indoor ambient lighting or directional spotlight (spotlight test showed this works well)
+- **Distance:** 1-3 feet from camera (tested - too far still works, too close fails)
+- **Background:** Any background - MediaPipe focuses on hand regardless
+- **Usage:** Single user at a time, or multiple users with identical gestures
+- **Setting:** Controlled indoor environment (classroom, meeting room, home office)
+
+### What is a bad environment for this system?
+
+**Challenging Conditions:**
+- **Complete darkness** - Camera cannot capture image (blackout test failed)
+- **Extreme close-up** - Hand fills entire frame, mapping not possible
+- **Multiple conflicting users** - Two people with opposite gestures causes flickering
+- **Fast-paced interactions** - 1-2 second lag from camera focus makes rapid gestures impractical
+- **Variable lighting** - Sudden brightness changes (outdoor sun, moving shadows) may affect camera exposure
+
+### When will this system break?
+
+**Hard Failures** (No detection):
+1. **Insufficient light** - Below camera's minimum sensitivity
+2. **Occluded hand** - Fingers not visible or hand partially out of frame
+3. **No closed fist** - Open palm or extended fingers don't trigger detection
+4. **Extreme distance** - Hand too small for landmark detection (>6 feet)
+
+**Soft Failures** (Degraded performance):
+1. **Multiple hands with opposite gestures** - Display flickers between states
+2. **Camera focus lag** - Fast movements take 1-2 seconds to register
+3. **Side angles >60°** - May lose thumb orientation accuracy
+4. **Similar gestures** - Peace sign or pointing up register as neutral (acceptable)
+
+### How does the system feel?
+
+**User Experience (with Iqra and Kyle) :**
+
+*Responsiveness:* Moderate lag (8-11 FPS detection + 1-2s camera focus) makes it feel deliberate rather than instant. Users must hold gestures for 1-2 seconds for reliable detection.
+
+*Satisfaction:* High - immediate visual feedback on PiTFT is rewarding. Clear color changes (green/red) and facial expressions make success obvious.
+
+*Intuitiveness:* Thumbs up/down is universally understood. No learning curve.
+
+*Reliability:* Good in optimal conditions, but users quickly learn to hold steady and ensure good lighting. The closed-fist requirement prevents most false positives.
+
+*Frustration Points:* 
+- Flickering with multiple users (confusing which input counts)
+- Camera focus lag makes rapid interactions not practical
+
+**Overall Feel:** The system feels like a thoughtful polling tool. It is best suited for deliberate, intentional feedback rather than quick, spontaneous gestures.
+
+### Characterization Media
+
+**All testing scenarios:** [`testingCharacterization/`](Deliverables/testingCharacterization/)
+
+| Test Case | Result | Media |
+|-----------|--------|-------|
+| Default (Optimal) | Success | ![](Deliverables/testingCharacterization/case_default.png) |
+| Too Close | No detection | ![](Deliverables/testingCharacterization/case_tooClose.png) |
+| Too Far | Still works | ![](Deliverables/testingCharacterization/case_tooFar.png) |
+| Side Angle (45°) | Detected | ![](Deliverables/testingCharacterization/case_side.png) |
+| Complete Darkness | No detection | ![](Deliverables/testingCharacterization/case_blackoutLight.png) |
+| Spotlight Only | Works well | ![](Deliverables/testingCharacterization/case_spotlight.png) |
+| Wrong Gesture (Palm) | Neutral | ![](Deliverables/testingCharacterization/case_incorrectGesture_palm.png) |
+| Wrong Gesture (Point) | Neutral | ![](Deliverables/testingCharacterization/case_incorrectGesture_point.png) |
+| Two Identical Hands | Both tracked | ![](Deliverables/testingCharacterization/case_2handsIdentical.png) |
+| Two Opposite Hands | Flickering | [Video](Deliverables/testingCharacterization/case_2handsOpposite.mp4) |
+| Fast Movement | 1-2s lag | [Video](Deliverables/testingCharacterization/case_tooFast.mp4) |
+
+---
 
 
 - **Characterization Media:**  
