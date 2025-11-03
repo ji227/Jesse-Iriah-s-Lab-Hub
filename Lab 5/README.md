@@ -17,6 +17,7 @@ N/A
 This lab explores interactive systems that sense and respond to real-world events using a Raspberry Pi 4. The lab focuses on experimenting with various machine learning models for object recognition, gesture detection, and custom classification to build observant systems that can monitor and respond to environmental changes.
 
 **All code, models, and media referenced in this document can be found in the [`Deliverables`](Deliverables/) folder.**
+**Demo videos:** [Lab 5 Videos](https://drive.google.com/drive/folders/1LAQ7KSJR5ZazZbtYKrJ5lUNYnUd9axqR?usp=sharing)
 
 ---
 
@@ -249,15 +250,74 @@ The intermediate save/load step likely introduced JPEG compression artifacts and
 
 ## Part 1B. Prototyping an Interaction
 
-- **Selected Model/Tool:**  
-  *Which system did you use for interaction prototype? Why?*
+### Thumbs Feedback System
 
-- **Interaction Description:**  
-  *Describe your prototype: user input, recognition, output. What task or behavior did you implement?*
+**Selected Model:** MediaPipe Hand Pose Tracking
 
-- **Media (photos, videos, diagrams):**  
-  ![Prototype Photo](path/to/photo.jpg)  
-  [![Demo Video](path/to/thumb.jpg)](link-to-video)
+**Why MediaPipe?**
+- Proven reliability on the Pi (8-11 FPS, good tracking accuracy from Part A testing)
+- Real-time landmark detection enables gesture recognition
+- More robust than Teachable Machines (which had deployment pipeline issues)
+- PyTorch limited to pre-trained object classes, couldn't detect custom gestures
+
+**System Overview:**
+
+The Thumbs Feedback System provides instant visual feedback for thumbs up/down gestures using the Adafruit Mini PiTFT display. The system combines MediaPipe's hand landmark detection with custom gesture recognition logic to create an intuitive approval/disapproval interface.
+
+**Interaction Flow:**
+```
+User performs gesture → MediaPipe detects hand landmarks → 
+Analyze thumb orientation & finger positions → Update PiTFT display
+```
+
+**Hardware Components:**
+- Raspberry Pi 4
+- USB Webcam
+- Adafruit Mini PiTFT (240x135, ST7789)
+
+**Gesture Detection Logic:**
+
+The system analyzes MediaPipe's 21 hand landmarks to detect:
+1. **Thumbs Up (👍):**
+   - Thumb tip (landmark 4) is above thumb base (landmark 2) by >30 pixels
+   - Other fingers are closed (fingertips below knuckles)
+   - **Output:** Green background + yellow smiley face + "Thumbs Up!" text
+
+2. **Thumbs Down (👎):**
+   - Thumb tip is below thumb base by >30 pixels
+   - Other fingers are closed
+   - **Output:** Red background + yellow frowny face + "Thumbs Down!" text
+
+3. **Neutral/No gesture:**
+   - Hand not detected or invalid pose
+   - **Output:** Black background + "Waiting..." text
+
+**Visual Feedback Design:**
+
+The PiTFT displays are designed for clear, immediate recognition:
+- **Color coding:** Green = positive, Red = negative, Black = neutral
+- **Facial expressions:** Programmatically drawn smiley/frowny faces using PIL shapes
+  - Face: Yellow circle (ellipse)
+  - Eyes: Black circles
+  - Smile/Frown: Arc shapes
+- **Text:** Centered on the display
+
+**Demo Video:**
+
+[![Thumbs Feedback System Demo](https://img.youtube.com/vi/placeholder/0.jpg)](https://drive.google.com/file/d/1wJ8BpLzLEhQJ1r9ytbh5xP_ICsSO2oqt/view?usp=sharing)
+
+**Code:** [`thumbs_feedback.py`](Deliverables/thumbs_feedback.py)
+
+**Key Features:**
+- Real-time gesture recognition (8-11 FPS)
+- Immediate visual feedback on PiTFT
+- Debug camera window shows hand landmarks and detection status
+- Simple, intuitive interaction requiring only thumb gestures
+
+**Design Considerations:**
+- 30-pixel threshold provides good balance between sensitivity and stability
+- Separate detection logic for each finger ensures strong gesture classification
+- Visual feedback placed on PiTFT for standalone operation
 
 ---
 
