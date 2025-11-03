@@ -593,19 +593,18 @@ The initial prototype (Part 1B) demonstrated basic thumbs up/down detection with
 
 #### v1 Architecture (Thumbs Feedback System)
 
-The original system operates as a straightforward real-time gesture recognition pipeline. Camera input at 640x480 resolution feeds into MediaPipe's hand detection framework, which tracks 21 anatomical landmarks on each detected hand. The gesture classification module analyzes thumb tip position relative to thumb base (Y-axis comparison with 30-pixel threshold) and verifies that remaining fingers are in a closed-fist configuration. Based on this analysis, the system outputs one of three states: thumbs_up, thumbs_down, or neutral. These states directly drive the PiTFT display output, which renders color-coded backgrounds (green for positive, red for negative, black for neutral) along with programmatically-drawn facial expressions. A parallel debug window displays the raw camera feed with landmark overlays and detection status for troubleshooting purposes. The entire pipeline operates at 8-11 FPS, with display updates occurring in real-time with minimal latency.
+The original system operates as a real-time gesture recognition pipeline. Camera input (640x480) feeds into MediaPipe, which tracks 21 hand landmarks. The gesture classifier analyzes thumb tip position relative to thumb base (30-pixel Y-axis threshold) and verifies closed-fist configuration, outputting thumbs_up, thumbs_down, or neutral states. These states directly drive PiTFT display output with color-coded backgrounds (green/red/black) and programmatically-drawn facial expressions. The pipeline operates at 8-11 FPS with minimal latency.
 
 **v1 State Machine:**
 ```mermaid
 stateDiagram-v2
     [*] --> Neutral
+    
     Neutral --> ThumbsUp: Thumb up detected
     Neutral --> ThumbsDown: Thumb down detected
+    
     ThumbsUp --> Neutral: Gesture ends
     ThumbsDown --> Neutral: Gesture ends
-    ThumbsUp --> ThumbsUp: Hold gesture
-    ThumbsDown --> ThumbsDown: Hold gesture
-    Neutral --> Neutral: No gesture
 ```
 
 #### v2 Architecture (Thumb Counter System)
