@@ -306,7 +306,7 @@ The PiTFT displays were designed for clear, immediate recognition:
 
 [![Thumbs Feedback System Demo](https://img.youtube.com/vi/placeholder/0.jpg)](https://drive.google.com/file/d/1wJ8BpLzLEhQJ1r9ytbh5xP_ICsSO2oqt/view?usp=sharing)
 
-**Code:** [`thumbs_feedback.py`](Deliverables/thumbs_feedback.py)
+**Code:** [`thumbs_feedback_v1.py`](Deliverables/thumbs_feedback_v1.py)
 
 **Key Features:**
 - Real-time gesture recognition (8-11 FPS)
