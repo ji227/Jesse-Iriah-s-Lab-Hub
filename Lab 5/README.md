@@ -414,24 +414,15 @@ The system performs reliably when:
 
 **Potential Future Improvements:**
 
-1. **State persistence/smoothing:**
-   - Hold detected state for 0.5s before allowing change
-   - Would eliminate flickering with conflicting hands
-2. **Confidence threshold:**
-   - Only trigger state change above 80% gesture confidence
-   - Add "unsure" state for ambiguous poses
-3. **Distance/lighting warnings:**
-   - Display "Move closer" or "Need more light" messages
-   - Help users self-correct rather than confusion at black screen
-4. **Multi-hand priority logic:**
-   - Detect which hand appeared first and prioritize it
-   - Ignore secondary conflicting hands
-5. **Adaptive exposure:**
-   - Programmatically adjust camera brightness for low-light environments
-   - Would extend usable range
-6. **Gesture timeout:**
-   - Auto-reset to neutral if same gesture held >10 seconds
-   - Prevents "stuck" states
+1. State persistence/smoothing: Hold detected state for 0.5s before allowing change to eliminate flickering with conflicting hands
+2. Confidence threshold: Only trigger state change above 80% gesture confidence. Add "unsure" state for ambiguous poses
+3. Distance/lighting warnings: Display "Move closer" or "Need more light" messages to help users self-correct rather than confusion at black screen
+4. Show "No hand detected" vs "Gesture unclear" distinct messages
+5. Show a count for the number of hands detected if in polling mode
+6. Multi-hand priority logic: Detect which hand appeared first and prioritize it or ignore secondary conflicting hands if the device is not in polling mode.
+7. Adaptive exposure: Programmatically adjust camera brightness for low-light environments
+8. Gesture timeout: Auto-reset to neutral if same gesture held >10 seconds. This could prevent "stuck" states
+9. Display detection confidence percentage
 
 ### Impact of Misclassification
 
@@ -448,22 +439,19 @@ The system performs reliably when:
    - PiTFT displays current state in <0.1s
    - Users instantly know if their gesture was detected correctly
    - Enables rapid self-correction
-
 2. **Simple Gesture Vocabulary:**
    - Only 2 gestures (thumbs up/down) reduces confusion
    - Universally understood gestures require no training
-
-3. **Conservative Detection Logic:**
+3. **Detection Logic:**
    - Closed-fist requirement errs on side of false negatives
    - Prevents unintended triggers more important than catching every gesture
-
 4. **Debug Window (Optional):**
    - Shows hand landmarks and thumb orientation value
    - Helps developers troubleshoot, not needed for end users
-
 5. **Low Consequence Domain:**
    - Feedback/polling use case means errors are not safety-critical
    - Users can always repeat input without harm
+
 
 **User Awareness of Uncertainties:**
 
@@ -471,12 +459,6 @@ Currently, users are not explicitly informed of system limitations:
 - No error messages for darkness or distance failures
 - No visual indicators of detection confidence
 - Neutral state looks the same for "no hand" , "ambiguous gesture" etc
-
-**Future improvements:**
-- Display detection confidence percentage
-- Show "No hand detected" vs "Gesture unclear" distinct messages
-- Show a count for the number of hands detected
-- Add visual cue when lighting/distance suboptimal
 
 ---
 
