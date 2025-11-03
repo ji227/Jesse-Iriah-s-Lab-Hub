@@ -294,7 +294,7 @@ The system analyzes MediaPipe's 21 hand landmarks to detect:
 
 **Visual Feedback Design:**
 
-The PiTFT displays are designed for clear, immediate recognition:
+The PiTFT displays were designed for clear, immediate recognition:
 - **Color coding:** Green = positive, Red = negative, Black = neutral
 - **Facial expressions:** Programmatically drawn smiley/frowny faces using PIL shapes
   - Face: Yellow circle (ellipse)
