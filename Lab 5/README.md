@@ -415,7 +415,7 @@ The PiTFT displays were designed for clear, immediate recognition:
 | Wrong Gesture (Palm) | Neutral | ![](Deliverables/testingCharacterization/case_incorrectGesture_palm.png) |
 | Wrong Gesture (Point) | Neutral | ![](Deliverables/testingCharacterization/case_incorrectGesture_point.png) |
 | Two Identical Hands | Both tracked | ![](Deliverables/testingCharacterization/case_2handsIdentical.png) |
-| Two Opposite Hands | Flickering | [Video](Deliverables/testingCharacterization/case_2handsOpposite.mp4) |
+| Two Opposite Hands | Flickering | https://github.com/user-attachments/assets/cba113c1-4ea0-499e-8d15-83a22e749d3a |
 | Fast Movement | 1-2s lag | [Video](Deliverables/testingCharacterization/case_tooFast.mp4) |
 
 ---
