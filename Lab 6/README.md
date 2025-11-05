@@ -1,6 +1,6 @@
 # Distributed Interaction
 
-**NAMES OF COLLABORATORS HERE**
+**Angela Bi, Kyle Li, Nophar Shalom, Jesse Iriah**
 
 For submission, replace this section with your documentation!
 
