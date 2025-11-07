@@ -95,7 +95,16 @@ Testing confirmed successful data flow:
 - **Multi-Device Grid:** Tested 2 devices, each creating different colored pixels simultaneously. The terminal output below confirms the simultaneous operation of the Mac Server (top window) and the Pi Publisher (bottom window), demonstrating the end-to-end distributed system flow.
 ![Controller Interface](Deliverables/app.py_terminal_screenshot.png)
   
-- **Sensor Interaction:** Color detection worked by holding colored objects near APDS-9960.
+- **Sensor Interaction:** Color detection worked by holding colored objects near APDS-9960.  
+
+
+### Video Demonstration
+
+| Component        | Description                                                                                 | Link                          |
+|-----------------------------|---------------------------------------------------------------------------------------------|-------------------------------|
+| System flow validation       | Desktop capture showing Pi client streaming RGB data alongside Server terminal live logs.  | [Google Drive Video 1](https://drive.google.com/file/d/1pDL850c50MaX1JIEoRUXx_oP8wkOPZGd/view?usp=sharing) |
+| Real-time sensor input       | Video of physical movement of the APDS-9960 sensor over colors with continuous pixel updates. | [Google Drive Video 2](https://drive.google.com/file/d/1Vhx3nXq7486Ub1F0ruDMzmqhW4JNtqaQ/view?usp=sharing) |
+
 
 
 ---
@@ -243,39 +252,17 @@ def poll_buttons():
 
 ## User Testing
 
-### Test Session 1 - Iqra
+To validate the **Distributed Number Guessing Game** and gather feedback on its competitive and real-time aspects, the system was tested with two individuals external to the development team simultaneously.
 
-- **Tester:** Iqra (not a team member)
-- **Initial Expectations:** Expected a simple number entry game, surprised by competitive aspect
-- **Testing Video:** [Link to Google Drive video]
-- **Surprises:** 
-  - Enjoyed the time pressure element
-  - Found button controls intuitive
-  - Liked seeing guess update in real-time
-- **Suggested Changes:** 
-  - Implement tie-breaking: "If there's a tie, the person who submitted first should win"
-  - Add more visual feedback for winner announcement
+- **Testers:** Iqra and Akash (Non-team members)
+- **Testing Video:** [User Testing Video](https://drive.google.com/file/d/1eUeII8ihZlDEZK7p8lxVowyuN6yJcOaU/view?usp=sharing)
 
-### Test Session 2 - Akash  
+### Key Observations (Iqra & Akash)
 
-- **Tester:** Akash (not a team member)
-- **Initial Expectations:** Thought it would be turn-based, interested in simultaneous play
-- **Testing Video:** [Link to Google Drive video]
-- **Surprises:** 
-  - Game's continuous looping nature
-  - Simplicity of button controls
-  - Quick round transitions
-- **Suggested Changes:**
-  - Add "best of 3" or tournament mode to have clear ending
-  - Include player avatars/characters on screen for visual identification
-  - Add sound effects for game events
-
-### Key Findings
-
-- Physical buttons provided satisfying tactile feedback compared to touchscreen
-- Players wanted more visual representation of themselves in the game
-- Competition element was engaging but needed clearer win conditions
-- Time pressure created excitement but some wanted difficulty levels
+| Tester | Initial Expectations | Key Surprises/Positive Feedback | Suggested Changes |
+| :--- | :--- | :--- | :--- |
+| **Iqra** | Expected a simple number entry game. | Enjoyed the **time pressure** and competitive aspect. Found **button controls intuitive** and liked seeing **real-time guess updates**. | Implement **tie-breaking** (first submission wins tie). Add more **visual feedback** for winner announcement. |
+| **Akash** | Thought the game would be **turn-based**. | Interested in the simultaneous play. Appreciated the game's **continuous looping** nature and **quick round transitions**. | Add "best of 3" or **tournament mode** for a clear ending. Include player avatars/characters and **sound effects** for game events. |
 
 ---
 
