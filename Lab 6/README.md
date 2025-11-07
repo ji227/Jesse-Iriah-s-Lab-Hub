@@ -130,48 +130,60 @@ The Bird Guessing Game requires users to estimate quantities presented on a cent
 
 ### Architecture Diagram
 ```mermaid
-graph TB
+graph TD
     subgraph "Central Server (Laptop)"
-        S[Flask ServerGame Logic]
-        W[Web InterfaceBird Display]
+        S["Flask Server / Game Logic"]
+        W["Web Interface / Bird Display (Output)"]
+        S -- Broadcasts/Receives --> W
     end
-    
-    subgraph "Pi Client 1"
-        P1[Python Client]
-        B1[Buttons A/B]
-        D1[LCD Display]
-    end
-    
-    subgraph "Pi Client 2"
-        P2[Python Client]
-        B2[Buttons A/B]
-        D2[LCD Display]
-    end
-    
-    subgraph "Pi Client 3"
-        P3[Python Client]
-        B3[Buttons A/B]
-        D3[LCD Display]
-    end
-    
+
     subgraph "MQTT Broker"
-        M[farlab.infosci.cornell.edu:1883]
+        M["farlab.infosci.cornell.edu:1883"]
     end
+
+    subgraph "Pi Client 1 (Player 1)"
+        B1["Buttons A/B (Input)"]
+        P1["Python Client"]
+        D1["LCD Display (Output)"]
+        B1 -->|Input: Guess Value| P1
+        P1 -->|Output: Game State| D1
+    end
+
+    subgraph "Pi Client 2 (Player 2)"
+        B2["Buttons A/B (Input)"]
+        P2["Python Client"]
+        D2["LCD Display (Output)"]
+        B2 -->|Input: Guess Value| P2
+        P2 -->|Output: Game State| D2
+    end
+
+    subgraph "Pi Client 3 (Player 3)"
+        B3["Buttons A/B (Input)"]
+        P3["Python Client"]
+        D3["LCD Display (Output)"]
+        B3 -->|Input: Guess Value| P3
+        P3 -->|Output: Game State| D3
+    end
+
+    subgraph "Pi Client 4 (Player 4)"
+        B4["Buttons A/B (Input)"]
+        P4["Python Client"]
+        D4["LCD Display (Output)"]
+        B4 -->|Input: Guess Value| P4
+        P4 -->|Output: Game State| D4
+    end
+
+    %% --- MQTT Communication ---
+
+    P1 -->|Pub/Sub: Guess/State| M
+    P2 -->|Pub/Sub: Guess/State| M
+    P3 -->|Pub/Sub: Guess/State| M
+    P4 -->|Pub/Sub: Guess/State| M
     
-    B1 -->|Input| P1
-    B2 -->|Input| P2
-    B3 -->|Input| P3
+    S -->|Pub/Sub: Game State/Guesses| M
     
-    P1 -->|Display| D1
-    P2 -->|Display| D2
-    P3 -->|Display| D3
-    
-    P1 |Pub/Sub| M
-    P2 |Pub/Sub| M
-    P3 |Pub/Sub| M
-    S |Pub/Sub| M
-    
-    S -->|Updates| W
+    %% Server to Web Interface Flow (via WebSockets/Flask route)
+    S -- WebSockets/Flask --> W
 ```
 
 ### State Diagram
@@ -211,42 +223,46 @@ stateDiagram-v2
 
 ### Hardware Configuration
 
-#### Device 1 (Pi #1) - Jesse
-- **Hardware:** ST7789 Display, GPIO Buttons (pins 23, 24)
-- **Setup Photo:** [Image: Deliverables/pi1_setup.jpg]
-- **MQTT Role:** Publisher/Subscriber (Both)
-- **Code Snippet:**
+The Distributed Number Guessing Game uses a modular architecture where the same **client script** is deployed across all four Raspberry Pis. Each Pi is uniquely identified by its MAC address.
+
+### Common Client Configuration (Pi Devices)
+The client application is contained within the **`bird_client.py`** script (or its equivalent) and performs both publishing (sending guesses) and subscribing (receiving game state).
+
+- **Hardware:** **ST7789 Display** (Output), **GPIO Buttons** (Pins 23/24 for Input).
+- **MQTT Role:** Publisher/Subscriber (Both).
+- **Code Reference:**  [Common Client Code](/Deliverables/bird_client.py)
+
+#### Key Code Snippet: Input Logic
+This function, executed identically on all Pi devices, handles player input to increment or decrement the guess.  
+
 ```python
 def poll_buttons():
+    # Only processes input during the 'GUESSING' state
     if game_state == 'GUESSING':
-        if not buttonA.value:  # Button A pressed
+        if not buttonA.value:  # Button A pressed (Increment)
             current_guess += 1
             display_needs_update = True
-        elif not buttonB.value:  # Button B pressed
+        elif not buttonB.value:  # Button B pressed (Decrement)
             current_guess = max(0, current_guess - 1)
 ```
 
-#### Device 2 (Pi #2) - Kyle
-- **Hardware:** ST7789 Display, GPIO Buttons (pins 23, 24)
-- **Setup Photo:** [Image: Deliverables/pi2_setup.jpg]
-- **MQTT Role:** Publisher/Subscriber (Both)
-- **MAC Address:** Unique identifier for player tracking
+### Pi Client Devices (Player Controllers)
+The core difference between clients is the MAC address that serves as the Player ID.
 
-#### Device 3 (Pi #3) - Angela
-- **Hardware:** ST7789 Display, GPIO Buttons (pins 23, 24)
-- **Setup Photo:** [Image: Deliverables/pi3_setup.jpg]
-- **MQTT Role:** Publisher/Subscriber (Both)
+| Device | Collaborator | Hardware Summary                  | Setup Photo                            |
+|--------|--------------|---------------------------------|--------------------------------------|
+| Pi #1  | Jesse        | ST7789 Display, GPIO Buttons (Pins 23, 24) | ![Pi 1 Setup](Deliverables/pi1_setup.jpg) |
+| Pi #2  | Kyle         | ST7789 Display, GPIO Buttons (Pins 23, 24) | ![Pi 2 Setup](Deliverables/pi2_setup.jpg) |
+| Pi #3  | Angela       | ST7789 Display, GPIO Buttons (Pins 23, 24) | ![Pi 3 Setup](Deliverables/pi3_setup.jpg) |
+| Pi #4  | Nophar       | ST7789 Display, GPIO Buttons (Pins 23, 24) | ![Pi 4 Setup](Deliverables/pi4_setup.jpg) |
 
-#### Device 4 (Pi #4) - Nophar
-- **Hardware:** ST7789 Display, GPIO Buttons (pins 23, 24)
-- **Setup Photo:** [Image: Deliverables/pi4_setup.jpg]
-- **MQTT Role:** Publisher/Subscriber (Both)
+### Server/Central Processing (Computation)
 
-### Server/Central Processing
+The server manages all game state transitions and result aggregation, relying entirely on the MQTT broker for communication.
 
-- **Server Code:** [Link: Deliverables/game_server.py]
-- **Data Aggregation:** Collects all player guesses via MQTT, compares to correct answer
-- **Output Generation:** Determines winner based on closest guess, broadcasts results
+- **Server Code:** The game logic is handled by the server script. [Deliverables/game_server.py]
+- **Data Aggregation:** Collects all final player guesses from the `IDD/birdgame/client/+/guess` topic via MQTT, using the MAC address to track each submission.
+- **Output Generation:** Determines the winner based on the closest guess to the target count and broadcasts the results to all clients and the web interface.
 
 ---
 
@@ -262,7 +278,7 @@ To validate the **Distributed Number Guessing Game** and gather feedback on its 
 | Tester | Initial Expectations | Key Surprises/Positive Feedback | Suggested Changes |
 | :--- | :--- | :--- | :--- |
 | **Iqra** | Expected a simple number entry game. | Enjoyed the **time pressure** and competitive aspect. Found **button controls intuitive** and liked seeing **real-time guess updates**. | Implement **tie-breaking** (first submission wins tie). Add more **visual feedback** for winner announcement. |
-| **Akash** | Thought the game would be **turn-based**. | Interested in the simultaneous play. Appreciated the game's **continuous looping** nature and **quick round transitions**. | Add "best of 3" or **tournament mode** for a clear ending. Include player avatars/characters and **sound effects** for game events. |
+| **Akash** | Thought the game would be **turn-based**. | Disliked the game's **continuous looping** nature. | Add "best of 3" or **tournament mode** for a clear ending. Include player avatars/characters and **sound effects** for game events. Make countdown shorter. |
 
 ---
 
