@@ -115,7 +115,7 @@ Testing confirmed successful data flow:
 
 ### Initial Concept Sketch/Storyboard
 
-[Concept Sketch:](/Deliverables/concept_sketch.png)
+[Concept Sketch:](/Deliverables/concept_storyboard.png)
 
 1. **Scene 1:** Players connect their Raspberry Pis to the central server.
 2. **Scene 2:** A new round begins — the central display shows a group of birds, and a 30-second timer starts.
