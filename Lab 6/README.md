@@ -113,16 +113,16 @@ Testing confirmed successful data flow:
 
 ## System Design
 
-### Initial Concept Sketches & Storyboard
+### Initial Concept Sketch/Storyboard
 
-[Image: Deliverables/concept_storyboard.png]
+[Concept Sketch:](/Deliverables/concept_sketch.png)
 
-**Scene 1:** Players gather with Pis, server displays "Waiting for players..."
-**Scene 2:** Game master starts round, bird image appears on central screen
-**Scene 3:** Players use buttons to adjust guess, seeing number on Pi display
-**Scene 4:** Timer expires, all guesses submitted automatically via MQTT
-**Scene 5:** Results shown - winner highlighted, actual count revealed
-**Scene 6:** Return to idle, ready for next round
+1. **Scene 1:** Players connect their Raspberry Pis to the central server.
+2. **Scene 2:** A new round begins — the central display shows a group of birds, and a 30-second timer starts.
+3. **Scene 3:** Players observe the screen and make their guesses using their Pis (represented by a thought bubble with a question mark).
+4. **Scene 4:** When the timer ends, all guesses are automatically submitted via MQTT.
+5. **Scene 5:** The correct answer and winner are displayed on the central screen.
+6. **Scene 6:** The game resets, ready for the next round.
 
 ### Concept Description
 
