@@ -335,15 +335,24 @@ The button-based interaction proved very for this fast-paced game. The physical 
 ### File Structure
 ```
 Lab 6/
-├── bird_game_client.py       # Pi client code with button input
-├── game_server.py            # Central game server
+├── app.py                   # Original pixel grid server (Used for Part B base)
+├── bird_client.py           # Custom pi client code (Input/sisplay/MQTT)
+├── game_server.py           # Custom central game server (part C game logic)
 ├── templates/
-│   ├── game_display.html     # Main game display interface
-│   └── admin_control.html    # Game master controls
+│   ├── grid.html             # Main game display interface (used by app.py/game_server.py)
+│   └── controller.html       # Game master controls (used by app.py/game_server.py)
 └── Deliverables/
-    ├── mqtt_viewer_screenshot.png
-    ├── concept_storyboard.png
-    └── [test videos, photos]
+    ├── app.py_terminal_screenshot.png # proof of Part B live collaboration
+    ├── controller_screenshot.png
+    ├── grid_screenshot.png
+    ├── mqtt_pub_sub_test.png
+    ├── mqtt_viewer_screenshot.png
+    ├── pi_with_sensor.jpg     # Pi setup photo
+    ├── pi1_setup.jpg        # Pi #1 Setup Photo (Jesse)
+    ├── pi2_setup.jpg        # Pi #2 Setup Photo (Kyle)
+    ├── pi3_setup.jpg        # Pi #3 Setup Photo (Angela)
+    ├── pi4_setup.jpg        # Pi #4 Setup Photo (Nophar)
+    └── **USER_TESTING_VIDEOS.md** # Links to user testing and system validation videos
 ```
 
 ### Debugging Process
