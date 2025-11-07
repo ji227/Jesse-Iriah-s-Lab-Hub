@@ -13,7 +13,6 @@ The distributed guessing game enables multiple players to use Raspberry Pis to g
 # Part A: MQTT Messaging Setup
 
 ### MQTT Installation & Configuration
-
 - **Installation Commands:**
   - **On Raspberry Pi:**
 ```bash
@@ -28,7 +27,6 @@ The distributed guessing game enables multiple players to use Raspberry Pis to g
 - **Authentication:** User: `idd`, Password: `device@theFarm`
 
 ### MQTT Testing
-
 - **Subscribe Test:**
 ```bash
   mosquitto_sub -h farlab.infosci.cornell.edu -p 1883 -t 'IDD/#' -u idd -P 'device@theFarm'
@@ -48,7 +46,6 @@ The distributed guessing game enables multiple players to use Raspberry Pis to g
 
 
 ### Brainstormed Ideas
-
 1. **Number Guessing Game** - Multiple players guess a number/quantity shown on screen
 2. **Music Maker** - Each Pi controls one instrument/sound parameter
 3. **Colour Guessig Game** - Multiple players try to guess/replicate a colour using input RGB/hex 
@@ -61,33 +58,44 @@ The distributed guessing game enables multiple players to use Raspberry Pis to g
 # Part B: Collaborative Pixel Grid
 
 ### Hardware Setup
-
-- **Sensor Configuration:** APDS-9960 RGB sensor connected via Qwiic connector
-- **Wiring Documentation:** Single Qwiic cable connection to Pi's I2C port
-- **Pi Setup:** [Photo: Deliverables/pi_with_sensor.jpg]
+- **Sensor Configuration:** The **Adafruit APDS-9960 RGB Sensor** was used to capture color input.
+- **Wiring:** The sensor was connected directly to the Raspberry Pi's I2C port using a **Qwiic connector cable**. The connection was verified using the diagnostic tool `sudo i2cdetect -y 1`.
+- **Pi Setup:** [Photo of Pi Setup: Deliverables/pi_with_sensor.jpg]  
 
 ### Software Configuration
+Due to an **OSError: [Errno 48] Address already in use** conflict on port 5000 (claimed by a macOS system process), the server's running port was manually changed to **5002** directly within the `app.py` script.
 
-- **Server Setup:** [Documentation of server running on laptop]
- ```bash
- cd "Lab 6"
- source .venv/bin/activate
- python app.py
- ```
-- **Pi Publisher Script:** [Running pixel_grid_publisher.py]
+- **Server Setup:** 
+The application was run on port 5002 after editing the `socketio.run()` line in `app.py`.
+```bash
+  # Activation and Dependency Installation
+  cd "Lab 6"
+  source server_venv/bin/activate
+  pip install -r requirements-server.txt
+  python3 app.py
+```
+- **Pi Publisher Script:** 
  ```bash
  python pixel_grid_publisher.py
  ```
-
 - **Virtual Environment:** Created/ activated with `python -m venv .venv` 
 
 
 ### Grid Testing
+Testing confirmed successful data flow:
 
-- **Grid Display:** [Screenshot of http://farlab.infosci.cornell.edu:5000]
-- **Controller Interface:** [Screenshot of controller page]
-- **Multi-Device Grid:** Successfully tested with 4 devices creating different colored pixels
-- **Sensor Interaction:** Color detection worked by holding colored objects near APDS-9960
+- **Pi Sensor → MQTT Broker → Server → Web Grid (Port 5002)**
+  
+- **Grid Display:** The collaborative grid displayed pixels correctly on the custom port.  
+![Grid Display](/Deliverables/grid_screenshot.png)
+
+- **Controller Interface:** The manual control interface was accessible and functional.  
+![Controller Interface](Deliverables/controller_screenshot.png)
+
+- **Multi-Device Grid:** Tested 2 devices, each creating different colored pixels simultaneously. The terminal output below confirms the simultaneous operation of the Mac Server (top window) and the Pi Publisher (bottom window), demonstrating the end-to-end distributed system flow.
+![Controller Interface](Deliverables/app.py_terminal_screenshot.png)
+  
+- **Sensor Interaction:** Color detection worked by holding colored objects near APDS-9960.
 
 
 ---
@@ -109,7 +117,7 @@ The distributed guessing game enables multiple players to use Raspberry Pis to g
 
 ### Concept Description
 
-The Bird Guessing Game challenges players to estimate quantities shown on a central display within a time limit. Each player uses a Raspberry Pi as a personal controller with physical button inputs (increment/decrement) and receives real-time feedback on the device's display. The game creates engaging group dynamics through competitive timed rounds while demonstrating distributed system coordination through MQTT messaging.
+The Bird Guessing Game requires users to estimate quantities presented on a central display within a time limit. Each player operates a Raspberry Pi as a personal controller with physical button inputs (increment/decrement) and receives real-time feedback on the device’s display. The game encourages interactive group participation through competitive timed rounds and illustrates distributed system coordination using MQTT messaging.
 
 ### Architecture Diagram
 ```mermaid
