@@ -1,243 +1,356 @@
 # Distributed Interaction
 
-**NAMES OF COLLABORATORS HERE**
-
-For submission, replace this section with your documentation!
-
----
-
-## Prep
-
-1. Pull the new changes
-2. Read: [The Presence Table](https://dl.acm.org/doi/10.1145/1935701.1935800) ([video](https://vimeo.com/15932020))
-
-## Overview
-
-Build interactive systems where **multiple devices communicate over a network** using MQTT messaging. Work in teams of 3+ with Raspberry Pis.
-
-**Parts:**
-- A: Learn MQTT messaging
-- B: Try collaborative pixel grid demo  
-- C: Build your own distributed system
+**Collaborators:**  
+Angela Bi, Kyle Li, Nophar Shalom, Jesse Iriah
 
 ---
 
-## Part A: MQTT Messaging
+## Project Overview
 
-MQTT = lightweight messaging for IoT. Publish/subscribe model with central broker.
+The distributed guessing game enables multiple players to use Raspberry Pis to guess the number of birds shown on a central display. Each Pi acts as an individual player controller with physical buttons for input and an LCD display for game state feedback. Players compete in timed rounds to see who can guess closest to the correct answer, with all devices communicating through MQTT messaging to maintain synchronized game state.  
 
-**Concepts:**
-- **Broker**: `farlab.infosci.cornell.edu:1883`
-- **Topic**: Like `IDD/bedroom/temperature` (use `#` wildcard)
-- **Publish/Subscribe**: Send and receive messages
+---
+# Part A: MQTT Messaging Setup
 
-**Install MQTT tools on your Pi:**
+### MQTT Installation & Configuration
+
+- **Installation Commands:**
+  - **On Raspberry Pi:**
 ```bash
-sudo apt-get update
-sudo apt-get install -y mosquitto-clients
+    sudo apt-get update
+    sudo apt-get install -y mosquitto-clients
 ```
-
-**Test it:**
-
-**Subscribe to messages (listener):**
+  - **On macOS:**
 ```bash
-mosquitto_sub -h farlab.infosci.cornell.edu -p 1883 -t 'IDD/#' -u idd -P 'device@theFarm'
+    brew install mosquitto
 ```
+- **Broker Configuration:** `farlab.infosci.cornell.edu:1883`
+- **Authentication:** User: `idd`, Password: `device@theFarm`
 
-**Publish a message (sender):**
+### MQTT Testing
+
+- **Subscribe Test:**
 ```bash
-mosquitto_pub -h farlab.infosci.cornell.edu -p 1883 -t 'IDD/test/yourname' -m 'Hello!' -u idd -P 'device@theFarm'
+  mosquitto_sub -h farlab.infosci.cornell.edu -p 1883 -t 'IDD/#' -u idd -P 'device@theFarm'
 ```
+  Successfully subscribed to all IDD topics and received published messages.
 
-> **💡 Tips:**
-> - Replace `yourname` with your actual name in the topic
-> - Use single quotes around the password: `'device@theFarm'`
+- **Publish Test:**
+```bash
+  mosquitto_pub -h farlab.infosci.cornell.edu -p 1883 -t 'IDD/test/jesse' -m 'Testing Lab 6 MQTT from Jesse' -u idd -P 'device@theFarm'
+```
+  ![MQTT Publish/Subscribe Test](Deliverables/mqtt_pub_sub_test.png)
+  *Screenshot showing successful message publication and reception between terminals*
 
-**🔧 Debug Tool:** View all MQTT messages in real-time at `http://farlab.infosci.cornell.edu:5001`
+- **Debug Tool Results:**
+  ![MQTT Message Viewer](Deliverables/mqtt_viewer_screenshot.png)
+  *Web-based MQTT viewer at http://farlab.infosci.cornell.edu:5001 showing birdgame messages with MAC addresses and guess values*
 
-![MQTT Explorer showing messages](imgs/MQTT-explorer.png)
 
-**💡 Brainstorm 5 ideas for messaging between devices**
+### Brainstormed Ideas
+
+1. **Number Guessing Game** - Multiple players guess a number/quantity shown on screen
+2. **Music Maker** - Each Pi controls one instrument/sound parameter
+3. **Colour Guessig Game** - Multiple players try to guess/replicate a colour using input RGB/hex 
+4. **Mood Ring** - Combined sensor inputs create collective mood visualization
+5. **Distributed Storytelling** - Each Pi adds elements to a collaborative narrative
+
 
 ---
 
-## Part B: Collaborative Pixel Grid
+# Part B: Collaborative Pixel Grid
 
-Each Pi = one pixel, controlled by RGB sensor, displayed in real-time grid.
+### Hardware Setup
 
-**Architecture:** `Pi (sensor) → MQTT → Server → Web Browser`
+- **Sensor Configuration:** APDS-9960 RGB sensor connected via Qwiic connector
+- **Wiring Documentation:** Single Qwiic cable connection to Pi's I2C port
+- **Pi Setup:** [Photo: Deliverables/pi_with_sensor.jpg]
 
-**Setup:**
+### Software Configuration
 
-1. **Sensor**
+- **Server Setup:** [Documentation of server running on laptop]
+ ```bash
+ cd "Lab 6"
+ source .venv/bin/activate
+ python app.py
+ ```
+- **Pi Publisher Script:** [Running pixel_grid_publisher.py]
+ ```bash
+ python pixel_grid_publisher.py
+ ```
 
-#### Light/Proximity/Gesture sensor (APDS-9960)
-We use this sensor [Adafruit APDS-9960](https://www.adafruit.com/product/3595) for this exmaple to detect light (also RGB)
- 
-<img src="https://cdn-shop.adafruit.com/970x728/3595-06.jpg" width=200>
-
-Connect it to your pi with Qwiic connector
+- **Virtual Environment:** Created/ activated with `python -m venv .venv` 
 
 
-<img src="imgs/IMG_0270.jpg" height="200" />
-We need to use the screen to display the color detection, so we need to stop the running piscreen.service to make your screen available again
+### Grid Testing
 
-```bash
-# stop the screen service
-sudo systemctl stop piscreen.service
-```
+- **Grid Display:** [Screenshot of http://farlab.infosci.cornell.edu:5000]
+- **Controller Interface:** [Screenshot of controller page]
+- **Multi-Device Grid:** Successfully tested with 4 devices creating different colored pixels
+- **Sensor Interaction:** Color detection worked by holding colored objects near APDS-9960
 
-if you want to restart the screen service
-```bash
-# start the screen service
-sudo systemctl start piscreen.service
-```
- 
-2. **Server** (one person on laptop):
-```bash
-cd "Lab 6"  
-source .venv/bin/activate
-pip install -r requirements-server.txt
-python app.py
-```
-
-2. **View in browser:**
-   - Grid: `http://farlab.infosci.cornell.edu:5000`
-   - Controller: `http://farlab.infosci.cornell.edu:5000/controller`
-
-3. **Pi publisher** (everyone on their Pi):
-```bash
-# First time setup - create virtual environment
-cd "Lab 6"
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-pi.txt
-
-# Run the publisher
-python pixel_grid_publisher.py
-```
-
-Hold colored objects near sensor to change your pixel!
-
-![Pixel grid with two devices](imgs/two-devices-grid.png)
-
-**📸 Include: Screenshot of grid + photo of your Pi setup**
 
 ---
 
-## Part C: Make Your Own
+# Part C: Distributed System - Bird Guessing Game
 
-**Requirements:**
-- 3+ people, 3+ Pis
-- Each Pi contributes sensor input via MQTT
-- Meaningful or fun interaction
+## System Design
 
-**Ideas:**
+### Initial Concept Sketches & Storyboard
 
-**Sensor Fortune Teller**
-- Each Pi sends 0-255 from different sensor
-- Server generates fortunes from combined values
+[Image: Deliverables/concept_storyboard.png]
 
-**Frankenstories**
-- Sensor events → story elements (not text!)
-- Red = danger, gesture up = climbed, distance <10cm = suddenly
+**Scene 1:** Players gather with Pis, server displays "Waiting for players..."
+**Scene 2:** Game master starts round, bird image appears on central screen
+**Scene 3:** Players use buttons to adjust guess, seeing number on Pi display
+**Scene 4:** Timer expires, all guesses submitted automatically via MQTT
+**Scene 5:** Results shown - winner highlighted, actual count revealed
+**Scene 6:** Return to idle, ready for next round
 
-**Distributed Instrument**
-- Each Pi = one musical parameter
-- Only works together
+### Concept Description
 
-**Others:** Games, presence display, mood ring
+The Bird Guessing Game challenges players to estimate quantities shown on a central display within a time limit. Each player uses a Raspberry Pi as a personal controller with physical button inputs (increment/decrement) and receives real-time feedback on the device's display. The game creates engaging group dynamics through competitive timed rounds while demonstrating distributed system coordination through MQTT messaging.
 
-### Deliverables
+### Architecture Diagram
+```mermaid
+graph TB
+    subgraph "Central Server (Laptop)"
+        S[Flask ServerGame Logic]
+        W[Web InterfaceBird Display]
+    end
+    
+    subgraph "Pi Client 1"
+        P1[Python Client]
+        B1[Buttons A/B]
+        D1[LCD Display]
+    end
+    
+    subgraph "Pi Client 2"
+        P2[Python Client]
+        B2[Buttons A/B]
+        D2[LCD Display]
+    end
+    
+    subgraph "Pi Client 3"
+        P3[Python Client]
+        B3[Buttons A/B]
+        D3[LCD Display]
+    end
+    
+    subgraph "MQTT Broker"
+        M[farlab.infosci.cornell.edu:1883]
+    end
+    
+    B1 -->|Input| P1
+    B2 -->|Input| P2
+    B3 -->|Input| P3
+    
+    P1 -->|Display| D1
+    P2 -->|Display| D2
+    P3 -->|Display| D3
+    
+    P1 |Pub/Sub| M
+    P2 |Pub/Sub| M
+    P3 |Pub/Sub| M
+    S |Pub/Sub| M
+    
+    S -->|Updates| W
+```
 
-Replace this README with your documentation:
+### State Diagram
+```mermaid
+stateDiagram-v2
+    [*] --> IDLE: System Start
+    IDLE --> IDLE: Waiting for game master
+    IDLE --> GUESSING: receive 'new_round' MQTT
+    GUESSING --> GUESSING: Button A/B adjusts guess
+    GUESSING --> RESULTS: receive 'times_up' MQTT
+    RESULTS --> RESULTS: Send guess via MQTT
+    RESULTS --> IDLE: receive 'round_idle' MQTT
+```
 
-**1. Project Description**
-- What does it do? Why interesting? User experience?
 
-**2. Architecture Diagram**
-- Hardware, connections, data flow
-- Label input/computation/output
+### MQTT Topic Structure
 
-**3. Build Documentation**
-- Photos of each Pi + sensors
-- MQTT topics used
-- Code snippets with explanations
+- **Topics Used:**
+  - `IDD/birdgame/client/register` - Pis register with MAC address
+  - `IDD/birdgame/client/submit_guess` - Submit final guesses
+  - `IDD/birdgame/broadcast/new_round` - Start new guessing round
+  - `IDD/birdgame/broadcast/times_up` - End guessing period
+  - `IDD/birdgame/broadcast/round_idle` - Return to idle state
 
-**4. User Testing**
-- **Test with 2+ people NOT on your team**
-- Photos/video of use
-- What did they think before trying?
-- What surprised them?
-- What would they change?
+- **Message Format:** 
+```json
+// Registration
+{"mac": "2c:cf:67:df:5c:03"}
 
-**5. Reflection**
-- What worked well?
-- Challenges with distributed interaction?
-- How did sensor events work?
-- What would you improve?
-
----
-
-## Code Files
-
-**Server files:**
-- `app.py` - Pixel grid server (Flask + WebSocket + MQTT)
-- `mqtt_viewer.py` - MQTT message viewer for debugging
-- `mqtt_bridge.py` - MQTT → WebSocket bridge
-- `requirements-server.txt` - Server dependencies
-
-**Pi files:**
-- `pixel_grid_publisher.py` - Example (RGB sensor → MQTT)
-- `requirements-pi.txt` - Pi dependencies
-
-**Web interface:**
-- `templates/grid.html` - Pixel grid display
-- `templates/controller.html` - Color picker
-- `templates/mqtt_viewer.html` - Message viewer
-
----
-
-## Debugging Tools
-
-**MQTT Message Viewer:** `http://farlab.infosci.cornell.edu:5001`
-- See all MQTT messages in real-time
-- View topics and payloads
-- Helpful for debugging your own projects
-
-**Command line:**
-```bash
-# See all IDD messages
-mosquitto_sub -h farlab.infosci.cornell.edu -p 1883 -t "IDD/#" -u idd -P "device@theFarm"
+// Guess submission
+{"mac": "2c:cf:67:df:5c:03", "guess": 34}
 ```
 
 ---
 
-## Troubleshooting
+## Implementation
 
-**MQTT:** Broker `farlab.infosci.cornell.edu:1883`, user `idd`, pass `device@theFarm`
+### Hardware Configuration
 
-**Sensor:** Check `i2cdetect -y 1`, APDS-9960 at `0x39`
+#### Device 1 (Pi #1) - Jesse
+- **Hardware:** ST7789 Display, GPIO Buttons (pins 23, 24)
+- **Setup Photo:** [Image: Deliverables/pi1_setup.jpg]
+- **MQTT Role:** Publisher/Subscriber (Both)
+- **Code Snippet:**
+```python
+def poll_buttons():
+    if game_state == 'GUESSING':
+        if not buttonA.value:  # Button A pressed
+            current_guess += 1
+            display_needs_update = True
+        elif not buttonB.value:  # Button B pressed
+            current_guess = max(0, current_guess - 1)
+```
 
-**Grid:** Verify server running, check MQTT in console, test with web controller
+#### Device 2 (Pi #2) - Kyle
+- **Hardware:** ST7789 Display, GPIO Buttons (pins 23, 24)
+- **Setup Photo:** [Image: Deliverables/pi2_setup.jpg]
+- **MQTT Role:** Publisher/Subscriber (Both)
+- **MAC Address:** Unique identifier for player tracking
 
-**Pi venv:** Make sure to activate: `source .venv/bin/activate`
+#### Device 3 (Pi #3) - Angela
+- **Hardware:** ST7789 Display, GPIO Buttons (pins 23, 24)
+- **Setup Photo:** [Image: Deliverables/pi3_setup.jpg]
+- **MQTT Role:** Publisher/Subscriber (Both)
 
+#### Device 4 (Pi #4) - Nophar
+- **Hardware:** ST7789 Display, GPIO Buttons (pins 23, 24)
+- **Setup Photo:** [Image: Deliverables/pi4_setup.jpg]
+- **MQTT Role:** Publisher/Subscriber (Both)
+
+### Server/Central Processing
+
+- **Server Code:** [Link: Deliverables/game_server.py]
+- **Data Aggregation:** Collects all player guesses via MQTT, compares to correct answer
+- **Output Generation:** Determines winner based on closest guess, broadcasts results
 
 ---
 
-## Submission Checklist
+## User Testing
 
-Before submitting:
-- [ ] Delete prep/instructions above
-- [ ] Add YOUR project documentation
-- [ ] Include photos/videos/diagrams  
-- [ ] Document user testing with non-team members
-- [ ] Add reflection on learnings
-- [ ] List team names at top
+### Test Session 1 - Iqra
 
-**Your README = story of what YOU built!**
+- **Tester:** Iqra (not a team member)
+- **Initial Expectations:** Expected a simple number entry game, surprised by competitive aspect
+- **Testing Video:** [Link to Google Drive video]
+- **Surprises:** 
+  - Enjoyed the time pressure element
+  - Found button controls intuitive
+  - Liked seeing guess update in real-time
+- **Suggested Changes:** 
+  - Implement tie-breaking: "If there's a tie, the person who submitted first should win"
+  - Add more visual feedback for winner announcement
+
+### Test Session 2 - Akash  
+
+- **Tester:** Akash (not a team member)
+- **Initial Expectations:** Thought it would be turn-based, interested in simultaneous play
+- **Testing Video:** [Link to Google Drive video]
+- **Surprises:** 
+  - Game's continuous looping nature
+  - Simplicity of button controls
+  - Quick round transitions
+- **Suggested Changes:**
+  - Add "best of 3" or tournament mode to have clear ending
+  - Include player avatars/characters on screen for visual identification
+  - Add sound effects for game events
+
+### Key Findings
+
+- Physical buttons provided satisfying tactile feedback compared to touchscreen
+- Players wanted more visual representation of themselves in the game
+- Competition element was engaging but needed clearer win conditions
+- Time pressure created excitement but some wanted difficulty levels
 
 ---
 
-Resources: [MQTT Guide](https://www.hivemq.com/mqtt-essentials/) | [Paho Python](https://www.eclipse.org/paho/index.php?page=clients/python/docs/index.php) | [Flask-SocketIO](https://flask-socketio.readthedocs.io/)
+## Project Reflection
+
+### What Worked Well
+
+- **MQTT Synchronization:** All devices stayed perfectly in sync throughout gameplay
+- **Physical Controls:** Button input felt responsive and intuitive for quick adjustments
+- **Display Feedback:** Real-time guess updates on Pi displays kept players engaged
+
+
+### Challenges with Distributed Interaction
+
+- **Challenge 1: Network Latency**
+  - Description: Occasional delay between button press and server acknowledgment
+  - Solution: Implemented local display updates before MQTT confirmation
+
+- **Challenge 2: Player Identification**
+  - Description: Difficult to track which guess belonged to which player
+  - Solution: Used MAC addresses as unique identifiers, displayed last 5 chars
+
+- **Challenge 3: State Synchronization**
+  - Description: Ensuring all Pis transitioned states simultaneously
+  - Solution: Server broadcasts state changes to all clients at once
+
+### Sensor Event Handling
+
+The button-based interaction proved very for this fast-paced game. The physical buttons eliminated false triggers and provided clear user intent. The 200ms debounce timer prevented double-inputs while maintaining responsiveness. State-based input validation (only accepting input during GUESSING state) prevented erroneous submissions.
+
+
+### Potential Improvements
+
+1. **Tournament Mode:** Implement Akash's suggestion for "best of 3" rounds with cumulative scoring
+2. **Player Avatars:** Add visual representation of each player on the main display
+3. **Progressive Difficulty:** Start with easier counts, increase complexity over rounds
+4. **Timing Bonuses:** Reward faster correct guesses as suggested by Iqra
+5. **Audio Feedback:** Add sound effects for round start/end and winner announcement
+
+---
+
+## Technical Documentation
+
+### Dependencies
+
+- **Server Requirements:** 
+  - Flask, Flask-SocketIO, paho-mqtt
+  
+- **Pi Requirements:**
+  - adafruit-circuitpython-rgb-display
+  - paho-mqtt
+  - Pillow (PIL)
+
+### File Structure
+```
+Lab 6/
+├── bird_game_client.py       # Pi client code with button input
+├── game_server.py            # Central game server
+├── templates/
+│   ├── game_display.html     # Main game display interface
+│   └── admin_control.html    # Game master controls
+└── Deliverables/
+    ├── mqtt_viewer_screenshot.png
+    ├── concept_storyboard.png
+    └── [test videos, photos]
+```
+
+### Debugging Process
+
+- **MQTT Monitoring:** Used viewer at :5001 to track all game messages and verify MAC addresses
+- **Command Line Testing:** 
+```bash
+  mosquitto_sub -h farlab.infosci.cornell.edu -p 1883 -t "IDD/birdgame/#" -u idd -P "device@theFarm"
+```
+- **Troubleshooting:** Initial button wiring issues resolved by checking pull-up resistor configuration
+
+---
+
+## Sources
+
+- MQTT Protocol Documentation
+- Paho Python MQTT Client Library
+- Adafruit CircuitPython RGB Display Guide
+- Flask-SocketIO Documentation for real-time web communication
+
+---
