@@ -11,4 +11,4 @@
 
 | Session | Video Link |
 | :--- | :--- |
-| **User Testing Session (Iqra & Akash)** | [[Link to Google Drive User Testing Video](https://drive.google.com/drive/folders/1Otw4EflBPba2MUtgRIjj33EAPpWEZZMb) |
+| **User Testing Session (Iqra & Akash)** | [Link to Google Drive User Testing Video](https://drive.google.com/drive/folders/1Otw4EflBPba2MUtgRIjj33EAPpWEZZMb) |
