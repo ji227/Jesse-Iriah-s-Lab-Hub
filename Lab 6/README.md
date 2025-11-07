@@ -342,6 +342,7 @@ Lab 6/
 │   ├── grid.html             # Main game display interface (used by app.py/game_server.py)
 │   └── controller.html       # Game master controls (used by app.py/game_server.py)
 └── Deliverables/
+    ├── concept_storyboard.png # Concept storyboard for the game
     ├── app.py_terminal_screenshot.png # proof of Part B live collaboration
     ├── controller_screenshot.png
     ├── grid_screenshot.png
