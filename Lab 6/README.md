@@ -7,13 +7,12 @@ Angela Bi, Kyle Li, Nophar Shalom, Jesse Iriah
 Angela Bi, Kyle Li, Nophar Shalom, Jesse Iriah
 
 ## Team Contributions
-
-| Collaborator | Contributions | Notes |
-| :--- | :--- | :--- |
-| **Jesse Iriah** | Concept Sketch/Storyboard, Architecture Diagram, State Machine (All Sole), Video Participation, Testing Participation, Documentation. | Solely responsible for the initial design, diagramming, and state machine logic. |
-| **Kyle Li** | Developer/Debugging, Hardware Setup, Pi Client Code, Testing Participation, Documentation. | Key contributor to client code and hardware implementation. |
-| **Nophar Shalom**| Code Debugging, Testing Participation, Documentation. | Assisted in code refinement and distributed system testing. |
-| **Angela Bi** | Developer/Debugging, Documentation, Testing Participation. | Assisted with development and debugging. Successfully resolved network errors on Pi #3. |
+| Collaborator   | Contributions                                                                                      |
+| :-------------| :------------------------------------------------------------------------------------------------ |
+| **Jesse Iriah**| Concept sketch/storyboard, architecture diagram, state machine, video participation, testing participation, documentation. |
+| **Kyle Li**   | Developer/Debugging, hardware setup, pi client code, testing participation, documentation.          |
+| **Nophar Shalom**| Code debugging, testing participation, documentation.                                             |
+| **Angela Bi** | Developer/debugging, documentation, testing participation.                                         |
 
 ---
 
