@@ -275,7 +275,6 @@ The server manages all game state transitions and result aggregation, relying en
 - **Data Aggregation:** Collects all final player guesses from the `IDD/birdgame/client/+/guess` topic via MQTT, using the MAC address to track each submission.
 - **Output Generation:** Determines the winner based on the closest guess to the target count and broadcasts the results to all clients and the web interface.
 
-Markdown
 
 ### Live MQTT Data Flow Proof
 
@@ -296,7 +295,10 @@ Markdown
 To validate the **Distributed Number Guessing Game** and gather feedback on its competitive and real-time aspects, the system was tested with two individuals external to the development team simultaneously.
 
 - **Testers:** Iqra and Akash (Non-team members)
-- **Testing Video:** [User Testing Video](https://drive.google.com/file/d/1eUeII8ihZlDEZK7p8lxVowyuN6yJcOaU/view?usp=sharing)
+- **Testing Videos:**
+  [User Testing Video 1](https://drive.google.com/file/d/1eUeII8ihZlDEZK7p8lxVowyuN6yJcOaU/view?usp=sharing)
+  [User Testing Video 2](https://drive.google.com/file/d/1hRcG17_nF7vg5Su6h5w8Pa4PZYicviEh/view?usp=sharing)
+
 
 ### Key Observations (Iqra & Akash)
 
