@@ -268,7 +268,7 @@ Markdown
 
 ### Live MQTT Data Flow Proof
 
-![MQTT 3-Client Guess Submission Proof](/Deliverables/mqtt_3_client_guess.png)
+<img width="2252" height="1670" alt="mqtt_3_client_guess" src="https://github.com/user-attachments/assets/9c9f134b-9e97-4e02-9285-3dbf0f2aa1b0" />
 
 This screenshot from the central MQTT Message Viewer confirms the successful distributed communication for a single round of the game. It shows three unique Pi clients (Player 1, Kyle, and Nophar) submitting their final guesses immediately following the game state broadcast.
 
