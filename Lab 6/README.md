@@ -249,7 +249,7 @@ def poll_buttons():
 ### Pi Client Devices (Player Controllers)
 The core difference between clients is the MAC address that serves as the Player ID.
 
-| Device | Collaborator | Hardware Summary                  | Setup Photo                            |
+| Device | Collaborator | Hardware                    | Setup Photo                            |
 |--------|--------------|---------------------------------|--------------------------------------|
 | Pi #1  | Jesse        | ST7789 Display, GPIO Buttons (Pins 23, 24) | ![Pi 1 Setup](Deliverables/pi1_setup.jpg) |
 | Pi #2  | Kyle         | ST7789 Display, GPIO Buttons (Pins 23, 24) | ![Pi 2 Setup](Deliverables/pi2_setup.jpg) |
@@ -353,7 +353,7 @@ Lab 6/
     ├── pi2_setup.jpg        # Pi #2 Setup Photo (Kyle)
     ├── pi3_setup.jpg        # Pi #3 Setup Photo (Angela)
     ├── pi4_setup.jpg        # Pi #4 Setup Photo (Nophar)
-    └── **USER_TESTING_VIDEOS.md** # Links to user testing and system validation videos
+    └── **VIDEO_LINKS.md** # Links to user testing and system validation videos
 ```
 
 ### Debugging Process
