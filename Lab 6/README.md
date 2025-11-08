@@ -260,7 +260,7 @@ The core difference between clients is the MAC address that serves as the Player
 
 The server manages all game state transitions and result aggregation, relying entirely on the MQTT broker for communication.
 
-- **Server Code:** The game logic is handled by the server script. [Deliverables/game_server.py]
+- **Server Code:** The game logic is handled by the server script. [Link to game_server.py Code](/Deliverables/game_server.py)
 - **Data Aggregation:** Collects all final player guesses from the `IDD/birdgame/client/+/guess` topic via MQTT, using the MAC address to track each submission.
 - **Output Generation:** Determines the winner based on the closest guess to the target count and broadcasts the results to all clients and the web interface.
 
