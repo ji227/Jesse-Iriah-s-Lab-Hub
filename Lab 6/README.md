@@ -10,7 +10,7 @@ Angela Bi, Kyle Li, Nophar Shalom, Jesse Iriah
 | Collaborator   | Contributions                                                                                      |
 | :-------------| :------------------------------------------------------------------------------------------------ |
 | **Jesse Iriah**| Concept sketch/storyboard, architecture diagram, state machine, video/ testing participation, documentation, hardware setup. |
-| **Kyle Li**   | Developer/Debugging, hardware setup, pi client code, video/testing participation, documentation.          |
+| **Kyle Li**   | Programming/Debugging, hardware setup, pi client code, video/testing participation, documentation.          |
 | **Nophar Shalom**| Video/testing participation, documentation, hardware setup.                                             |
 | **Angela Bi** | Documentation, video/testing participation, hardware setup.                                         |
 
