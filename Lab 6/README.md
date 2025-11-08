@@ -264,6 +264,20 @@ The server manages all game state transitions and result aggregation, relying en
 - **Data Aggregation:** Collects all final player guesses from the `IDD/birdgame/client/+/guess` topic via MQTT, using the MAC address to track each submission.
 - **Output Generation:** Determines the winner based on the closest guess to the target count and broadcasts the results to all clients and the web interface.
 
+Markdown
+
+### Live MQTT Data Flow Proof
+
+![MQTT 3-Client Guess Submission Proof](/Deliverables/mqtt_3_client_guess.png)
+
+This screenshot from the central MQTT Message Viewer confirms the successful distributed communication for a single round of the game. It shows three unique Pi clients (Player 1, Kyle, and Nophar) submitting their final guesses immediately following the game state broadcast.
+
+| MAC Address | Collaborator | Guess Submitted |
+| :--- | :--- | :--- |
+| **...df:5c:03** | **Jesse** | **34** |
+| **...5b:c2** | Kyle | 29 |
+| **...5c:ac** | Nophar | 26 |
+
 ---
 
 ## User Testing
