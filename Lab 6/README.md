@@ -380,7 +380,7 @@ Lab 6/
     ├── pi2_setup.jpg        # Pi #2 Setup Photo (Kyle)
     ├── pi3_setup.jpg        # Pi #3 Setup Photo (Angela)
     ├── pi4_setup.jpg        # Pi #4 Setup Photo (Nophar)
-    └── **VIDEO_LINKS.md** # Links to user testing and system validation videos
+    └── VIDEO_LINKS.md # Links to user testing and system validation videos
 ```
 
 ### Debugging Process
