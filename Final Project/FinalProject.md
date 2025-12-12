@@ -130,7 +130,7 @@ Connected NeoPixel ring to Arduino Uno to verify basic LED control before adding
 *Initial breadboard setup with Arduino Uno controlling 24-LED NeoPixel ring*
 
 ![Arduino Wiring Detail](Assets/media/build/arduino_wiring.png)
-*Close-up of NeoPixel connections - note 5V power requirement and Pin 6 data line*
+*Diagram of NeoPixel connections - note 5V power requirement and Pin 6 data line*
 
 **Testing Process:**
 1. Installed Adafruit NeoPixel library in Arduino IDE
@@ -162,7 +162,7 @@ ser.write(b"0,0,255\n")  # Blue
 ```
 
 **Architecture Decision:**
-We chose a **Pi + Arduino hybrid** rather than direct Pi GPIO control because:
+A **Pi + Arduino hybrid** rather than direct Pi GPIO control was chosen for the following reasons:
 1. Arduino handles time-critical NeoPixel refresh without Linux OS interruptions
 2. Pi focuses on compute-heavy tasks (speech recognition, FFT, web server)
 3. Serial provides clean 9600 baud interface with ~30 FPS refresh rate
@@ -172,14 +172,9 @@ We chose a **Pi + Arduino hybrid** rather than direct Pi GPIO control because:
 
 #### Phase 3: Sensor Integration (Nov 17-24)
 
-**Step 3: Adding Interactive Inputs**
+**Step 3: Adding Microphone for Voice & Audio**
 
-With the LED control pipeline validated, we added sensors for different interaction modes.
-
-**Initial Sensor Testing:**
-- **Potentiometer:** Manual brightness control (analog input)
-- **IMU (Accelerometer):** Tilt-based color changes
-- **Microphone:** Voice commands + audio-reactive effects
+With the LED control pipeline validated, microphone input was added for voice commands and audio-reactive lighting.
 
 **Microphone Configuration:**
 
@@ -203,26 +198,8 @@ pip install sparkfun-qwiic sounddevice numpy SpeechRecognition
 **Microphone Feature Development:**
 
 Implemented two distinct audio modes:
-1. **Voice Commands:** "Lumos Maxima" (lights on), "Nox" (lights off)
-2. **Audio-Reactive:** Real-time volume/frequency analysis drives LED color/brightness
-
-**MPR121 Capacitive Touch Sensor:**
-
-Added color mixing interface using copper tape electrodes:
-- **Lead 0:** Add red "drop"
-- **Lead 1:** Add green "drop"
-- **Lead 2:** Add blue "drop"  
-- **Lead 11:** Reset palette
-
-This "paint mixing" metaphor makes RGB intuitive - users blend colors like physical pigments rather than abstract 0-255 values.
-```python
-# Color mixing algorithm from color_mixer.py
-total_drops = red_drops + green_drops + blue_drops
-if total_drops > 0:
-    r_val = (red_drops / total_drops) * 255
-    g_val = (green_drops / total_drops) * 255
-    b_val = (blue_drops / total_drops) * 255
-```
+1. **Voice Commands:** Speech-activated scene triggering ("Deep Focus", "Wicked", etc.)
+2. **Audio-Reactive (Party Mode):** Real-time volume/frequency analysis drives LED color/brightness based on music playback
 
 #### Phase 4: Enclosure Design (Nov 20-28)
 
@@ -241,7 +218,7 @@ Design requirements:
 **3D Model Visualization:**
 
 ![Autodesk Viewer](Assets/media/build/scene_autodeskViewer.png)
-*Final CAD model rendered in Autodesk Viewer - note clean aesthetic with no visible fasteners*
+*Final CAD model rendered in Autodesk Viewer*
 
 **Physical Build:**
 
