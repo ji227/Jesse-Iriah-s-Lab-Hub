@@ -39,11 +39,13 @@ Create an all-in-one ambient device that eliminates the need for multiple smart 
 - **Relaxation:** Warm tones with rainfall or meditation audio
 - **Voice convenience:** Hands-free scene activation while cooking, working, or winding down
 
-### Initial Concept Sketches
+### Initial Concept Sketch
 
 ![Initial Sketch](Assets/media/concept/scene_sketch.jpg)
 
 *Early hardware concept showing sphere diffuser on cube base with integrated microphone and USB-C power*
+
+### Storyboard
 
 ![Storyboard](Assets/media/concept/scene_storyboard.jpg)
 
