@@ -888,21 +888,21 @@ void loop() {
 
 **1. Hybrid Pi + Arduino Architecture**
 
-The decision to split responsibilities between Raspberry Pi (high-level control) and Arduino (LED driver) proved essential. Early attempts to drive NeoPixels directly from Pi GPIO resulted in visible flickering due to Linux scheduling interrupts. Offloading time-critical LED refresh to Arduino's deterministic loop eliminated this issue entirely while allowing the Pi to focus on compute-intensive tasks like speech recognition and FFT analysis.
+The decision to split responsibilities between Raspberry Pi (high-level control) and Arduino (LED driver) proved essential. Early attempts to drive NeoPixels directly from Pi GPIO resulted in visible flickering due to Linux scheduling interrupts. Offloading time-critical LED refresh to Arduino's deterministic loop eliminated this issue entirely while allowing the Pi to focus on compute-intensive tasks like speech recognition and FFT analysis.  
 
-**Lesson:** Distributed architectures with specialized roles often outperform monolithic designs. Don't try to force a single microcontroller to handle all tasks.
+**Lesson:** Distributed architectures with specialized roles often outperform monolithic designs. Don't try to force a single microcontroller to handle all tasks.  
 
 **2. Iterative Hardware Testing**
 
-Testing each component independently before integration (Arduino→LED, then Pi→Arduino serial, then sensors) made debugging straightforward. When issues arose, isolation to specific subsystems was possible rather than troubleshooting the entire stack.
+Testing each component independently before integration (Arduino→LED, then Pi→Arduino serial, then sensors) made debugging straightforward. When issues arose, isolation to specific subsystems was possible rather than troubleshooting the entire stack.  
 
-**Lesson:** Validate each hardware interface separately before building the complete system. The extra time spent on incremental testing saves hours of debugging later.
+**Lesson:** Validate each hardware interface separately before building the complete system. The extra time spent on incremental testing saves hours of debugging later.  
 
 **3. Real-Time User Feedback**
 
-Both the web interface and physical LEDs provided immediate visual feedback for user actions. This tight feedback loop made the system feel responsive and helped users understand cause-and-effect relationships without reading documentation.
+Both the web interface and physical LEDs provided immediate visual feedback for user actions. This tight feedback loop made the system feel responsive and helped users understand cause-and-effect relationships without reading documentation.  
 
-**Lesson:** Visible, immediate feedback is critical for intuitive interaction design. Users shouldn't have to guess whether their input was received.
+**Lesson:** Visible, immediate feedback is critical for intuitive interaction design. Users shouldn't have to guess whether their input was received.  
 
 ---
 
@@ -910,27 +910,27 @@ Both the web interface and physical LEDs provided immediate visual feedback for 
 
 **1. Serial Communication Buffer Limits**
 
-The system occasionally dropped serial commands during rapid color changes. Arduino's serial buffer (64 bytes) was overflowing when the Pi sent commands faster than Arduino could process them. Solution: Added 10ms delay between serial writes and implemented buffer checking.
+The system occasionally dropped serial commands during rapid color changes. Arduino's serial buffer (64 bytes) was overflowing when the Pi sent commands faster than Arduino could process them. Solution: Added 10ms delay between serial writes and implemented buffer checking.  
 
-**Lesson:** Always consider buffer sizes and timing constraints when designing inter-device communication protocols. Read hardware specs before assuming unlimited throughput.
+**Lesson:** Always consider buffer sizes and timing constraints when designing inter-device communication protocols. Read hardware specs before assuming unlimited throughput.  
 
 **2. Google Speech API Latency**
 
-Voice commands require internet connectivity and introduce ~1 second latency due to cloud processing. Initial expectations of near-instant response were unrealistic - this delay is inherent to the Google Speech Recognition API. For truly instant response, offline speech recognition (e.g., PocketSphinx) would be necessary.
+Voice commands require internet connectivity and introduce ~1 second latency due to cloud processing. Initial expectations of near-instant response were unrealistic - this delay is inherent to the Google Speech Recognition API. For truly instant response, offline speech recognition (e.g., PocketSphinx) would be necessary.  
 
-**Lesson:** Cloud-based APIs trade latency for accuracy. For time-critical applications, investigate offline alternatives early in the design process.
+**Lesson:** Cloud-based APIs trade latency for accuracy. For time-critical applications, investigate offline alternatives early in the design process.  
 
 **3. Spotify API Preview Limitations**
 
-Spotify only provides 30-second previews for non-Premium users - this wasn't discovered until late in development. This significantly limited Party Mode's appeal. Earlier awareness would have prioritized local MP3 upload functionality.
+Spotify only provides 30-second previews for non-Premium users - this wasn't discovered until late in development. This significantly limited Party Mode's appeal. Earlier awareness would have prioritized local MP3 upload functionality.  
 
-**Lesson:** Thoroughly read API documentation and test limitations before building features that depend on third-party services.
+**Lesson:** Thoroughly read API documentation and test limitations before building features that depend on third-party services.  
 
 **4. 3D Print Tolerances**
 
-The sphere diffuser required multiple print iterations to achieve a friction-fit. First attempt with 100mm cutout was too loose; second at 98mm was too tight. Final version at 99mm worked perfectly.
+The sphere diffuser required multiple print iterations to achieve a friction-fit. First attempt with 100mm cutout was too loose; second at 98mm was too tight. Final version at 99mm worked perfectly.  
 
-**Lesson:** Always account for print tolerances and material shrinkage. Build in adjustment mechanisms or plan for iterative prototyping.
+**Lesson:** Always account for print tolerances and material shrinkage. Build in adjustment mechanisms or plan for iterative prototyping.  
 
 ---
 
@@ -938,31 +938,31 @@ The sphere diffuser required multiple print iterations to achieve a friction-fit
 
 **Challenge 1: Audio-Reactive Synchronization**
 
-**Problem:** Initial audio analysis had ~500ms lag between music playback and LED response, making synchronization feel disconnected.
+**Problem:** Initial audio analysis had ~500ms lag between music playback and LED response, making synchronization feel disconnected.  
 
-**Solution:** Reduced FFT blocksize from 4096 to 2048 samples, halving latency to ~50ms. Also switched from Pi's onboard audio jack (which has its own buffering) to Bluetooth speaker, which paradoxically reduced overall system latency.
+**Solution:** Reduced FFT blocksize from 4096 to 2048 samples, halving latency to ~50ms. Also switched from Pi's onboard audio jack (which has its own buffering) to Bluetooth speaker, which paradoxically reduced overall system latency.  
 
-**Takeaway:** Latency in interactive systems compounds across components. Profile each stage of the pipeline to identify bottlenecks.
+**Takeaway:** Latency in interactive systems compounds across components. Profile each stage of the pipeline to identify bottlenecks.  
 
 ---
 
 **Challenge 2: Voice Recognition in Noisy Environments**
 
-**Problem:** Microphone picked up LED noise (electrical interference) and music playback during Party Mode, causing false voice triggers.
+**Problem:** Microphone picked up LED noise (electrical interference) and music playback during Party Mode, causing false voice triggers.  
 
-**Solution:** Implemented noise gate with volume threshold - voice commands only processed when audio input exceeds baseline. Added 2-second cooldown after Party Mode ends before re-enabling voice listener.
+**Solution:** Implemented noise gate with volume threshold - voice commands only processed when audio input exceeds baseline. Added 2-second cooldown after Party Mode ends before re-enabling voice listener.  
 
-**Takeaway:** Environmental noise is inevitable in real-world deployments. Build in signal filtering and context-aware logic to prevent false positives.
+**Takeaway:** Environmental noise is inevitable in real-world deployments. Build in signal filtering and context-aware logic to prevent false positives.  
 
 ---
 
 **Challenge 3: Flask Server Crashes on Long-Running Scenes**
 
-**Problem:** Scenes longer than 60 minutes would cause Flask to timeout and crash, stopping LED playback mid-sequence.
+**Problem:** Scenes longer than 60 minutes would cause Flask to timeout and crash, stopping LED playback mid-sequence.  
 
-**Solution:** Moved scene playback to a separate background thread that continues even if Flask request times out. Added graceful shutdown handlers to clean up threads on server restart.
+**Solution:** Moved scene playback to a separate background thread that continues even if Flask request times out. Added graceful shutdown handlers to clean up threads on server restart.  
 
-**Takeaway:** Don't run long-duration tasks in HTTP request handlers. Use background workers (threads, queues, or separate processes) for operations that outlive the request-response cycle.
+**Takeaway:** Don't run long-duration tasks in HTTP request handlers. Use background workers (threads, queues, or separate processes) for operations that outlive the request-response cycle.  
 
 ---
 
@@ -987,45 +987,45 @@ The sphere diffuser required multiple print iterations to achieve a friction-fit
 
 **1. Physical Form Matters**
 
-The minimalist cube + sphere aesthetic wasn't just about looks - it communicated the product's purpose immediately. Users understood "this is a light" without explanation. A messy breadboard prototype wouldn't have received the same enthusiastic response during testing.
+The minimalist cube + sphere aesthetic wasn't just about looks - it communicated the product's purpose immediately. Users understood "this is a light" without explanation. A messy breadboard prototype wouldn't have received the same enthusiastic response during testing.  
 
-**Lesson:** Industrial design is part of the user experience. A polished enclosure signals quality and makes people take the project seriously.
+**Lesson:** Industrial design is part of the user experience. A polished enclosure signals quality and makes people take the project seriously.  
 
 **2. Multiple Interaction Modes Serve Different Contexts**
 
-No single input method works for all situations. Voice is perfect when hands are busy. Web interface excels for detailed customization. Audio-reactive mode requires zero input. Offering all three made SCENE adaptable to different user needs and environments.
+No single input method works for all situations. Voice is perfect when hands are busy. Web interface excels for detailed customization. Audio-reactive mode requires zero input. Offering all three made SCENE adaptable to different user needs and environments.  
 
-**Lesson:** Don't force users into a single interaction paradigm. Provide multiple input methods optimized for different use cases.
+**Lesson:** Don't force users into a single interaction paradigm. Provide multiple input methods optimized for different use cases.  
 
 **3. Iteration Based on Real User Feedback is Essential**
 
-The initial web interface included hue controls that confused both testers. Simplification to color presets resolved this. This change only happened because real users were observed struggling with the original design. Internal testing wouldn't have caught this issue.
+The initial web interface included hue controls that confused both testers. Simplification to color presets resolved this. This change only happened because real users were observed struggling with the original design. Internal testing wouldn't have caught this issue.  
 
-**Lesson:** Assumptions about intuitive design are often wrong. Test with real users early and often, then be willing to cut features that don't work.
+**Lesson:** Assumptions about intuitive design are often wrong. Test with real users early and often, then be willing to cut features that don't work.  
 
 **4. Integration is Harder Than Individual Components**
 
-Each piece worked perfectly in isolation: Arduino controlled LEDs flawlessly, voice recognition was accurate, Spotify API returned results. But combining them revealed edge cases that weren't anticipated (e.g., voice listener picking up music playback, serial buffer overflows, thread synchronization issues).
+Each piece worked perfectly in isolation: Arduino controlled LEDs flawlessly, voice recognition was accurate, Spotify API returned results. But combining them revealed edge cases that weren't anticipated (e.g., voice listener picking up music playback, serial buffer overflows, thread synchronization issues).  
 
-**Lesson:** Budget extra time for integration and system-level testing. The whole is often more complex than the sum of its parts.
+**Lesson:** Budget extra time for integration and system-level testing. The whole is often more complex than the sum of its parts.  
 
 ---
 
 ### Development Insights
 
 **Hardware Design:**
-Planning for manufacturing constraints early is critical. The enclosure was designed in TinkerCAD assuming perfect print accuracy, but real-world tolerances meant multiple iterations. Future projects should include adjustment mechanisms from the start (e.g., slots instead of exact-fit holes). Detailed build photos made reassembly after failures much easier and proved essential for documentation.
+Planning for manufacturing constraints early is critical. The enclosure was designed in TinkerCAD assuming perfect print accuracy, but real-world tolerances meant multiple iterations. Future projects should include adjustment mechanisms from the start (e.g., slots instead of exact-fit holes). Detailed build photos made reassembly after failures much easier and proved essential for documentation.    
 
 **Software Architecture:**
-Software architecture decisions have physical consequences. When the audio FFT algorithm was optimized, CPU load reduced enough that the Pi stopped thermally throttling, which eliminated LED flickering that had persisted for days. Embracing imperfect third-party APIs (like Spotify's preview limitation) rather than waiting for ideal solutions proved valuable - shipping a working feature with constraints beats having no feature at all.
+Software architecture decisions have physical consequences. When the audio FFT algorithm was optimized, CPU load reduced enough that the Pi stopped thermally throttling, which eliminated LED flickering that had persisted for days. Embracing imperfect third-party APIs (like Spotify's preview limitation) rather than waiting for ideal solutions proved valuable - shipping a working feature with constraints beats having no feature at all.    
 
 ---
 
 ### Final Assessment
 
-SCENE successfully demonstrates that unified ambiance control is achievable with consumer hardware and open-source software. The positive user feedback validates the core hypothesis: people want a single device that handles light + sound without juggling multiple apps.
+SCENE successfully demonstrates that unified ambiance control is achievable with consumer hardware and open-source software. The positive user feedback validates the core hypothesis: people want a single device that handles light + sound without juggling multiple apps.  
 
-The biggest surprise was how much users loved the audio-reactive Party Mode - a feature that was almost cut due to time constraints. This reinforced the value of building experimental features even when they seem risky.
+The biggest surprise was how much users loved the audio-reactive Party Mode - a feature that was almost cut due to time constraints. This reinforced the value of building experimental features even when they seem risky.  
 
 **Commercialization Path:**
 
@@ -1037,7 +1037,7 @@ If SCENE were to be commercialized, the next steps would be:
 
 **Project Outcome:**
 
-This project achieved its goal of creating a polished, functional interactive device that people genuinely wanted to use. The skills learned - from serial protocols to audio DSP to user testing methodology - will transfer directly to future hardware/software integration projects.
+This project achieved its goal of creating a polished, functional interactive device that people genuinely wanted to use. The skills learned - from serial protocols to audio DSP to user testing methodology - will transfer directly to future hardware/software integration projects.  
 
 ---
 
@@ -1107,16 +1107,16 @@ This project achieved its goal of creating a polished, functional interactive de
 ### Acknowledgments
 
 **Testing Participants:**
-- Nophar - User testing across all three interaction modes, valuable feedback on voice recognition and audio-reactive features
-- Kyle - User testing and detailed feature requests, identification of UI/UX pain points
+- Nophar - User testing across all three interaction modes, valuable feedback on voice recognition and audio-reactive features  
+- Kyle - User testing and detailed feature requests, identification of UI/UX pain points  
 
 **Course Support:**
-- Professor Wendy Ju - Course instruction and project guidance
-- IDD Teaching Team - Technical support and lab resources
+- Professor Wendy Ju - Course instruction and project guidance  
+- IDD Teaching Team - Technical support and lab resources   
 
 **Hardware & Fabrication:**
-- Cornell MakerLab - 3D printer access and filament
-- Phillips Hall Electronics Shop - Component sourcing and testing equipment
+- Cornell MakerLab - 3D printer access and filament  
+- Phillips Hall Electronics Shop - Component sourcing and testing equipment  
 
 ---
 
