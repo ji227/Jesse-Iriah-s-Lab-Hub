@@ -1126,8 +1126,7 @@ This project achieved its goal of creating a polished, functional interactive de
 - IDD Teaching Team - Technical support and lab resources   
 
 **Hardware & Fabrication:**
-- Cornell MakerLab - 3D printer access and filament  
-- Phillips Hall Electronics Shop - Component sourcing and testing equipment  
+- Cornell MakerLab - 3D printer access and filament   
 
 ---
 
