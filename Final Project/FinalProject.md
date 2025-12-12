@@ -248,39 +248,35 @@ Design requirements:
 **System Diagram:**
 ```mermaid
 graph TD
-    subgraph "User Interfaces"
-        UI1[Web BrowserTimeline Editor]
-        UI2[Voice CommandsSpeech Recognition]
-        UI3[Touch Sensor PadsMPR121]
+    subgraph UI["User Interfaces"]
+        UI1["Web Browser<br/>Timeline Editor"]
+        UI2["Voice Commands<br/>Speech Recognition"]
     end
 
-    subgraph "Raspberry Pi 4 - Flask Server"
-        SCENE[scene.pyWeb UI & API]
-        VOICE[voice_listener.pySpeech Daemon]
-        SPOTIFY[spotify_party.pyMusic + Audio FFT]
-        MIXER[color_mixer.pyTouch Input Handler]
-        HW[hardware.pySerial Controller]
+    subgraph PI["Raspberry Pi 4 - Flask Server"]
+        SCENE["scene.py<br/>Web UI & API"]
+        VOICE["voice_listener.py<br/>Speech Daemon"]
+        SPOTIFY["spotify_party.py<br/>Music + Audio FFT"]
+        HW["hardware.py<br/>Serial Controller"]
     end
 
-    subgraph "Arduino Uno - LED Driver"
-        ARDUINO[Led_Control_arduino.inoNeoPixel Controller]
+    subgraph ARDUINO_BOX["Arduino Uno - LED Driver"]
+        ARDUINO["Led_Control_arduino.ino<br/>NeoPixel Controller"]
     end
 
-    subgraph "Output"
-        LED[24 NeoPixel LED Ring]
+    subgraph OUTPUT["Output"]
+        LED["24 NeoPixel LED Ring"]
     end
 
     UI1 --> SCENE
     UI2 --> VOICE
-    UI3 --> MIXER
     
     SCENE --> HW
     VOICE --> HW
     SPOTIFY --> HW
-    MIXER --> HW
     
-    HW -->|USB Serial9600 baud"R,G,B\n"| ARDUINO
-    ARDUINO -->|Digital Pin 6| LED
+    HW -->|"USB Serial<br/>9600 baud<br/>'R,G,B\n'"| ARDUINO
+    ARDUINO -->|"Digital Pin 6"| ARDUINO
 ```
 
 **Key Software Components:**
