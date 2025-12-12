@@ -232,7 +232,8 @@ Design requirements:
 
 **Physical Build:**
 
-![Final Device](https://github.com/user-attachments/assets/f696dad2-b288-4e9e-ad8c-1e5aab0f906d)
+![Final Device](Assets/media/build/scene_photopng)
+
 
 *Completed SCENE device - white PLA enclosure with frosted sphere diffuser, minimalist design inspired by modern smart home products*
 
