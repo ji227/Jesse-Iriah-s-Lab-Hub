@@ -47,7 +47,7 @@ Create an all-in-one ambient device that eliminates the need for multiple smart 
 
 ![Storyboard](Assets/media/concept/scene_storyboard.jpg)
 
-*User interaction flow: (1) Setup & power on, (2) Create custom scene via web UI, (3) Save and name scene, (4) Voice activation, (5) Device executes programmed sequence*
+*User interaction flow: (1) Setup & power on, (2) Create custom scene via UI, (3) Save and name scene, (4) Voice activation, (5) Device executes programmed sequence*
 
 ### Timeline
 
