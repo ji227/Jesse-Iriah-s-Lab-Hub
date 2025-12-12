@@ -1,58 +1,108 @@
-# Final Project
+# SCENE: The Art of Ambiance
 
-Using the tools and techniques you learned in this class, design, prototype and test an interactive device.
+**Team Members:**  
+Jesse Iriah, Iqra Khan
 
-Project plan - November 10  (updated documentation due in Canvas November 11)
+## Team Contributions
+| Team Member | Contributions |
+|-------------|---------------|
+| **Jesse Iriah** | Hardware enclosure design (TinkerCAD modeling, 3D printing), hardware testing, software development, system integration, hardware assembly, user testing, documentation, video recording |
+| **Iqra Khan** | Software architecture (Flask web app, Arduino communication, Spotify integration), voice control implementation, system integration, core feature development, user testing, documentation |
 
-** Peer feedback on Project plans: November 13 ** <-- this is part of class participation!
+---
 
-Functional check-off - December 1 
+## Project Overview
 
-Final Project Presentations - December 8
+SCENE is a smart ambient lighting and sound system that transforms any space through synchronized light and audio experiences. The device combines a spherical diffuser lamp with a modular control system, offering three interaction modes: Studio Mode for precise manual control via web interface, Voice Mode for hands-free activation using speech commands, and Party Mode for real-time audio-reactive lighting synchronized with music playback.
 
-Write-up and documentation due - December 15 
+**Core Features:**
+- Web-based timeline editor for creating custom lighting sequences
+- Voice-activated scene triggering
+- Real-time audio analysis with microphone-driven LED reactions
+- Spotify integration with music-synced lighting effects
+- Persistent scene storage with JSON configuration files
 
-## Objective
+**Demo Videos:** [SCENE Project Folder](https://drive.google.com/drive/folders/12Zgj43E09HnoGVaSLpz_glJq2OIJacpn?usp=drive_link)
 
-The goal of this final project is for you to have a functioning and well-designed interactive device of your own design.
- 
-## Description
-Your project is to design and build an interactive device to suit a specific application of your choosing, and *test the interaction with people*. 
+---
 
-## Deliverables
+## Project Plan
 
-1. Project plan: Big idea, timeline, parts needed, fall-back plan.
+### Ideation
 
-2. Functioning project: The finished project should be a device, system, interface, etc. that people can interact with.
+Create an all-in-one ambient device that eliminates the need for multiple smart home products by combining customizable lighting, synchronized sound, and intelligent voice control into a single elegant form factor. SCENE addresses the fragmentation of modern smart home ecosystems where users need separate apps for lights (Philips Hue), speakers (Sonos), and voice assistants (Alexa) - instead offering a unified, programmable ambiance system.
 
-3. Documentation of design process
-4. Archive of all code, design patterns, etc. used in the final design. (As with labs, the standard should be that the documentation would allow you to recreate your project if you woke up with amnesia.)
-5. Video of someone using your project
-6. Reflections on process (What have you learned or wish you knew at the start?)
+**Target Use Cases:**
+- **Morning routines:** Gradual sunrise simulation with nature sounds
+- **Focus sessions:** Steady blue lighting with white noise or lofi music
+- **Entertainment:** Music-reactive party lighting synced to Spotify playback
+- **Relaxation:** Warm tones with rainfall or meditation audio
+- **Voice convenience:** Hands-free scene activation while cooking, working, or winding down
 
-7. Group work distribution questionnaire
+### Initial Concept Sketches
 
-## Change of Design
+![Initial Sketch](Assets/media/concept/scene_sketch.jpg)
+*Early hardware concept showing sphere diffuser on cube base with integrated microphone and USB-C power*
 
-It is fine to change your project goals, but please resubmit the project plan for the new design when you do that.
+![Storyboard](Assets/media/concept/scene_storyboard.jpg)
+*User interaction flow: (1) Setup & power on, (2) Create custom scene via web UI, (3) Save and name scene, (4) Voice activation, (5) Device executes programmed sequence*
 
-## Grading rubric
+### Timeline
 
-20% Project planning: Allocation of needed resources (time, people, materials, facilities) anticipated well.
+| Milestone | Target Date | Status |
+|-----------|-------------|--------|
+| Project plan submission | Nov 10 | Complete |
+| Hardware prototyping (breadboard + sensors) | Nov 17 | Complete |
+| Enclosure CAD design & 3D printing | Nov 24 | Complete |
+| Core software features (web UI, serial comm) | Nov 24 | Complete |
+| Voice control integration | Dec 1 | Complete |
+| Spotify + audio-reactive mode | Dec 1 | Complete |
+| Functional check-off | Dec 1 | Complete |
+| User testing with 2+ participants | Dec 5 | Complete |
+| Final documentation & video | Dec 8 | Complete |
 
-20% Design of project: Interaction, hardware and software aspects of projects planned well.
+### Parts & Components
 
-20% Testing of project: Functional or wizarded system tested with people
+**Electronics:**
+- Raspberry Pi 4 (main controller)
+- Arduino Uno (LED driver via serial)
+- Adafruit NeoPixel Ring - 24 LEDs (RGB lighting)
+- Adafruit MPR121 Capacitive Touch Sensor (color mixing input)
+- USB Microphone (voice commands + audio analysis)
+- USB-C Power Supply (5V, 3A)
 
-20% Prototype functionality: System capable of interaction, either through autonomous or wizarded mechanisms
+**Physical Materials:**
+- 3D printed cube enclosure (PLA, white)
+- Spherical lamp diffuser (frosted acrylic, 6" diameter)
+- Jumper wires, USB cables
+- Mounting hardware (screws, standoffs)
 
-20% Project documentation: Text, video, and photo of project illustratign capability and documenting plans and process
+**Software Dependencies:**
+```
+Flask (web server)
+pyserial (Arduino communication)
+adafruit-circuitpython-mpr121 (touch sensor)
+SpeechRecognition (voice commands)
+sounddevice + numpy (audio analysis)
+spotipy (Spotify API integration)
+```
 
-## Teams
+### Fall-Back Plan
 
-You can and are not required to work in teams. Be clear in documentation who contributed what. The total project contributions should reflect the number of people on the project.
+**If voice recognition fails:**
+- Rely on web UI with saved scene library for quick access
+- Add physical buttons for 3-5 preset scenes
 
-## Examples
+**If Spotify integration fails:**
+- Use local MP3 uploads with audio-reactive lighting
+- Microphone-driven effects work independently of music source
 
-[Here is a list of good final projects from previous classes.](https://github.com/FAR-Lab/Developing-and-Designing-Interactive-Devices/wiki/Previous-Final-Projects)
+**If 3D printing delays occur:**
+- Use cardboard/foamcore prototype enclosure
+- Focus on functional software demo with exposed hardware
 
+**If audio analysis is too CPU-intensive:**
+- Simplify algorithm to basic volume-based brightness control
+- Pre-compute FFT at lower sample rates
+
+---
