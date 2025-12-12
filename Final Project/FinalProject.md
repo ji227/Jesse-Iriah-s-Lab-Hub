@@ -22,7 +22,7 @@ SCENE is a smart ambient lighting and sound system that transforms any space thr
 - Spotify integration with music-synced lighting effects
 - Persistent scene storage with JSON configuration files
 
-**Demo Videos:** [SCENE Project Folder](https://drive.google.com/drive/folders/12Zgj43E09HnoGVaSLpz_glJq2OIJacpn?usp=drive_link)
+**Demo Videos:** [SCENE Videos - Project Folder](https://drive.google.com/drive/folders/12Zgj43E09HnoGVaSLpz_glJq2OIJacpn?usp=drive_link)
 
 ---
 
