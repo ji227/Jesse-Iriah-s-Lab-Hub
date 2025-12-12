@@ -890,19 +890,19 @@ void loop() {
 
 The decision to split responsibilities between Raspberry Pi (high-level control) and Arduino (LED driver) proved essential. Early attempts to drive NeoPixels directly from Pi GPIO resulted in visible flickering due to Linux scheduling interrupts. Offloading time-critical LED refresh to Arduino's deterministic loop eliminated this issue entirely while allowing the Pi to focus on compute-intensive tasks like speech recognition and FFT analysis.  
 
-**Lesson:** Distributed architectures with specialized roles often outperform monolithic designs. Don't try to force a single microcontroller to handle all tasks.  
+**Lesson learned:** Distributed architectures with specialized roles often outperform monolithic designs. Don't try to force a single microcontroller to handle all tasks.  
 
 **2. Iterative Hardware Testing**
 
 Testing each component independently before integration (Arduino→LED, then Pi→Arduino serial, then sensors) made debugging straightforward. When issues arose, isolation to specific subsystems was possible rather than troubleshooting the entire stack.  
 
-**Lesson:** Validate each hardware interface separately before building the complete system. The extra time spent on incremental testing saves hours of debugging later.  
+**Lesson learned:** Validate each hardware interface separately before building the complete system. The extra time spent on incremental testing saves hours of debugging later.  
 
 **3. Real-Time User Feedback**
 
 Both the web interface and physical LEDs provided immediate visual feedback for user actions. This tight feedback loop made the system feel responsive and helped users understand cause-and-effect relationships without reading documentation.  
 
-**Lesson:** Visible, immediate feedback is critical for intuitive interaction design. Users shouldn't have to guess whether their input was received.  
+**Lesson learned:** Visible, immediate feedback is critical for intuitive interaction design. Users shouldn't have to guess whether their input was received.  
 
 ---
 
@@ -912,25 +912,25 @@ Both the web interface and physical LEDs provided immediate visual feedback for 
 
 The system occasionally dropped serial commands during rapid color changes. Arduino's serial buffer (64 bytes) was overflowing when the Pi sent commands faster than Arduino could process them. Solution: Added 10ms delay between serial writes and implemented buffer checking.  
 
-**Lesson:** Always consider buffer sizes and timing constraints when designing inter-device communication protocols. Read hardware specs before assuming unlimited throughput.  
+**Lesson learned:** Always consider buffer sizes and timing constraints when designing inter-device communication protocols. Read hardware specs before assuming unlimited throughput.  
 
 **2. Google Speech API Latency**
 
 Voice commands require internet connectivity and introduce ~1 second latency due to cloud processing. Initial expectations of near-instant response were unrealistic - this delay is inherent to the Google Speech Recognition API. For truly instant response, offline speech recognition (e.g., PocketSphinx) would be necessary.  
 
-**Lesson:** Cloud-based APIs trade latency for accuracy. For time-critical applications, investigate offline alternatives early in the design process.  
+**Lesson learned:** Cloud-based APIs trade latency for accuracy. For time-critical applications, investigate offline alternatives early in the design process.  
 
 **3. Spotify API Preview Limitations**
 
 Spotify only provides 30-second previews for non-Premium users - this wasn't discovered until late in development. This significantly limited Party Mode's appeal. Earlier awareness would have prioritized local MP3 upload functionality.  
 
-**Lesson:** Thoroughly read API documentation and test limitations before building features that depend on third-party services.  
+**Lesson learned:** Thoroughly read API documentation and test limitations before building features that depend on third-party services.  
 
 **4. 3D Print Tolerances**
 
 The sphere diffuser required multiple print iterations to achieve a friction-fit. First attempt with 100mm cutout was too loose; second at 98mm was too tight. Final version at 99mm worked perfectly.  
 
-**Lesson:** Always account for print tolerances and material shrinkage. Build in adjustment mechanisms or plan for iterative prototyping.  
+**Lesson learned:** Always account for print tolerances and material shrinkage. Build in adjustment mechanisms or plan for iterative prototyping.  
 
 ---
 
@@ -989,25 +989,25 @@ The sphere diffuser required multiple print iterations to achieve a friction-fit
 
 The minimalist cube + sphere aesthetic wasn't just about looks - it communicated the product's purpose immediately. Users understood "this is a light" without explanation. A messy breadboard prototype wouldn't have received the same enthusiastic response during testing.  
 
-**Lesson:** Industrial design is part of the user experience. A polished enclosure signals quality and makes people take the project seriously.  
+**Lesson learned:** Industrial design is part of the user experience. A polished enclosure signals quality and makes people take the project seriously.  
 
 **2. Multiple Interaction Modes Serve Different Contexts**
 
 No single input method works for all situations. Voice is perfect when hands are busy. Web interface excels for detailed customization. Audio-reactive mode requires zero input. Offering all three made SCENE adaptable to different user needs and environments.  
 
-**Lesson:** Don't force users into a single interaction paradigm. Provide multiple input methods optimized for different use cases.  
+**Lesson learned:** Users should not be forced into a single interaction paradigm. Provide multiple input methods optimized for different use cases.  
 
 **3. Iteration Based on Real User Feedback is Essential**
 
 The initial web interface included hue controls that confused both testers. Simplification to color presets resolved this. This change only happened because real users were observed struggling with the original design. Internal testing wouldn't have caught this issue.  
 
-**Lesson:** Assumptions about intuitive design are often wrong. Test with real users early and often, then be willing to cut features that don't work.  
+**Lesson learned:** Assumptions about intuitive design are often wrong. Test with real users early and often, then be willing to cut features that don't work.  
 
 **4. Integration is Harder Than Individual Components**
 
 Each piece worked perfectly in isolation: Arduino controlled LEDs flawlessly, voice recognition was accurate, Spotify API returned results. But combining them revealed edge cases that weren't anticipated (e.g., voice listener picking up music playback, serial buffer overflows, thread synchronization issues).  
 
-**Lesson:** Budget extra time for integration and system-level testing. The whole is often more complex than the sum of its parts.  
+**Lesson learned:** Budget extra time for integration and system-level testing. The whole is often more complex than the sum of its parts.  
 
 ---
 
