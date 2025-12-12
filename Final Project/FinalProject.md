@@ -292,7 +292,7 @@ graph TD
 
 **Data Flow Example (Voice Command):**
 ```
-1. User says: "Hey Scene, start Focus Mode"
+1. User requests a saved scene (e.g. Focus Mode)
 2. voice_listener.py captures audio via USB mic
 3. Google Speech API returns text: "start focus mode"
 4. POST request to Flask: /api/start-by-name/focus
