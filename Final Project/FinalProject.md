@@ -127,9 +127,11 @@ Connected NeoPixel ring to Arduino Uno to verify basic LED control before adding
 - Data In → Digital Pin 6
 
 ![Arduino LED Setup](Assets/media/build/arduino_led_test.png)
+
 *Initial breadboard setup with Arduino Uno controlling 24-LED NeoPixel ring*
 
 ![Arduino Wiring Detail](Assets/media/build/arduino_wiring.png)
+
 *Diagram of NeoPixel connections - note 5V power requirement and Pin 6 data line*
 
 **Testing Process:**
@@ -140,16 +142,20 @@ Connected NeoPixel ring to Arduino Uno to verify basic LED control before adding
 
 **Result:** LED ring works correctly with Arduino control
 
+
 #### Phase 2: Raspberry Pi Serial Communication (Nov 14-17)
+
 
 **Step 2: Pi ↔ Arduino Integration**
 
 Connected Arduino to Raspberry Pi via USB cable to enable Python-based control.
 
 ![Pi + Arduino + LED Setup](Assets/media/build/arduino_pi_led_test.png)
+
 *Complete system integration: Raspberry Pi connected to Arduino via USB, controlling NeoPixel ring through serial commands*
 
 ![Serial Terminal Output](Assets/media/build/pi_serial_test.png)
+
 *Terminal showing successful RGB command transmission: Python script → Serial → Arduino → LEDs*
 
 **Testing Script:**
@@ -170,7 +176,9 @@ A **Pi + Arduino hybrid** rather than direct Pi GPIO control was chosen for the 
 
 **Result:** Serial communication working reliably
 
+
 #### Phase 3: Sensor Integration (Nov 17-24)
+
 
 **Step 3: Adding Microphone for Voice & Audio**
 
@@ -206,6 +214,7 @@ Implemented two distinct audio modes:
 **TinkerCAD Modeling:**
 
 ![TinkerCAD Design](Assets/media/build/scene_tinkerCAD.png)
+
 *Parametric cube base (139.7mm sides) with centered 100mm sphere cutout for lamp diffuser*
 
 Design requirements:
@@ -218,11 +227,13 @@ Design requirements:
 **3D Model Visualization:**
 
 ![Autodesk Viewer](Assets/media/build/scene_autodeskViewer.png)
+
 *Final CAD model rendered in Autodesk Viewer*
 
 **Physical Build:**
 
 ![Final Device](Assets/media/build/scene_photo.png)
+
 *Completed SCENE device - white PLA enclosure with frosted sphere diffuser, minimalist design inspired by modern smart home products*
 
 **Manufacturing Notes:**
