@@ -45,7 +45,7 @@ Create an all-in-one ambient device that eliminates the need for multiple smart 
 
 *Early hardware concept showing sphere diffuser on cube base with integrated microphone and USB-C power*
 
-### Storyboard
+### Storyboard Design
 
 ![Storyboard](Assets/media/concept/scene_storyboard.jpg)
 
