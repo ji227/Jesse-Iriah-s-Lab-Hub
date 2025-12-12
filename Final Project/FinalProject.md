@@ -41,13 +41,13 @@ Create an all-in-one ambient device that eliminates the need for multiple smart 
 
 ### Initial Concept Sketch
 
-![Initial Sketch](Assets/media/concept/scene_sketch.jpg)
+<img src="Assets/media/concept/scene_sketch.jpg" width="500">
 
 *Early hardware concept showing sphere diffuser on cube base with integrated microphone and USB-C power*
 
 ### Storyboard Design
 
-![Storyboard](Assets/media/concept/scene_storyboard.jpg)
+<img src="Assets/media/concept/scene_storyboard.jpg" width="700">
 
 *User interaction flow: (1) Setup & power on, (2) Create custom scene via UI, (3) Save and name scene, (4) Voice activation, (5) Device executes programmed sequence*
 
@@ -127,11 +127,11 @@ Connected NeoPixel ring to Arduino Uno to verify basic LED control before adding
 - Ground → GND  
 - Data In → Digital Pin 6
 
-![Arduino LED Setup](Assets/media/build/arduino_led_test.png)
+<img src="Assets/media/build/arduino_led_test.png" width="500">
 
 *Initial breadboard setup with Arduino Uno controlling 24-LED NeoPixel ring*
 
-![Arduino Wiring Detail](Assets/media/build/arduino_wiring.png)
+<img src="Assets/media/build/arduino_wiring.png" width="500">
 
 *Diagram of NeoPixel connections - note 5V power requirement and Pin 6 data line*
 
@@ -151,11 +151,11 @@ Connected NeoPixel ring to Arduino Uno to verify basic LED control before adding
 
 Connected Arduino to Raspberry Pi via USB cable to enable Python-based control.
 
-![Pi + Arduino + LED Setup](Assets/media/build/arduino_pi_led_test.png)
+<img src="Assets/media/build/arduino_pi_led_test.png" width="500">
 
 *Complete system integration: Raspberry Pi connected to Arduino via USB, controlling NeoPixel ring through serial commands*
 
-![Serial Terminal Output](Assets/media/build/pi_serial_test.png)
+<img src="Assets/media/build/pi_serial_test.png" width="600">
 
 *Terminal showing successful RGB command transmission: Python script → Serial → Arduino → LEDs*
 
@@ -214,7 +214,7 @@ Implemented two distinct audio modes:
 
 **TinkerCAD Modeling:**
 
-![TinkerCAD Design](Assets/media/build/scene_tinkerCAD.png)
+<img src="Assets/media/build/scene_tinkerCAD.png" width="600">
 
 *Parametric cube base (139.7mm sides) with centered 100mm sphere cutout for lamp diffuser*
 
@@ -227,13 +227,13 @@ Design requirements:
 
 **3D Model Visualization:**
 
-![Autodesk Viewer](Assets/media/build/scene_autodeskViewer.png)
+<img src="Assets/media/build/scene_autodeskViewer.png" width="500">
 
 *Final CAD model rendered in Autodesk Viewer*
 
 **Physical Build:**
 
-![Final Device](Assets/media/build/scene_photo.png)
+<img src="Assets/media/build/scene_photo.png" width="500">
 
 
 *Completed SCENE device - white PLA enclosure with frosted sphere diffuser, minimalist design inspired by modern smart home products*
@@ -312,7 +312,7 @@ SCENE offers three distinct modes of interaction, each designed for different us
 
 ### Studio Mode: Web Interface Control
 
-![Web Interface](Assets/media/concept/webui_interface.png)
+<img src="Assets/media/concept/webui_interface.png" width="700">
 
 *Timeline-based scene editor with hue, brightness, and volume control curves*
 
