@@ -128,7 +128,7 @@ Connected NeoPixel ring to Arduino Uno to verify basic LED control before adding
 - Ground → GND  
 - Data In → Digital Pin 6
 
-<img src="Assets/media/build/arduino_led_test.png" width="500">
+<img src="Assets/media/build/arduino_led_test_edit.jpy" width="500">
 
 *Initial breadboard setup with Arduino Uno controlling 24-LED NeoPixel ring*  
 
@@ -157,7 +157,7 @@ Connected NeoPixel ring to Arduino Uno to verify basic LED control before adding
 
 Connected Arduino to Raspberry Pi via USB cable to enable Python-based control.
 
-<img src="Assets/media/build/arduino_pi_led_test.png" width="500">
+<img src="Assets/media/build/arduino_pi_led_test_edit.png" width="500">
 
 *Complete system integration: Raspberry Pi connected to Arduino via USB, controlling NeoPixel ring through serial commands*  
 
