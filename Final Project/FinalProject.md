@@ -130,12 +130,14 @@ Connected NeoPixel ring to Arduino Uno to verify basic LED control before adding
 
 <img src="Assets/media/build/arduino_led_test.png" width="500">
 
-*Initial breadboard setup with Arduino Uno controlling 24-LED NeoPixel ring*
+*Initial breadboard setup with Arduino Uno controlling 24-LED NeoPixel ring*  
+
 
 
 <img src="Assets/media/build/arduino_wiring.png" width="500">
 
-*Diagram of NeoPixel connections - note 5V power requirement and Pin 6 data line*
+*Diagram of NeoPixel connections - note 5V power requirement and Pin 6 data line*  
+
 
 
 
@@ -157,12 +159,12 @@ Connected Arduino to Raspberry Pi via USB cable to enable Python-based control.
 
 <img src="Assets/media/build/arduino_pi_led_test.png" width="500">
 
-*Complete system integration: Raspberry Pi connected to Arduino via USB, controlling NeoPixel ring through serial commands*
+*Complete system integration: Raspberry Pi connected to Arduino via USB, controlling NeoPixel ring through serial commands*  
 
 
 <img src="Assets/media/build/pi_serial_test.png" width="600">
 
-*Terminal showing successful RGB command transmission: Python script → Serial → Arduino → LEDs*
+*Terminal showing successful RGB command transmission: Python script → Serial → Arduino → LEDs*  
 
 
 **Testing Script:**
@@ -222,7 +224,7 @@ Implemented two distinct audio modes:
 
 <img src="Assets/media/build/scene_tinkerCAD.png" width="600">
 
-*Parametric cube base (139.7mm sides) with centered 100mm sphere cutout for lamp diffuser*
+*Parametric cube base (139.7mm sides) with centered 100mm sphere cutout for lamp diffuser*  
 
 
 Design requirements:
@@ -236,14 +238,15 @@ Design requirements:
 
 <img src="Assets/media/build/scene_autodeskViewer.png" width="500">
 
-*Final CAD model rendered in Autodesk Viewer*
+*Final CAD model rendered in Autodesk Viewer*  
+
 
 
 **Physical Build:**
 
 <img src="Assets/media/build/scene_photo.png" width="500">
 
-*Completed SCENE device - white PLA enclosure with frosted sphere diffuser, minimalist design inspired by modern smart home products*
+*Completed SCENE device - white PLA enclosure with frosted sphere diffuser, minimalist design inspired by modern smart home products*  
 
 
 **Manufacturing Notes:**
