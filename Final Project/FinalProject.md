@@ -115,47 +115,106 @@ spotipy (Spotify API integration)
 
 ### Hardware Evolution
 
-#### Phase 1: Breadboard Prototype (Nov 10-17)
+#### Phase 1: Arduino LED Testing (Nov 10-14)
 
-Initial testing focused on validating sensor inputs and LED control independently before integration.
+**Step 1: Standalone Arduino + NeoPixel**
 
-**Arduino LED Testing:**
+Connected NeoPixel ring to Arduino Uno to verify basic LED control before adding Raspberry Pi complexity.
 
-![Arduino LED Test](Assets/media/build/arduino_led_test.png)
-*NeoPixel ring successfully controlled via Arduino Uno - all 24 LEDs responding to serial RGB commands*
+**Wiring Configuration:**
+- Power → 5V
+- Ground → GND  
+- Data In → Digital Pin 6
 
-![Arduino Wiring](Assets/media/build/arduino_wiring.png)
-*Wiring configuration: NeoPixel Data → Pin 6, Power → 5V, Ground → GND*
+![Arduino LED Setup](Assets/media/build/arduino_led_test.png)
+*Initial breadboard setup with Arduino Uno controlling 24-LED NeoPixel ring*
 
-**Key Learnings:**
-- NeoPixel requires 5V logic level (Arduino) rather than 3.3V (Pi GPIO)
-- Serial communication at 9600 baud provides sufficient refresh rate (~30 FPS)
-- RGB values must be clamped to 0-255 range to prevent overflow errors
+![Arduino Wiring Detail](Assets/media/build/arduino_wiring.png)
+*Close-up of NeoPixel connections - note 5V power requirement and Pin 6 data line*
 
-**Raspberry Pi Serial Communication:**
+**Testing Process:**
+1. Installed Adafruit NeoPixel library in Arduino IDE
+2. Uploaded `led_test.ino` sketch
+3. Verified all 24 LEDs respond to color commands
+4. Tested RGB color cycling (Red → Green → Blue → White → Off)
 
-![Pi Serial Test](Assets/media/build/pi_serial_test.png)
-*Python script successfully sending RGB commands to Arduino via USB serial*
+**Result:** LED ring works correctly with Arduino control
 
-![Pi Terminal Output](Assets/media/build/pi_serial_terminal.png)
-*Real-time serial monitor showing bidirectional communication and command acknowledgment*
+#### Phase 2: Raspberry Pi Serial Communication (Nov 14-17)
+
+**Step 2: Pi ↔ Arduino Integration**
+
+Connected Arduino to Raspberry Pi via USB cable to enable Python-based control.
+
+![Pi + Arduino + LED Setup](Assets/media/build/arduino_pi_led_test.png)
+*Complete system integration: Raspberry Pi connected to Arduino via USB, controlling NeoPixel ring through serial commands*
+
+![Serial Terminal Output](Assets/media/build/pi_serial_test.png)
+*Terminal showing successful RGB command transmission: Python script → Serial → Arduino → LEDs*
+
+**Testing Script:**
+Ran `led_control.py` on Pi to send color commands:
+```python
+# Format: "R,G,B\n" sent at 9600 baud
+ser.write(b"255,0,0\n")  # Red
+ser.write(b"0,255,0\n")  # Green
+ser.write(b"0,0,255\n")  # Blue
+```
 
 **Architecture Decision:**
-We chose a **Pi + Arduino hybrid architecture** rather than Pi-only control because:
-1. Arduino handles time-critical LED refresh without OS interruptions
-2. Pi focuses on compute-heavy tasks (speech recognition, audio FFT, web server)
-3. Serial interface provides clean separation of concerns
-4. Arduino can run standalone if Pi crashes (failsafe lighting)
+We chose a **Pi + Arduino hybrid** rather than direct Pi GPIO control because:
+1. Arduino handles time-critical NeoPixel refresh without Linux OS interruptions
+2. Pi focuses on compute-heavy tasks (speech recognition, FFT, web server)
+3. Serial provides clean 9600 baud interface with ~30 FPS refresh rate
+4. Arduino can run standalone if Pi crashes (failsafe mode)
 
-#### Phase 2: Sensor Integration (Nov 17-24)
+**Result:** Serial communication working reliably
+
+#### Phase 3: Sensor Integration (Nov 17-24)
+
+**Step 3: Adding Interactive Inputs**
+
+With the LED control pipeline validated, we added sensors for different interaction modes.
+
+**Initial Sensor Testing:**
+- **Potentiometer:** Manual brightness control (analog input)
+- **IMU (Accelerometer):** Tilt-based color changes
+- **Microphone:** Voice commands + audio-reactive effects
+
+**Microphone Configuration:**
+
+Installing required audio libraries on Raspberry Pi:
+```bash
+# Core audio dependencies
+sudo apt-get install -y libportaudio2 portaudio19-dev flac i2c-tools python3-dev
+
+# Enable I2C for sensor communication
+sudo raspi-config nonint do_i2c 0
+
+# Python audio packages
+pip install sparkfun-qwiic sounddevice numpy SpeechRecognition
+```
+
+**Library Troubleshooting:**
+- `portaudio19-dev` → Fixed `AttributeError: Could not find PyAudio` crash
+- `flac` → Fixed `OSError: FLAC conversion utility not available` crash  
+- `python3-dev` → Ensures headers available for compiling `spidev`
+
+**Microphone Feature Development:**
+
+Implemented two distinct audio modes:
+1. **Voice Commands:** "Lumos Maxima" (lights on), "Nox" (lights off)
+2. **Audio-Reactive:** Real-time volume/frequency analysis drives LED color/brightness
 
 **MPR121 Capacitive Touch Sensor:**
 
-The color mixer feature uses capacitive touch electrodes to let users "paint" RGB colors by tapping copper pads:
-- **Lead 0:** Add red component (+1 drop)
-- **Lead 1:** Add green component (+1 drop)
-- **Lead 2:** Add blue component (+1 drop)
-- **Lead 11:** Reset palette (clear all drops)
+Added color mixing interface using copper tape electrodes:
+- **Lead 0:** Add red "drop"
+- **Lead 1:** Add green "drop"
+- **Lead 2:** Add blue "drop"  
+- **Lead 11:** Reset palette
+
+This "paint mixing" metaphor makes RGB intuitive - users blend colors like physical pigments rather than abstract 0-255 values.
 ```python
 # Color mixing algorithm from color_mixer.py
 total_drops = red_drops + green_drops + blue_drops
@@ -165,42 +224,24 @@ if total_drops > 0:
     b_val = (blue_drops / total_drops) * 255
 ```
 
-This "color drops" metaphor makes RGB mixing intuitive - users think in terms of paint mixing rather than abstract 0-255 values.
-
-**Microphone Audio Analysis:**
-
-![Microphone Test](Assets/media/build/mic_test.png)
-*Speech recognition diagnostic tool confirming Google Speech API connectivity and ambient noise calibration*
-
-Implemented two audio processing modes:
-1. **Voice Commands:** Uses `SpeechRecognition` library with Google API for discrete trigger words
-2. **Audio-Reactive:** Real-time FFT analysis maps volume → brightness, frequency → hue
-```python
-# Audio callback from mic_music.py
-volume = np.linalg.norm(indata) * SENSITIVITY
-target_speed = MIN_SPEED + volume  # Maps volume to rainbow rotation speed
-rainbow_offset = (rainbow_offset + current_speed) % 255
-```
-
-**Challenge:** Initial attempts used Pi GPIO PWM for LEDs, but this caused flickering due to Linux scheduling interrupts. Solution: Offload LED control to Arduino's deterministic loop.
-
-#### Phase 3: Enclosure Design (Nov 20-28)
+#### Phase 4: Enclosure Design (Nov 20-28)
 
 **TinkerCAD Modeling:**
 
 ![TinkerCAD Design](Assets/media/build/scene_tinkerCAD.png)
-*Parametric cube base (139.7mm sides) with centered 150mm (5.9 inch) sphere cutout for lamp diffuser*
+*Parametric cube base (139.7mm sides) with centered 100mm sphere cutout for lamp diffuser*
 
 Design requirements:
 - Conceal all electronics (Pi, Arduino, breadboard, wiring)
 - Front-facing microphone port for voice pickup
 - Side-mounted USB-C power access
 - Top cutout precisely sized for sphere friction-fit
+- Ventilation gaps for heat dissipation
 
 **3D Model Visualization:**
 
 ![Autodesk Viewer](Assets/media/build/scene_autodeskViewer.png)
-*Final CAD model rendered in Autodesk Viewer*
+*Final CAD model rendered in Autodesk Viewer - note clean aesthetic with no visible fasteners*
 
 **Physical Build:**
 
@@ -211,7 +252,7 @@ Design requirements:
 - Printed in white PLA at 0.2mm layer height
 - Total print time: ~18 hours
 - Post-processing: Light sanding on sphere contact surface for smooth fit
-- Sphere sourced from lighting supply store (standard 5.9" globe shade)
+- Sphere sourced from lighting supply store (standard 6" globe shade)
 
 ### Software Architecture
 
