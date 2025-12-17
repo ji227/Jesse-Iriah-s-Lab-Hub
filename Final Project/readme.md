@@ -72,7 +72,6 @@ Create an all-in-one ambient device that eliminates the need for multiple smart 
 - Raspberry Pi 5 (main controller)
 - Arduino Uno (LED driver via serial)
 - Adafruit NeoPixel Ring - 24 LEDs (RGB lighting)
-- Adafruit MPR121 Capacitive Touch Sensor (color mixing input)
 - USB Microphone (voice commands + audio analysis)
 - Bluetooth Speaker (audio playback for Party Mode)
 - USB-C Power Supply (5V, 3A)
@@ -87,7 +86,6 @@ Create an all-in-one ambient device that eliminates the need for multiple smart 
 ```
 Flask (web server)
 pyserial (Arduino communication)
-adafruit-circuitpython-mpr121 (touch sensor)
 SpeechRecognition (voice commands)
 sounddevice + numpy (audio analysis)
 spotipy (Spotify API integration)
@@ -266,10 +264,9 @@ graph TD
     end
 
     subgraph PI["Raspberry Pi 5 - Flask Server"]
-        SCENE["scene.py<br/>Web UI & API"]
+        SCENE["scene.py<br/>Web UI & API<br/>Serial Controller"]
         VOICE["voice_listener.py<br/>Speech Daemon"]
         SPOTIFY["spotify_party.py<br/>Music + Audio FFT"]
-        HW["hardware.py<br/>Serial Controller"]
     end
 
     subgraph ARDUINO_BOX["Arduino Uno - LED Driver"]
@@ -283,23 +280,20 @@ graph TD
     UI1 --> SCENE
     UI2 --> VOICE
     
-    SCENE --> HW
-    VOICE --> HW
-    SPOTIFY --> HW
+    SCENE -->|"USB Serial<br/>9600 baud<br/>'R,G,B\n'"| ARDUINO
+    VOICE --> SCENE
+    SPOTIFY --> SCENE
     
-    HW -->|"USB Serial<br/>9600 baud<br/>'R,G,B\n'"| ARDUINO
-    ARDUINO -->|"Digital Pin 6"| ARDUINO
+    ARDUINO -->|"Digital Pin 6"| LED
 ```
 
 **Key Software Components:**
 
 | File | Purpose | Key Functions |
 |------|---------|---------------|
-| `scene.py` | Flask web server, main UI | Timeline editor, scene playback, Spotify search |
-| `hardware.py` | Arduino serial communication | `send_color(r, g, b)`, `init_serial()` |
+| `scene.py` | Flask web server, main UI | Timeline editor, scene playback, Spotify search, Arduino serial communication |
 | `voice_listener.py` | Speech recognition daemon | Listens for "start [scene name]" commands |
 | `spotify_party.py` | Music integration + audio FFT | `play_preview_with_analysis()`, `microphone_to_leds()` |
-| `color_mixer.py` | Touch sensor color painting | Capacitive input → RGB calculation |
 | `Led_Control_arduino.ino` | NeoPixel driver | Serial parser → `strip.setPixelColor()` |
 
 **Data Flow Example (Voice Command):**
@@ -309,8 +303,8 @@ graph TD
 3. Google Speech API returns text: "start focus mode"
 4. POST request to Flask: /api/start-by-name/focus
 5. scene.py loads saved_scenes.json, finds "Focus Mode"
-6. Timeline engine interpolates brightness/hue curves
-7. hardware.py sends serial commands: "0,150,255\n" (blue)
+6. Timeline engine interpolates brightness/color curves
+7. scene.py sends serial commands: "0,150,255\n" (blue)
 8. Arduino parses command, updates all 24 LEDs
 9. Result: Device glows steady blue
 ```
@@ -557,8 +551,7 @@ Assets/
 │   │   ├── Led_Control_arduino.ino    # NeoPixel serial driver
 │   │   └── led_test.ino                # Standalone LED testing
 │   ├── core/
-│   │   ├── scene.py                    # Main Flask web server
-│   │   ├── hardware.py                 # Arduino serial communication
+│   │   ├── scene.py                    # Main Flask web server + serial communication
 │   │   ├── requirements.txt            # Python dependencies
 │   │   └── saved_scenes.json           # Scene configurations
 │   ├── features/
@@ -727,7 +720,7 @@ python3 Assets/code/core/scene.py
 
 #### `scene.py` - Main Flask Server
 
-**Purpose:** Web server hosting timeline editor UI and REST API
+**Purpose:** Web server hosting timeline editor UI, REST API, and Arduino serial communication
 
 **Key Routes:**
 - `GET /` - Serve main web interface
@@ -736,28 +729,7 @@ python3 Assets/code/core/scene.py
 - `POST /api/start-by-name/<name>` - Activate scene by voice command
 - `GET /api/spotify/search?q=<query>` - Search Spotify for tracks
 
-**Scene Playback Engine:**
-```python
-def play_scene(scene_data):
-    # Load brightness and color curves from JSON
-    duration = scene_data['duration']
-    brightness_points = scene_data['brightness_points']
-    
-    # Interpolate values over time
-    for t in range(0, duration * 60):  # Convert minutes to seconds
-        brightness = interpolate(brightness_points, t)
-        color = interpolate(color_points, t)
-        
-        # Send to Arduino via serial
-        hardware.send_color(color['r'], color['g'], color['b'])
-        time.sleep(1)
-```
-
-#### `hardware.py` - Arduino Serial Interface
-
-**Purpose:** Manages USB serial communication with Arduino
-
-**Key Functions:**
+**Serial Communication:**
 ```python
 def init_serial():
     # Auto-detect Arduino on /dev/ttyACM0 or /dev/ttyUSB0
@@ -774,6 +746,24 @@ def send_color(r, g, b):
     cmd = f"{int(r)},{int(g)},{int(b)}\n"
     arduino.write(cmd.encode('utf-8'))
 ```
+
+**Scene Playback Engine:**
+```python
+def play_scene(scene_data):
+    # Load brightness and color curves from JSON
+    duration = scene_data['duration']
+    brightness_points = scene_data['brightness_points']
+    
+    # Interpolate values over time
+    for t in range(0, duration * 60):  # Convert minutes to seconds
+        brightness = interpolate(brightness_points, t)
+        color = interpolate(color_points, t)
+        
+        # Send to Arduino via serial
+        send_color(color['r'], color['g'], color['b'])
+        time.sleep(1)
+```Claude is AI and can make mistakes. Please double-check responses. Sonnet 4.5Claude is AI and can make mistakes. Please double-check responses.Share
+
 
 #### `voice_listener.py` - Speech Recognition Daemon
 
